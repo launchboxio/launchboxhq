@@ -5,3 +5,12 @@
 #
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
+
+clusters = Cluster.create([
+                            {
+                              name: "Test Cluster",
+                              region: "us-east-1",
+                              version: "1.25",
+                              provider: "lbx"
+                            }
+                          ])
