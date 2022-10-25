@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "target": "es6",
+    "outDir": "dist",
+    "allowJs": true,
+    "jsx": "react-jsx",
+    "skipLibCheck": true
+  },
+  "include": ["./app/javascript/**/*"]
+}
