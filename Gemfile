@@ -13,7 +13,9 @@ gem "stimulus-rails"
 gem "jbuilder"
 gem "redis", "~> 4.0"
 gem "dotenv-rails", "~> 2.8"
-
+gem "devise", "~> 4.8"
+gem "omniauth", "~> 2.1"
+gem "jsonapi-serializer", "~> 2.2"
 gem "tzinfo-data", platforms: %i[ mingw mswin x64_mingw jruby ]
 gem "bootsnap", require: false
 
@@ -31,8 +33,3 @@ group :test do
   gem "webdrivers"
 end
 
-
-
-gem "devise", "~> 4.8"
-
-gem "omniauth", "~> 2.1"

@@ -2,11 +2,17 @@
   "name": "app",
   "private": "true",
   "dependencies": {
+    "@blueprintjs/core": "^4.11.5",
+    "@blueprintjs/datetime": "^4.4.5",
+    "@blueprintjs/datetime2": "^0.8.1",
+    "@blueprintjs/popover2": "^1.8.0",
+    "@blueprintjs/select": "^4.8.5",
     "@hotwired/stimulus": "^3.1.0",
     "@hotwired/turbo-rails": "^7.2.4",
     "esbuild": "^0.15.12",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.4.2"
   },
   "scripts": {
     "build": "esbuild app/javascript/application.tsx --bundle --sourcemap --outdir=app/assets/builds",
