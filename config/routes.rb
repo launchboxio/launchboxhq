@@ -1,23 +1,19 @@
 Rails.application.routes.draw do
+  resources :addons
   devise_for :admins
-  devise_for :users, path_names: {
-    sign_in: 'login',
-    sign_out: 'logout',
-    registration: 'signup'
-  }, controllers: {
-    sessions: 'users/sessions',
-    registrations: 'users/registrations'
-  }
+  devise_for :users
 
   resources :clusters
-  resources :spaces
+  resources :spaces do
+    member do
+      get :logs
+    end
+  end
+
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Defines the root path route ("/")
   # root "articles#index"
   root "home#index"
-  get '*path', to: "application#fallback_index_html", constraints: ->(request) do
-    !request.xhr? && request.format.html?
-  end
 end

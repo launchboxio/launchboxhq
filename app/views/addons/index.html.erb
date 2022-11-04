@@ -1,0 +1,30 @@
+<div class="card">
+  <div class="card-header">Addons</div>
+  <div class="card-body">
+    <table class="table">
+      <thead>
+      <tr>
+        <th>Chart</th>
+        <th>Version</th>
+        <th>Release</th>
+        <th>Namespace</th>
+        <th></th>
+      </tr>
+      </thead>
+      <tbody>
+      <% @addons.each do |addon| %>
+        <tr>
+          <td><%= addon.repo %>/<%= addon.chart %></td>
+          <td><%= addon.version %></td>
+          <td><%= addon.release %></td>
+          <td><%= addon.namespace %></td>
+          <td><button class="btn">View values</button></td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+  <div class="card-footer">
+    <a href="/addons/new" class="btn">Create a new addon</a>
+  </div>
+</div>

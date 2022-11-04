@@ -1,0 +1,19 @@
+<div class="card">
+  <%= form_for(@space) do |f| %>
+    <div class="card-header">New Space</div>
+    <div class="card-body">
+      <div class="mb-3">
+        <%= f.label :cluster, "Name", class: "form-label" %>
+        <%= f.text_field :name, class: "form-control" %>
+      </div>
+      <div class="mb-3">
+        <%= f.label :cluster, "Cluster", class: "form-label" %>
+        <%= f.select :cluster, @clusters.map { |c| [c.name, c.id]}, {}, class: "form-select" %>
+      </div>
+    </div>
+    <div class="card-footer">
+      <button class="btn" type="submit">Create</button>
+    </div>
+  <% end %>
+
+</div>

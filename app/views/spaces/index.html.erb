@@ -1,0 +1,30 @@
+<div class="card">
+  <div class="card-header">Spaces</div>
+  <div class="card-body">
+    <table class="table">
+      <thead>
+      <tr>
+        <th>Name</th>
+        <th>Region</th>
+        <th>Version</th>
+        <th>Provider</th>
+        <th>Status</th>
+      </tr>
+      </thead>
+      <tbody>
+      <% @spaces.each do |space| %>
+        <tr>
+          <td><%= space.name %></td>
+          <td><%= space.cluster.region %></td>
+          <td><%= space.cluster.version %></td>
+          <td><%= space.cluster.provider %></td>
+          <td><%= space.status %></td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+  <div class="card-footer">
+    <a href="/spaces/new" class="btn">Create a new space</a>
+  </div>
+</div>

@@ -1,0 +1,30 @@
+<div class="card">
+  <div class="card-header">Clusters</div>
+  <div class="card-body">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Region</th>
+          <th>Version</th>
+          <th>Provider</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @clusters.each do |cluster| %>
+          <tr>
+            <td><%= cluster.name %></td>
+            <td><%= cluster.region %></td>
+            <td><%= cluster.version %></td>
+            <td><%= cluster.provider %></td>
+            <td><%= cluster.status %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+  <div class="card-footer">
+    <button class="btn">Add a cluster</button>
+  </div>
+</div>

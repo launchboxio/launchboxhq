@@ -18,6 +18,9 @@ gem "omniauth", "~> 2.1"
 gem "jsonapi-serializer", "~> 2.2"
 gem "tzinfo-data", platforms: %i[ mingw mswin x64_mingw jruby ]
 gem "bootsnap", require: false
+gem "vault-rails", "~> 0.8.0"
+gem "haikunate", "~> 0.1.1"
+gem "kubeclient", "~> 4.10"
 
 group :development, :test do
   gem "debug", platforms: %i[ mri mingw x64_mingw ]
@@ -32,4 +35,8 @@ group :test do
   gem "selenium-webdriver"
   gem "webdrivers"
 end
+
+gem "bcrypt", "~> 3.1"
+gem "rack-cors", "~> 1.1"
+gem "vault", "~> 0.17.0"
 

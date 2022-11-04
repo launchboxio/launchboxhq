@@ -10,9 +10,31 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_10_25_224914) do
+ActiveRecord::Schema[7.0].define(version: 2022_11_04_015215) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "addon_subscriptions", force: :cascade do |t|
+    t.bigint "space_id"
+    t.bigint "addon_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["addon_id"], name: "index_addon_subscriptions_on_addon_id"
+    t.index ["space_id"], name: "index_addon_subscriptions_on_space_id"
+  end
+
+  create_table "addons", force: :cascade do |t|
+    t.string "chart"
+    t.string "repo"
+    t.string "version"
+    t.string "username_encrypted"
+    t.string "password_encrypted"
+    t.string "release"
+    t.string "namespace"
+    t.text "values"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "admins", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -43,10 +65,27 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_25_224914) do
     t.string "region"
     t.string "version"
     t.string "provider"
+    t.string "status"
+    t.string "host"
+    t.string "ca_crt_encrypted"
+    t.string "token_encrypted"
     t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_clusters_on_user_id"
+  end
+
+  create_table "spaces", force: :cascade do |t|
+    t.string "name"
+    t.string "status"
+    t.string "slug"
+    t.bigint "cluster_id"
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["cluster_id"], name: "index_spaces_on_cluster_id"
+    t.index ["slug"], name: "index_spaces_on_slug", unique: true
+    t.index ["user_id"], name: "index_spaces_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|

@@ -1,0 +1,59 @@
+ingress:
+  enabled: <%= @ingress[:enabled] %>
+  ingressClassName: <%= @ingress[:class] %>
+  host: "*.<%= @space.slug %>.broken-smoke.launchboxhq.io"
+vcluster:
+  <% if @extra_args %>
+  extraArgs:
+    <% @extra_args.each do |arg, value| %>
+    - --kube-apiserver-arg=--<%= arg %>="<%= value %>"
+    <% end %>
+  <% else %>
+  extraArgs: []
+  <% end %>
+
+init:
+  manifests: |-
+    ---
+    kind: ClusterRoleBinding
+    apiVersion: rbac.authorization.k8s.io/v1
+    metadata:
+      name: oidc-admin-binding
+    roleRef:
+      apiGroup: rbac.authorization.k8s.io
+      kind: ClusterRole
+      name: cluster-admin
+    subjects:
+    <% @users.each do |user| %>
+    - kind: User
+      name: <%= user %>
+    <% end %>
+    ---
+    kind: ClusterRoleBinding
+    apiVersion: rbac.authorization.k8s.io/v1
+    metadata:
+      name: crb:oidc-viewer
+    subjects:
+      - kind: Group
+        name: system:unauthenticated
+        apiGroup: rbac.authorization.k8s.io
+    roleRef:
+      kind: ClusterRole
+      name: system:service-account-issuer-discovery
+      apiGroup: rbac.authorization.k8s.io
+  <% if @space.addons.length > 0 %>
+  helm:
+    <% @space.addons.each do |addon| %>
+    - chart:
+        name: <%= addon.release %>
+        repo: <%= addon.repo %>
+        version: <%= addon.version %>
+        username: <%= addon.username %>
+        password: <%= addon.password %>
+      values: |-
+        <%= addon.values %>
+      release:
+        name: <%= addon.release %>
+        namespace: <%= addon.namespace %>
+    <% end %>
+  <% end %>

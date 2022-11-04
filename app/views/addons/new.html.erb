@@ -1,0 +1,43 @@
+<div class="card">
+  <%= form_for(@addon) do |f| %>
+    <div class="card-header">New Addon</div>
+    <div class="card-body">
+      <div class="mb-3">
+        <%= f.label :addon, "Repository", class: "form-label" %>
+        <%= f.text_field :repo, class: "form-control" %>
+      </div>
+      <div class="mb-3">
+        <%= f.label :addon, "Chart", class: "form-label" %>
+        <%= f.text_field :chart, class: "form-control" %>
+      </div>
+      <div class="mb-3">
+        <%= f.label :addon, "Version", class: "form-label" %>
+        <%= f.text_field :version, class: "form-control" %>
+      </div>
+      <div class="mb-3">
+        <%= f.label :addon, "Username", class: "form-label" %>
+        <%= f.text_field :username, class: "form-control" %>
+      </div>
+      <div class="mb-3">
+        <%= f.label :addon, "Password", class: "form-label" %>
+        <%= f.password_field :password, class: "form-control" %>
+      </div>
+      <div class="mb-3">
+        <%= f.label :addon, "Release", class: "form-label" %>
+        <%= f.text_field :release, class: "form-control" %>
+      </div>
+      <div class="mb-3">
+        <%= f.label :addon, "Namespace", class: "form-label" %>
+        <%= f.text_field :namespace, class: "form-control" %>
+      </div>
+      <div class="mb-3">
+        <%= f.label :addon, "Values", class: "form-label" %>
+        <%= f.text_area :values, class: "form-control" %>
+      </div>
+    </div>
+    <div class="card-footer">
+      <button class="btn" type="submit">Create Addon</button>
+    </div>
+  <% end %>
+
+</div>

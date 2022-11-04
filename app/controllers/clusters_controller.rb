@@ -1,10 +1,23 @@
-class ClustersController < ApplicationController
+class ClustersController < AuthenticatedController
   def index
     @clusters = Cluster.all
-    render :json => @clusters
   end
 
   def show
-    render :json => @cluster
+    @cluster
+  end
+
+  def create
+    @cluster = Cluster.new(params[:cluster])
+    @cluster.user = current_user
+    @cluster.save
+  end
+
+  def update
+
+  end
+
+  def delete
+
   end
 end

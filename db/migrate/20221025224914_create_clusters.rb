@@ -5,6 +5,10 @@ class CreateClusters < ActiveRecord::Migration[7.0]
       t.string :region
       t.string :version
       t.string :provider
+      t.string :status
+      t.string :host
+      t.string :ca_crt_encrypted
+      t.string :token_encrypted
 
       t.belongs_to :user, optional: true
 
