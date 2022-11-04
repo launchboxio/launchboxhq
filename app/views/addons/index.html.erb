@@ -14,11 +14,14 @@
       <tbody>
       <% @addons.each do |addon| %>
         <tr>
-          <td><%= addon.repo %>/<%= addon.chart %></td>
+          <td>
+            <%= link_to "#{addon.repo}/#{addon.chart}", edit_addon_path(addon) %>
           <td><%= addon.version %></td>
           <td><%= addon.release %></td>
           <td><%= addon.namespace %></td>
-          <td><button class="btn">View values</button></td>
+          <td>
+            <%= link_to "View Values", addon %>
+          </td>
         </tr>
       <% end %>
       </tbody>

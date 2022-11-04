@@ -21,11 +21,16 @@ class AddonsController < AuthenticatedController
   end
 
   def edit
-
+    @addon = Addon.find(params[:id])
   end
 
   def update
-
+    @addon = Addon.find(params[:id])
+    if @addon.update addon_params
+      redirect_to @addon
+    else
+      render "edit"
+    end
   end
 
   def delete

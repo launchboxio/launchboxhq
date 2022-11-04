@@ -19,8 +19,10 @@ class SpacesController < AuthenticatedController
     @space.cluster = Cluster.find(params[:space][:cluster])
     @space.user = current_user
 
-    params[:addon].each do |addon, value|
-      value == "on" && @space.addons << Addon.find(addon)
+    if params[:addon]
+      params[:addon].each do |addon, value|
+        value == "on" && @space.addons << Addon.find(addon)
+      end
     end
 
     if @space.save

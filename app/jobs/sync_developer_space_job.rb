@@ -53,7 +53,7 @@ class SyncDeveloperSpaceJob < ApplicationJob
       if error.error_code == 409
         cluster_client.merge_patch_cluster(@space.slug, cluster, @space.slug)
       else
-        throw error
+        raise error
       end
     end
 
@@ -91,9 +91,8 @@ class SyncDeveloperSpaceJob < ApplicationJob
     vcluster.spec = {}
     vcluster.spec = {}
     vcluster.spec.kubernetesVersion = @space.cluster.version
-    vcluster.spec.helmRelease = {
-      "values": values
-    }
+    vcluster.spec.helmRelease = {}
+    vcluster.spec.helmRelease.values = values
 
     begin
       infrastructure_client.create_vcluster(vcluster)
@@ -101,7 +100,7 @@ class SyncDeveloperSpaceJob < ApplicationJob
       if error.error_code == 409
         infrastructure_client.merge_patch_vcluster(@space.slug, vcluster, @space.slug)
       else
-        throw error
+        raise error
       end
 
     end

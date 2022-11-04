@@ -19,9 +19,9 @@ vcluster:
       cpu: 2
       <% end %>
       <% if @space.memory %>
-      memory: <%= @space.memory %>
+      memory: "<%= @space.memory %>Mi"
       <% else %>
-      memory: 4096
+      memory: 4096Mi
       <% end %>
 storage:
   persistence: true
