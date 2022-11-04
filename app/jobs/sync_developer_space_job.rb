@@ -2,7 +2,6 @@ class SyncDeveloperSpaceJob < ApplicationJob
   queue_as :default
 
   def perform(*args)
-    puts args
     # Connect to the cluster / agent
     # Create / Update the VCluster CRD on the cluster
     @space = Space.find(args.first)

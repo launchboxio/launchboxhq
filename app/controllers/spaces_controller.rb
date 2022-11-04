@@ -10,6 +10,7 @@ class SpacesController < AuthenticatedController
 
   def new
     @clusters = Cluster.all
+    @addons = Addon.all
     @space = Space.new
   end
 
@@ -19,6 +20,7 @@ class SpacesController < AuthenticatedController
     @space.user = current_user
 
     if @space.save
+      SyncDeveloperSpaceJob.perform_now(@space.id)
       redirect_to @space
     else
       @clusters = Cluster.all
@@ -31,7 +33,9 @@ class SpacesController < AuthenticatedController
   end
 
   def delete
-
+    @space = Space.find(params[:id])
+    @space.destroy
+    CleanupUserSpaceJob.perform_now(@space.slug, @space.cluster_id)
   end
 
   def restart
