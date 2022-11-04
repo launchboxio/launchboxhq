@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_11_04_015215) do
+ActiveRecord::Schema[7.0].define(version: 2022_11_04_041751) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -19,6 +19,13 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_04_015215) do
     t.bigint "addon_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "chart"
+    t.string "repo"
+    t.string "version"
+    t.string "release"
+    t.string "namespace"
+    t.text "values"
+    t.text "values_merge_type"
     t.index ["addon_id"], name: "index_addon_subscriptions_on_addon_id"
     t.index ["space_id"], name: "index_addon_subscriptions_on_space_id"
   end
@@ -83,6 +90,9 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_04_015215) do
     t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "memory"
+    t.integer "cpu"
+    t.integer "disk"
     t.index ["cluster_id"], name: "index_spaces_on_cluster_id"
     t.index ["slug"], name: "index_spaces_on_slug", unique: true
     t.index ["user_id"], name: "index_spaces_on_user_id"

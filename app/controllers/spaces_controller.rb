@@ -19,6 +19,10 @@ class SpacesController < AuthenticatedController
     @space.cluster = Cluster.find(params[:space][:cluster])
     @space.user = current_user
 
+    params[:addon].each do |addon, value|
+      value == "on" && @space.addons << Addon.find(addon)
+    end
+
     if @space.save
       SyncDeveloperSpaceJob.perform_now(@space.id)
       redirect_to @space

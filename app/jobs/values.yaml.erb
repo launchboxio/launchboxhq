@@ -11,7 +11,25 @@ vcluster:
   <% else %>
   extraArgs: []
   <% end %>
-
+  resources:
+    limits:
+      <% if @space.cpu %>
+      cpu: <%= @space.cpu %>
+      <% else %>
+      cpu: 2
+      <% end %>
+      <% if @space.memory %>
+      memory: <%= @space.memory %>
+      <% else %>
+      memory: 4096
+      <% end %>
+storage:
+  persistence: true
+  <% if @space.disk %>
+  size: "<%= @space.disk %>Gi"
+  <% else %>
+  size: "5Gi"
+  <% end %>
 init:
   manifests: |-
     ---
