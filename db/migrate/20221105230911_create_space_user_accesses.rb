@@ -4,6 +4,7 @@ class CreateSpaceUserAccesses < ActiveRecord::Migration[7.0]
       t.belongs_to :space
       t.belongs_to :user
       t.string     :role
+      
       t.timestamps
     end
   end
