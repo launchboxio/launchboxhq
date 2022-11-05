@@ -26,6 +26,7 @@
             <% elsif ['paused'].include? space.status %>
             <button class="btn">Resume</button>
             <% end %>
+            <%= button_to 'Delete', space, method: :delete, form: {onsubmit: "return confirm('Do you really want to delete this space?');" }, class: "btn" %>
           </td>
         </tr>
       <% end %>
