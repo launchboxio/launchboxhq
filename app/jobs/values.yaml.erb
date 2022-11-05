@@ -42,9 +42,27 @@ init:
       kind: ClusterRole
       name: cluster-admin
     subjects:
-    <% @users.each do |user| %>
     - kind: User
-      name: <%= user %>
+      name: "oidc:<%= @space.user.email %>"
+    <% @users.select {|u| u.role == "admin" }.each do |user| %>
+    - kind: User
+      name: "oidc:<%= user.email %>"
+    <% end %>
+    <% if @users.count { |u| u.role == "view" } > 0 %>
+    ---
+    kind: ClusterRoleBinding
+    apiVersion: rbac.authorization.k8s.io/v1
+    metadata:
+      name: oidc-view-binding
+    roleRef:
+      apiGroup: rbac.authorization.k8s.io
+      kind: ClusterRole
+      name: cluster-admin
+    subjects:
+    <% @users.select {|u| u.role == "view" }.each do |u| %>
+    - kind: User
+      name: "oidc:<%= u.email %>"
+    <% end %>
     <% end %>
     ---
     kind: ClusterRoleBinding

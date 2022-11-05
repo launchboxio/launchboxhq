@@ -7,11 +7,11 @@ class CleanupUserSpaceJob < ApplicationJob
     cluster = Cluster.find(cluster_id)
 
     @options = {
-      auth_options:  { bearer_token: @space.cluster.token },
+      auth_options:  { bearer_token: cluster.token },
       ssl_options: { verify_ssl: OpenSSL::SSL::VERIFY_NONE }
     }
 
-    client = Kubeclient::Client.new(cluster.host, 'v1', **options)
+    client = Kubeclient::Client.new(cluster.host, 'v1', **@options)
     client.delete_namespace(slug)
   end
 end

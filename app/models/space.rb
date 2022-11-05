@@ -4,6 +4,7 @@ class Space < ApplicationRecord
 
   has_many :addon_subscriptions
   has_many :addons, :through => :addon_subscriptions
+  has_many :users, :through => :space_user_accesses
 
   before_create :generate_slug
 

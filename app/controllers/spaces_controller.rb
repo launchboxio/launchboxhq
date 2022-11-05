@@ -27,8 +27,8 @@ class SpacesController < AuthenticatedController
     end
 
     if @space.save
-      SyncDeveloperSpaceJob.perform_now(@space.id)
       @space.update(status: "provisioning")
+      SyncDeveloperSpaceJob.perform_now(@space.id)
       redirect_to @space
     else
       @clusters = Cluster.all
@@ -52,10 +52,11 @@ class SpacesController < AuthenticatedController
     ResumeDeveloperSpaceJob.perform_now(@space.id)
   end
 
-  def delete
+  def destroy
     @space = Space.find(params[:id])
     @space.destroy
     CleanupUserSpaceJob.perform_now(@space.slug, @space.cluster_id)
+    redirect_to spaces_path, notice: "Space scheduled for deletion"
   end
 
   def restart
