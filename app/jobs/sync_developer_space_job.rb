@@ -2,33 +2,41 @@ class SyncDeveloperSpaceJob < ApplicationJob
   queue_as :default
 
   def perform(*args)
-    # Connect to the cluster / agent
-    # Create / Update the VCluster CRD on the cluster
     @space = Space.find(args.first)
 
-    auth_options = {
-      bearer_token: @space.cluster.token
+    @options = {
+      auth_options:  { bearer_token: @space.cluster.token },
+      ssl_options: { verify_ssl: OpenSSL::SSL::VERIFY_NONE }
     }
-    ssl_options = { verify_ssl: OpenSSL::SSL::VERIFY_NONE }
 
-    # Ensure the namespace exists
-    client = Kubeclient::Client.new(
-      @space.cluster.host, 'v1', auth_options: auth_options, ssl_options: ssl_options
-    )
+    begin
+      create_namespace
+      create_cluster
+      create_vcluster
+    rescue => error
+      @space.update(status: "failed", error: error)
+      raise error
+    end
+
+    @space.update(status: "provisioned")
+  end
+
+  def create_namespace()
+    client = Kubeclient::Client.new(@space.cluster.host, 'v1', **@options)
 
     begin
       client.create_namespace(Kubeclient::Resource.new({ metadata: { name: @space.slug } }))
     rescue Kubeclient::HttpError => error
       if error.error_code == 409
-        # client.patch_namespace(space.slug, namespace)
+        client.patch_namespace(space.slug, namespace)
+      else
+        raise error
       end
     end
+  end
 
-    # Create the ClusterAPI cluster object
-
-    cluster_client = Kubeclient::Client.new(
-      "#{@space.cluster.host}/apis/cluster.x-k8s.io", 'v1beta1', auth_options: auth_options, ssl_options: ssl_options
-    )
+  def create_cluster()
+    cluster_client = Kubeclient::Client.new("#{@space.cluster.host}/apis/cluster.x-k8s.io", 'v1beta1', **@options)
     cluster_client.discover
 
     cluster = Kubeclient::Resource.new
@@ -53,14 +61,14 @@ class SyncDeveloperSpaceJob < ApplicationJob
       if error.error_code == 409
         cluster_client.merge_patch_cluster(@space.slug, cluster, @space.slug)
       else
+        @space.update(status: "failed", error: error)
         raise error
       end
     end
+  end
 
-    ## Lastly, create the VCluster CRD
-    infrastructure_client = Kubeclient::Client.new(
-      "#{@space.cluster.host}/apis/infrastructure.cluster.x-k8s.io", 'v1alpha1', auth_options: auth_options, ssl_options: ssl_options
-    )
+  def create_vcluster()
+    infrastructure_client = Kubeclient::Client.new("#{@space.cluster.host}/apis/infrastructure.cluster.x-k8s.io", 'v1alpha1', **@options)
 
     # TODO: Point these to configurable setting somewhere
     @extra_args = {
@@ -100,12 +108,9 @@ class SyncDeveloperSpaceJob < ApplicationJob
       if error.error_code == 409
         infrastructure_client.merge_patch_vcluster(@space.slug, vcluster, @space.slug)
       else
+        @space.update(status: "failed", error: error)
         raise error
       end
-
     end
-
-    puts "VCluster spun up in #{@space.slug} namespace. Give it a look"
-    # Run some checks, and send notifications
   end
 end

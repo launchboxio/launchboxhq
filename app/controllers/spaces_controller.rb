@@ -6,6 +6,7 @@ class SpacesController < AuthenticatedController
   end
 
   def show
+    @space = Space.find(params[:id])
   end
 
   def new
@@ -27,6 +28,7 @@ class SpacesController < AuthenticatedController
 
     if @space.save
       SyncDeveloperSpaceJob.perform_now(@space.id)
+      @space.update(status: "provisioning")
       redirect_to @space
     else
       @clusters = Cluster.all
@@ -35,7 +37,19 @@ class SpacesController < AuthenticatedController
   end
 
   def update
+    @space = Space.find(params[:id])
+  end
 
+  def pause
+    @space = Space.find(params[:id])
+    @space.update(status: "pausing")
+    PauseDeveloperSpaceJob.perform_now(@space.id)
+  end
+
+  def resume
+    @space = Space.find(params[:id])
+    @space.update(status: "starting")
+    ResumeDeveloperSpaceJob.perform_now(@space.id)
   end
 
   def delete

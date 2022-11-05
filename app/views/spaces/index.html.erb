@@ -14,7 +14,7 @@
       <tbody>
       <% @spaces.each do |space| %>
         <tr>
-          <td><%= space.name %></td>
+          <td><%= link_to space.name, space %></td>
           <td><%= space.cluster.region %></td>
           <td><%= space.cluster.version %></td>
           <td><%= space.cluster.provider %></td>
