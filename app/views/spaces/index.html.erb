@@ -9,6 +9,7 @@
         <th>Version</th>
         <th>Provider</th>
         <th>Status</th>
+        <th></th>
       </tr>
       </thead>
       <tbody>
@@ -19,6 +20,13 @@
           <td><%= space.cluster.version %></td>
           <td><%= space.cluster.provider %></td>
           <td><%= space.status %></td>
+          <td>
+            <% if ['provisioned', 'running'].include? space.status %>
+            <button class="btn">Pause</button>
+            <% elsif ['paused'].include? space.status %>
+            <button class="btn">Resume</button>
+            <% end %>
+          </td>
         </tr>
       <% end %>
       </tbody>

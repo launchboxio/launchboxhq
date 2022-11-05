@@ -3,12 +3,25 @@
     <div class="card-header">New Space</div>
     <div class="card-body">
       <div class="mb-3">
-        <%= f.label :cluster, "Name", class: "form-label" %>
+        <%= f.label :name, "Name", class: "form-label" %>
         <%= f.text_field :name, class: "form-control" %>
       </div>
       <div class="mb-3">
         <%= f.label :cluster, "Cluster", class: "form-label" %>
         <%= f.select :cluster, @clusters.map { |c| [c.name, c.id]}, {}, class: "form-select" %>
+      </div>
+      <!-- TODO: Add input group with Units for Memory, CPU, and Disk Size-->
+      <div class="mb-3">
+        <%= f.label :memory, "Memory", class: "form-label" %>
+        <%= f.text_field :memory, class: "form-control" %>
+      </div>
+      <div class="mb-3">
+        <%= f.label :memory, "CPU", class: "form-label" %>
+        <%= f.text_field :memory, class: "form-control" %>
+      </div>
+      <div class="mb-3">
+        <%= f.label :disk, "Disk", class: "form-label" %>
+        <%= f.text_field :disk, class: "form-control" %>
       </div>
     </div>
     <p>Addons</p>
@@ -22,5 +35,4 @@
       <button class="btn" type="submit">Create</button>
     </div>
   <% end %>
-
 </div>
