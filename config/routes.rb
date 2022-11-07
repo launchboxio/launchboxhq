@@ -3,7 +3,11 @@ Rails.application.routes.draw do
   devise_for :admins
   devise_for :users
 
-  resources :clusters
+  resources :clusters do
+    collection do
+      get :import
+    end
+  end
   resources :spaces do
     member do
       get :logs

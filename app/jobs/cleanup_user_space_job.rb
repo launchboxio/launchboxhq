@@ -11,7 +11,8 @@ class CleanupUserSpaceJob < ApplicationJob
       ssl_options: { verify_ssl: OpenSSL::SSL::VERIFY_NONE }
     }
 
-    client = Kubeclient::Client.new(cluster.host, 'v1', **@options)
+    # Get the version
+    client = Kubeclient::Client.new(cluster.host, **@options)
     client.delete_namespace(slug)
   end
 end

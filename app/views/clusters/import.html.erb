@@ -1,0 +1,27 @@
+<div class="card">
+  <%= form_for(@cluster) do |f| %>
+  <div class="card-header">Import cluster</div>
+  <div class="card-body">
+    <input type="hidden" name="action" value="import">
+    <div class="mb-3">
+      <%= f.label :name, "Name" %>
+      <%= f.text_field :name, class: "form-control" %>
+    </div>
+    <div class="mb-3">
+      <%= f.label :host, "Host" %>
+      <%= f.text_field :host, class: "form-control" %>
+    </div>
+    <div class="mb-3">
+      <%= f.label :token, "Service Account Token" %>
+      <%= f.text_field :token, class: "form-control" %>
+    </div>
+    <div class="mb">
+      <%= f.label :ca_crt, "CA Certificate" %>
+      <%= f.text_area :ca_crt, class: "form-control" %>
+    </div>
+  </div>
+  <div class="card-footer">
+    <button class="btn" type="submit">Import</button>
+  </div>
+  <% end %>
+</div>

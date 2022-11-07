@@ -1,0 +1,45 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-header">Cluster Info</div>
+      <div class="card-body">
+
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-6">
+    <div class="card">
+      <div class="card-header">Spaces</div>
+      <div class="card-body">
+        <table class="table">
+          <tr>
+            <th>Name</th>
+            <th>CPU</th>
+            <th>Memory</th>
+            <th>Disk</th>
+            <th>GPU</th>
+            <th>State</th>
+          </tr>
+          <% @cluster.spaces.each do |space| %>
+          <tr>
+            <td><%= space.name %></td>
+            <td><%= space.cpu %></td>
+            <td><%= space.memory %></td>
+            <td><%= space.disk %></td>
+            <td><%= space.status %></td>
+          </tr>
+          <% end %>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-6">
+    <div class="card">
+      <div class="card-header">Other settings</div>
+      <div class="card-body"></div>
+    </div>
+  </div>
+</div>

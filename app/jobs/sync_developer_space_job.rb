@@ -14,7 +14,7 @@ class SyncDeveloperSpaceJob < ApplicationJob
       create_cluster
       create_vcluster
     rescue => error
-      @space.update(status: "failed", error: error)
+      @space.update(status: "failed", last_error: error)
       raise error
     end
 
@@ -28,7 +28,7 @@ class SyncDeveloperSpaceJob < ApplicationJob
       client.create_namespace(Kubeclient::Resource.new({ metadata: { name: @space.slug } }))
     rescue Kubeclient::HttpError => error
       if error.error_code == 409
-        client.patch_namespace(space.slug, namespace)
+        # client.patch_namespace(@space.slug, {})
       else
         raise error
       end
@@ -61,7 +61,7 @@ class SyncDeveloperSpaceJob < ApplicationJob
       if error.error_code == 409
         cluster_client.merge_patch_cluster(@space.slug, cluster, @space.slug)
       else
-        @space.update(status: "failed", error: error)
+        @space.update(status: "failed", last_error: error)
         raise error
       end
     end
@@ -108,7 +108,7 @@ class SyncDeveloperSpaceJob < ApplicationJob
       if error.error_code == 409
         infrastructure_client.merge_patch_vcluster(@space.slug, vcluster, @space.slug)
       else
-        @space.update(status: "failed", error: error)
+        @space.update(status: "failed", last_error: error)
         raise error
       end
     end

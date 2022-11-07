@@ -40,3 +40,7 @@ gem "bcrypt", "~> 3.1"
 gem "rack-cors", "~> 1.1"
 gem "vault", "~> 0.17.0"
 
+
+gem "faraday", "~> 2.6"
+
+gem "breadcrumbs", "~> 0.3.0"

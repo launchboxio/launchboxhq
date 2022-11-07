@@ -28,3 +28,8 @@ vi .env
 rails db:create && rails db:migrate 
 rails s
 ```
+
+
+t4g.xlarge	$0.1344	4	16 GiB
+m6g.xlarge	$0.154	4	16 GiB	EBS Only
+c7g.xlarge	$0.1445	4	8 GiB	EBS Only
