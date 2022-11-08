@@ -1,0 +1,25 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ .Release.Name }}-post-install
+  namespace: {{ .Release.Namespace }}
+spec:
+  template:
+    spec:
+      containers:
+        - name: doctl
+          image: kubectl
+          command:
+            - sh
+            - "-c"
+            - |
+              /bin/bash <<'EOF'
+
+              kubectl apply -f https://docs.projectcalico.org/manifests/calico.yaml
+              kubectl apply -f https://raw.githubusercontent.com/digitalocean/digitalocean-cloud-controller-manager/master/releases/v0.1.27.yml
+              kubectl apply -f https://raw.githubusercontent.com/digitalocean/csi-digitalocean/master/deploy/kubernetes/releases/csi-digitalocean-v1.3.0.yaml
+              EOF
+      restartPolicy: OnFailure
+  # TODO: Mount kubeconfig for cluster access
+  # TODO: Mount access token from secret
+  backoffLimit: 4

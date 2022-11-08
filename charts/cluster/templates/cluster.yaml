@@ -1,0 +1,24 @@
+apiVersion: cluster.x-k8s.io/v1beta1
+kind: Cluster
+metadata:
+  name: {{ .Release.Name }}
+  namespace: {{ .Release.Namespace }}
+spec:
+  clusterNetwork:
+    pods:
+      cidrBlocks:
+        {{ toYaml .Values.kubernetes.network.podCidrBlocks }}
+  controlPlaneRef:
+    apiVersion: controlplane.cluster.x-k8s.io/v1beta1
+    kind: KubeadmControlPlane
+    name: {{ .Release.Name }}
+  infrastructureRef:
+    {{ if eq .Values.cloud "digitalocean" }}
+    apiVersion: infrastructure.cluster.x-k8s.io/v1beta1
+    kind: DOCluster
+    name: {{ .Release.Name }}
+    {{- else if eq .Values.cloud "google" }}
+    apiVersion: infrastructure.cluster.x-k8s.io/v1beta1
+    kind: GCPCluster
+    name: {{ .Release.Name }}
+    {{- end }}

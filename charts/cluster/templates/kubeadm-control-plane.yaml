@@ -1,0 +1,54 @@
+apiVersion: controlplane.cluster.x-k8s.io/v1beta1
+kind: KubeadmControlPlane
+metadata:
+  name: {{ .Release.Name }}
+  namespace: {{ .Release.Namespace }}
+spec:
+  kubeadmConfigSpec:
+    {{- if eq .Values.cloud "google" }}
+    clusterConfiguration:
+      apiServer:
+        extraArgs:
+          cloud-provider: gce
+        timeoutForControlPlane: 20m
+      controllerManager:
+        extraArgs:
+          allocate-node-cidrs: "false"
+          cloud-provider: gce
+    initConfiguration:
+      nodeRegistration:
+        kubeletExtraArgs:
+          cloud-provider: gce
+        name: '{{ "{{" }} ds.meta_data.local_hostname.split(".")[0] {{ "}}" }}'
+    joinConfiguration:
+      nodeRegistration:
+        kubeletExtraArgs:
+          cloud-provider: gce
+        name: '{{ "{{" }} ds.meta_data.local_hostname.split(".")[0] {{ "}}" }}'
+    {{- else if eq .Values.cloud "digitalocean" }}
+    initConfiguration:
+      nodeRegistration:
+        kubeletExtraArgs:
+          cloud-provider: external
+          provider-id: digitalocean://'{{ "{{" }} ds.meta_data["instance_id"] {{ "}}" }}'
+        name: '{{ "{{" }} ds.meta_data["local_hostname"] {{ "}}" }}'
+    joinConfiguration:
+      nodeRegistration:
+        kubeletExtraArgs:
+          cloud-provider: external
+        name: '{{ "{{" }} ds.meta_data["local_hostname"] {{ "}}" }}'
+    {{- end }}
+  machineTemplate:
+    {{- if eq .Values.cloud "digitalocean"}}
+    infrastructureRef:
+      apiVersion: infrastructure.cluster.x-k8s.io/v1beta1
+      kind: DOMachineTemplate
+      name: {{ .Release.Name }}-control-plane
+    {{- else if eq .Values.cloud "google" }}
+    infrastructureRef:
+      apiVersion: infrastructure.cluster.x-k8s.io/v1beta1
+      kind: GCPMachineTemplate
+      name: {{ .Release.Name }}-control-plane
+    {{- end }}
+  replicas: {{ .Values.kubernetes.controlPlane.replicas }}
+  version: v{{ .Values.kubernetes.version }}

@@ -1,0 +1,36 @@
+# The cloud provider of choice
+# Must be one of: launchbox, amazon, google, azure, digialocean
+cloud: digitalocean
+
+kubernetes:
+  version: 1.23.3
+  network:
+    podCidrBlocks:
+      - 192.168.0.0/16
+  controlPlane:
+    replicas: 1
+  worker:
+    replicas: 3
+
+google:
+  region: us-east1
+  project: launchboxhq
+  controlPlane:
+    machineType: n1-standard-2
+    image: cluster-api-ubuntu-1804-v1-23-10-1667871972
+  node:
+    machineType: n1-standard-2
+    image: cluster-api-ubuntu-1804-v1-23-10-1667871972
+  network:
+    name:
+
+digitalocean:
+  region: us-nyc1
+  controlPlane:
+    imageId: 120462120
+    machineType: s-2vcpu-4gb
+  node:
+    imageId: 120462120
+    machineType: s-2vcpu-4gb
+  sshKeys:
+    - 256 SHA256:ZBKHor3NkvTZZIFmCs6bDtUZr8IjrEW3iWONAeDD9KA robert.wittman@noteable.io
