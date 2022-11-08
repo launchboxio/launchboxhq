@@ -1,3 +1,4 @@
+{{- if ne .Values.cloud "amazon" }}
 apiVersion: cluster.x-k8s.io/v1beta1
 kind: MachineDeployment
 metadata:
@@ -22,9 +23,9 @@ spec:
         kind: DOMachineTemplate
         name: {{ .Release.Name }}-node
         {{- else if eq .Values.cloud "google" }}
-        infrastructureRef:
-          apiVersion: infrastructure.cluster.x-k8s.io/v1beta1
-          kind: GCPMachineTemplate
-          name: {{ .Release.Name }}-node
+        apiVersion: infrastructure.cluster.x-k8s.io/v1beta1
+        kind: GCPMachineTemplate
+        name: {{ .Release.Name }}-node
         {{- end }}
       version: {{ .Values.kubernetes.version }}
+{{- end }}

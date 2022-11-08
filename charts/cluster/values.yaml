@@ -1,5 +1,5 @@
 # The cloud provider of choice
-# Must be one of: launchbox, amazon, google, azure, digialocean
+# Must be one of: amazon, google, azure, digialocean, vcluster
 cloud: digitalocean
 
 kubernetes:
@@ -17,12 +17,12 @@ google:
   project: launchboxhq
   controlPlane:
     machineType: n1-standard-2
-    image: cluster-api-ubuntu-1804-v1-23-10-1667871972
+    image: projects/launchboxhq/global/images/cluster-api-ubuntu-1804-v1-23-10-1667871972
   node:
     machineType: n1-standard-2
-    image: cluster-api-ubuntu-1804-v1-23-10-1667871972
+    image: projects/launchboxhq/global/images/cluster-api-ubuntu-1804-v1-23-10-1667871972
   network:
-    name:
+    name: launchboxhq
 
 digitalocean:
   region: us-nyc1
@@ -34,3 +34,20 @@ digitalocean:
     machineType: s-2vcpu-4gb
   sshKeys:
     - 256 SHA256:ZBKHor3NkvTZZIFmCs6bDtUZr8IjrEW3iWONAeDD9KA robert.wittman@noteable.io
+
+vcluster:
+  controlPlaneEndpoint:
+    host: ""
+    port: 0
+  helmRelease:
+    chart:
+      name:
+      repo:
+      version:
+    values: {}
+
+amazon:
+  region: us-east-1
+  sshKeyName: ""
+  workers:
+    replicas: 3

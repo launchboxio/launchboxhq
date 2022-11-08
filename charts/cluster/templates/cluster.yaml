@@ -9,9 +9,19 @@ spec:
       cidrBlocks:
         {{ toYaml .Values.kubernetes.network.podCidrBlocks }}
   controlPlaneRef:
+    {{- if eq .Values.cloud "vcluster" }}
+    apiVersion: infrastructure.cluster.x-k8s.io/v1alpha1
+    kind: VCluster
+    name: {{ .Release.Name }}
+    {{- else if eq .Values.cloud "amazon" }}
+    apiVersion: controlplane.cluster.x-k8s.io/v1beta1
+    kind: AWSManagedControlPlane
+    name: {{ .Release.Name }}
+    {{- else }}
     apiVersion: controlplane.cluster.x-k8s.io/v1beta1
     kind: KubeadmControlPlane
     name: {{ .Release.Name }}
+    {{- end }}
   infrastructureRef:
     {{ if eq .Values.cloud "digitalocean" }}
     apiVersion: infrastructure.cluster.x-k8s.io/v1beta1
@@ -20,5 +30,9 @@ spec:
     {{- else if eq .Values.cloud "google" }}
     apiVersion: infrastructure.cluster.x-k8s.io/v1beta1
     kind: GCPCluster
+    name: {{ .Release.Name }}
+    {{- else if eq .Values.cloud "vcluster"}}
+    apiVersion: infrastructure.cluster.x-k8s.io/v1alpha1
+    kind: VCluster
     name: {{ .Release.Name }}
     {{- end }}
