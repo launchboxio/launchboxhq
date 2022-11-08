@@ -8,4 +8,24 @@ spec:
   region: {{ .Values.amazon.region }}
   sshKeyName: {{ .Values.amazon.sshKeyName }}
   version: v{{ .Values.kubernetes.version }}
+  addons: {{ toYaml .Values.amazon.addons | nindent 4 }}
+  associateOIDCProvider: {{ .Values.amazon.oidcProvider.enabled }}
+  eksClusterName: {{ .Release.Name }}
+  endpointAccess:
+    private: {{ .Values.amazon.endpointAccess.private.enabled }}
+    public: {{ .Values.amazon.endpointAccess.public.enabled }}
+    {{- if .Values.amazon.endpointAccess.public.cidrBlocks }}
+    publicCidrBlocks:
+      {{ toYaml .Values.amazon.endpointAccess.public.cidrBlocks }}
+    {{- end }}
+  iamAuthenticatorConfig:
+    mapRoles: {{ toYaml .Values.amazon.iamAuthenticatorConfig.mapRoles | nindent 8 }}
+    mapUsers: {{ toYaml .Values.amazon.iamAuthenticatorConfig.mapUsers | nindent 8 }}
+  logging: {{ toYaml .Values.amazon.logging | nindent 6 }}
+  subnets: {{ toYaml .Values.amazon.subnets | nindent 6 }}
+  vpc: {{ toYaml .Values.amazon.vpc | nindent 6 }}
+  {{- if .Values.kubernetes.oidcIdentityProviderConfig.enabled }}
+  oidcIdentityProviderConfig: {{ toYaml .Values.kubernetes.oidcIdentityProviderConfig | nindent 6 }}
+  {{- end }}
+  roleAdditionalPolicies: {{ toYaml .Values.amazon.roleAdditionalPolicies | nindent 6 }}
 {{- end }}

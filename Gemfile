@@ -44,3 +44,5 @@ gem "vault", "~> 0.17.0"
 gem "faraday", "~> 2.6"
 
 gem "breadcrumbs", "~> 0.3.0"
+
+gem "rhelm", "~> 0.2.0"

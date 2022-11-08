@@ -244,6 +244,7 @@ GEM
       mime-types (>= 1.16, < 4.0)
       netrc (~> 0.8)
     rexml (3.2.5)
+    rhelm (0.2.0)
     ruby2_keywords (0.0.5)
     rubyzip (2.3.2)
     selenium-webdriver (4.1.0)
@@ -317,6 +318,7 @@ DEPENDENCIES
   rack-cors (~> 1.1)
   rails (~> 7.0.2, >= 7.0.2.4)
   redis (~> 4.0)
+  rhelm (~> 0.2.0)
   selenium-webdriver
   sprockets-rails
   stimulus-rails

@@ -7,6 +7,8 @@ metadata:
 spec:
   network:
     name: {{ .Values.google.network.name }}
+    autoCreateSubnetworks: {{ .Values.google.network.autoCreateSubnetworks }}
+
   project: {{ .Values.google.project }}
   region: {{ .Values.google.region }}
 {{- end }}

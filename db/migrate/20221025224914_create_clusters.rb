@@ -2,6 +2,7 @@ class CreateClusters < ActiveRecord::Migration[7.0]
   def change
     create_table :clusters do |t|
       t.string :name
+      t.string :slug
       t.string :region
       t.string :version
       t.string :provider

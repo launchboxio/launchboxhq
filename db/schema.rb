@@ -69,6 +69,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_04_015215) do
 
   create_table "clusters", force: :cascade do |t|
     t.string "name"
+    t.string "slug"
     t.string "region"
     t.string "version"
     t.string "provider"
