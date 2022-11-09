@@ -38,7 +38,7 @@ google:
     autoCreateSubnetworks: false
 
 digitalocean:
-  region: us-nyc1
+  region: nyc1
   controlPlane:
     imageId: 120462120
     machineType: s-2vcpu-4gb
@@ -46,7 +46,7 @@ digitalocean:
     imageId: 120462120
     machineType: s-2vcpu-4gb
   sshKeys:
-    - 256 SHA256:ZBKHor3NkvTZZIFmCs6bDtUZr8IjrEW3iWONAeDD9KA robert.wittman@noteable.io
+    -     88:84:bc:ae:1a:15:b6:38:d6:89:84:05:6e:04:c3:18
 
 vcluster:
   controlPlaneEndpoint:
