@@ -5,7 +5,7 @@ Doorkeeper::OpenidConnect.configure do
     'http://localhost:3000'
   end
 
-  signing_key File.read("private_key.pem")
+  signing_key ENV['OIDC_SIGNING_KEY'] || File.read(ENV['OIDC_SIGNING_KEY_FILE'] || "/certs/private_key.pem")
 
   subject_types_supported [:public]
 
