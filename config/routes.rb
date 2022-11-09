@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  use_doorkeeper_openid_connect
+  use_doorkeeper
   resources :addons
   devise_for :admins
   devise_for :users

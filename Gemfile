@@ -46,3 +46,7 @@ gem "faraday", "~> 2.6"
 gem "breadcrumbs", "~> 0.3.0"
 
 gem "rhelm", "~> 0.2.0"
+
+gem "doorkeeper", "~> 5.6"
+
+gem "doorkeeper-openid_connect", "~> 1.8"

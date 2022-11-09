@@ -12,6 +12,9 @@ TODO: Maybe move to `bin/setup`
 # Clone the repository
 git clone git@github.com:launchboxio/launchboxhq
 
+# Generate a signing key for OIDC requests 
+openssl genpkey -algorithm RSA -out private_key.pem -pkeyopt rsa_keygen_bits:2048
+
 # Start Vault and Postgres
 docker-compose up -d 
 
