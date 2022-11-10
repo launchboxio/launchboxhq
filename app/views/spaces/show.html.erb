@@ -1,3 +1,4 @@
+
 <div class="card">
   <div class="card-header"><%= @space.name %></div>
 
@@ -5,5 +6,40 @@
     <!-- Cluster info -->
     <!-- Compute settings -->
     <!-- Addon selection -->
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-header">Connection Info</div>
+  <div class="card-content">
+    <pre>
+      <code>
+clusters:
+- cluster:
+    certificate-authority-data: <%= @space.ca_crt %>
+    server: <%= @space.host %>
+  name: <%= @space.slug %>
+contexts:
+- context:
+    cluster: <%= @space.slug %>
+    user: <%= current_user.email %>
+  name: <%= @space.slug %>
+users:
+- name: <%= current_user.email %>
+  user:
+    exec:
+      apiVersion: client.authentication.k8s.io/v1beta1
+      args:
+      - oidc-login
+      - get-token
+      - --oidc-issuer-url=<%= @domain || "http://localhost:3000" %>
+        - --oidc-client-id=<%= @client.uid %>
+        - --oidc-extra-scope=email
+      command: kubectl
+      env: null
+      interactiveMode: IfAvailable
+      provideClusterInfo: false
+      </code>
+    </pre>
   </div>
 </div>

@@ -1,4 +1,5 @@
 class Space < ApplicationRecord
+  include Vault::EncryptedModel
   belongs_to :cluster
   belongs_to :user
 
@@ -7,6 +8,10 @@ class Space < ApplicationRecord
 
   has_and_belongs_to_many :users
   before_create :generate_slug
+
+  vault_lazy_decrypt!
+  vault_attribute :ca_crt
+  vault_attribute :token
 
   private
   def generate_slug

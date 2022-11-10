@@ -15,9 +15,9 @@ Vault::Rails.configure do |vault|
   vault.application = "launchboxhq"
 
   # The address of the Vault server. Default: ENV["VAULT_ADDR"].
-  vault.address = "http://127.0.0.1:8200"
+  vault.address = ENV["VAULT_ADDR"] || "http://127.0.0.1:8200"
 
   # The token to communicate with the Vault server.
   # Default: ENV["VAULT_TOKEN"].
-  vault.token = "s.Iw1x8sSXHKitGGxPO77aNPee"
+  vault.token = ENV["VAULT_TOKEN"] || ""
 end

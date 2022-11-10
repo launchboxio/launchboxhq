@@ -51,9 +51,48 @@
                 <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
                     <li><a href="#" class="link-dark rounded">Profile</a></li>
                     <li><a href="#" class="link-dark rounded">Settings</a></li>
+                    <li><a href="#" class="link-dark rounded" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                      Kubeconfig
+                    </a></li>
                     <%= link_to "Sign Out", destroy_user_session_path, data: { turbo_method: :delete }, class: "link-dark rounded" %>
                 </ul>
             </div>
         </li>
     </ul>
+</div>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Kubeconfig User block</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <pre>
+          <code>
+user:
+- name: <%= current_user.email %>
+  user:
+    exec:
+      apiVersion: client.authentication.k8s.io/v1beta1
+      args:
+      - oidc-login
+      - get-token
+      - --oidc-issuer-url=<%= @domain || "http://localhost:3000" %>
+      - --oidc-client-id=<%= @client.uid %>
+      - --oidc-extra-scope=email
+      command: kubectl
+      env: null
+      interactiveMode: IfAvailable
+      provideClusterInfo: false
+          </code>
+        </pre>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
 </div>

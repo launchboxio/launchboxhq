@@ -20,8 +20,9 @@ docker-compose up -d
 
 # Unseal Vault 
 docker-compose exec vault sh 
-vault operator init 
+vault operator init -n 1 -t 1
 vault operator unseal
+vault secrets enable transit
 
 # Edit your .env file, replacing the Vault token
 cp .env.example .env
@@ -38,15 +39,15 @@ To connect to kubernetes using the OIDC provided by Launchbox
 kubectl oidc-login get-token --oidc-issuer-url http://localhost:3000 --oidc-client-id=RSR00W3ZNJnlc2uPKBE7dx7zDwq_ZTlbeU7sqPkfrbk --oidc-extra-scope email -v8
 ```yaml 
 user:
-- name: {username}
+- name: <%= current_user.email %>
   user:
     exec:
       apiVersion: client.authentication.k8s.io/v1beta1
       args:
       - oidc-login
       - get-token
-      - --oidc-issuer-url=${launchbox_domain}
-      - --oidc-client-id=${kubernetes_oidc_client}
+      - --oidc-issuer-url=<%= @client.uid %>
+      - --oidc-client-id=<%= @domain %>
       - --oidc-extra-scope=email
       command: kubectl
       env: null

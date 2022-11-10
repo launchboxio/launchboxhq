@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_11_09_034744) do
+ActiveRecord::Schema[7.0].define(version: 2022_11_10_161202) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -146,6 +146,9 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_09_034744) do
     t.text "last_error"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "host"
+    t.text "ca_crt_encrypted"
+    t.string "token_encrypted"
     t.index ["cluster_id"], name: "index_spaces_on_cluster_id"
     t.index ["slug"], name: "index_spaces_on_slug", unique: true
     t.index ["user_id"], name: "index_spaces_on_user_id"
