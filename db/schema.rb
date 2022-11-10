@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_11_10_161202) do
+ActiveRecord::Schema[7.0].define(version: 2022_11_10_192753) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -67,6 +67,20 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_10_161202) do
     t.index ["reset_password_token"], name: "index_admins_on_reset_password_token", unique: true
   end
 
+  create_table "agents", force: :cascade do |t|
+    t.bigint "cluster_id"
+    t.datetime "last_communication"
+    t.string "status"
+    t.string "access_token_encrypted"
+    t.string "refresh_token_encrypted"
+    t.string "ip_address"
+    t.string "pod_name"
+    t.string "node_name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["cluster_id"], name: "index_agents_on_cluster_id"
+  end
+
   create_table "clusters", force: :cascade do |t|
     t.string "name"
     t.string "slug"
@@ -80,6 +94,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_10_161202) do
     t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "agent_token_encrypted"
     t.index ["user_id"], name: "index_clusters_on_user_id"
   end
 

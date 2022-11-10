@@ -10,7 +10,7 @@ gem "puma", "~> 5.0"
 gem "jsbundling-rails"
 gem "turbo-rails"
 gem "stimulus-rails"
-gem "jbuilder"
+# gem "jbuilder", github: 'rails/jbuilder'
 gem "redis", "~> 4.0"
 gem "dotenv-rails", "~> 2.8"
 gem "devise", "~> 4.8"

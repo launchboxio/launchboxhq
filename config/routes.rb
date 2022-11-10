@@ -10,6 +10,7 @@ Rails.application.routes.draw do
       get :import
     end
   end
+
   resources :spaces do
     member do
       get :logs
@@ -17,8 +18,9 @@ Rails.application.routes.draw do
   end
 
   scope module: :api, defaults: { format: :json }, path: 'api' do
-    scope module: :v1 do
+    namespace :v1 do
       resources :clusters
+      resources :agents, only: [:create, :show, :update, :destroy]
     end
   end
 
