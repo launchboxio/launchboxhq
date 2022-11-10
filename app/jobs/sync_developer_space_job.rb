@@ -18,7 +18,7 @@ class SyncDeveloperSpaceJob < ApplicationJob
       raise error
     end
 
-    @space.update(status: "provisioned")
+    @space.update(status: "provisioned", last_error: nil)
   end
 
   def create_namespace()
@@ -72,17 +72,17 @@ class SyncDeveloperSpaceJob < ApplicationJob
 
     # TODO: Point these to configurable setting somewhere
     @extra_args = {
-      "oidc-issuer-url": "https://dev-61028818.okta.com/oauth2/default",
-      "oidc-client-id": "0oa72w5ufijm6Xwso5d7",
+      "oidc-issuer-url": ENV['OIDC_DOMAIN'] || "http://localhost:3000",
+      "oidc-client-id": Doorkeeper::Application.find_by(name: "Kubernetes OIDC").uid,
       "oidc-username-prefix": "oidc:",
       "oidc-groups-prefix": "oidcgroup:",
-      "oidc-username-claim": "preferred_username",
+      "oidc-username-claim": "email",
       "service-account-issuer": "https://oidc.#{@space.slug}.broken-smoke.launchboxhq.io",
       "service-account-jwks-uri": "https://oidc.#{@space.slug}.broken-smoke.launchboxhq.io/openid/v1/jwks",
       "service-account-signing-key-file": "/data/server/tls/service.key",
       "service-account-key-file": "/data/server/tls/service.key"
     }
-    @users = ["oidc:robwittman@github.oktaidp"]
+    @users = ["oidc:robkwittman@gmail.com"]
     @ingress = {
       enabled: true,
       class: "nginx"
