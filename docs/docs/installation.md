@@ -14,6 +14,10 @@ helm upgrade --install launchbox launchboxhq/launchboxhq -n lbx-system
 ```
 
 ## Helm (Standalone)
+
+If the required services already exist in your cluster, and / or you want to use managed services for them,
+you can install just the LaunchboxHQ server
+
 ```shell  
 helm upgrade --install launchbox launchboxhq/launchboxhq-standalone -n lbx-system
 ```
@@ -43,11 +47,11 @@ docker run launcboxio/launchboxhq \
   -p 443:443
 ```
 ## Source 
-Really not recommended, but we'll document it
+Really not recommended, but we'll document it at some point. Pretty much just `git clone && rails s` 
 
 ## Tenancy
 
 Users who wish to have a dedicated environment, but without hosting it themselves, are able to create a new tenant. This 
-is a unique deployment of Launchbox on separate infrastructure, exclusive to your team. 
+is a unique deployment of Launchbox on separate infrastructure we managed, exclusive to your team. 
 
 
