@@ -32,7 +32,24 @@ rails db:create && rails db:migrate
 rails s
 ```
 
+## Kubeconfig template 
+To connect to kubernetes using the OIDC provided by Launchbox 
 
-t4g.xlarge	$0.1344	4	16 GiB
-m6g.xlarge	$0.154	4	16 GiB	EBS Only
-c7g.xlarge	$0.1445	4	8 GiB	EBS Only
+kubectl oidc-login get-token --oidc-issuer-url http://localhost:3000 --oidc-client-id=RSR00W3ZNJnlc2uPKBE7dx7zDwq_ZTlbeU7sqPkfrbk --oidc-extra-scope email -v8
+```yaml 
+user:
+- name: {username}
+  user:
+    exec:
+      apiVersion: client.authentication.k8s.io/v1beta1
+      args:
+      - oidc-login
+      - get-token
+      - --oidc-issuer-url=${launchbox_domain}
+      - --oidc-client-id=${kubernetes_oidc_client}
+      - --oidc-extra-scope=email
+      command: kubectl
+      env: null
+      interactiveMode: IfAvailable
+      provideClusterInfo: false
+```
