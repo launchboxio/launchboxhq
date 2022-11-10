@@ -16,10 +16,11 @@ Rails.application.routes.draw do
     end
   end
 
+  scope module: :api, defaults: { format: :json }, path: 'api' do
+    scope module: :v1 do
+      resources :clusters
+    end
+  end
 
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
-
-  # Defines the root path route ("/")
-  # root "articles#index"
   root "home#index"
 end
