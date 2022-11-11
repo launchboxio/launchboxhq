@@ -1,0 +1,2 @@
+module ClusterAddonsHelper
+end

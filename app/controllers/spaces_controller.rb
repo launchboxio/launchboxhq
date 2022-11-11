@@ -1,12 +1,14 @@
 class SpacesController < AuthenticatedController
+  before_action :add_initial_breadcrumbs
+  before_action :get_space, except: [:index, :new, :create]
+
   include ActionController::Live
 
   def index
-    @spaces = Space.all
+    @spaces = Space.where(user_id: current_user.id)
   end
 
   def show
-    @space = Space.find(params[:id])
   end
 
   def new
@@ -20,8 +22,8 @@ class SpacesController < AuthenticatedController
     @space.cluster = Cluster.find(params[:space][:cluster])
     @space.user = current_user
 
-    if params[:addon]
-      params[:addon].each do |addon, value|
+    if params[:addons]
+      params[:addons].each do |addon, value|
         value == "on" && @space.addons << Addon.find(addon)
       end
     end
@@ -37,23 +39,19 @@ class SpacesController < AuthenticatedController
   end
 
   def update
-    @space = Space.find(params[:id])
   end
 
   def pause
-    @space = Space.find(params[:id])
     @space.update(status: "pausing")
     PauseDeveloperSpaceJob.perform_now(@space.id)
   end
 
   def resume
-    @space = Space.find(params[:id])
     @space.update(status: "starting")
     ResumeDeveloperSpaceJob.perform_now(@space.id)
   end
 
   def destroy
-    @space = Space.find(params[:id])
     @space.destroy
     CleanupUserSpaceJob.perform_now(@space.slug, @space.cluster_id)
     redirect_to spaces_path, notice: "Space scheduled for deletion"
@@ -86,8 +84,15 @@ class SpacesController < AuthenticatedController
   end
 
   private
+  def get_space
+    @space = Space.where(id: params[:id], user_id: current_user.id)
+  end
 
   def space_params
     params.require(:space).permit(:name)
+  end
+
+  def add_initial_breadcrumbs
+    breadcrumbs.add "Spaces", spaces_path
   end
 end

@@ -1,9 +1,11 @@
 Rails.application.routes.draw do
+  resources :cluster_addons
   use_doorkeeper_openid_connect
   use_doorkeeper
   resources :addons
   devise_for :admins
   devise_for :users
+  get 'auth/:provider/callback', to: 'sessions#create'
 
   resources :clusters do
     collection do
@@ -17,6 +19,8 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :agents
+
   scope module: :api, defaults: { format: :json }, path: 'api' do
     namespace :v1 do
       resources :clusters
@@ -24,5 +28,5 @@ Rails.application.routes.draw do
     end
   end
 
-  root "home#index"
+  root "spaces#index"
 end

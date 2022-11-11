@@ -1,71 +1,71 @@
-<div class="flex-shrink-0 p-3 bg-primary text-white" style="width: 280px;">
-    <a href="/" class="d-flex align-items-center pb-3 mb-3 link-dark text-decoration-none border-bottom">
-        <svg class="bi me-2" width="30" height="24"><use xlink:href="#bootstrap"/></svg>
-        <span class="fs-5 fw-semibold text-white">LaunchBoxHQ</span>
-    </a>
-    <ul class="list-unstyled ps-0">
-        <li class="mb-1">
-          <a href="/clusters" class="btn rounded text-white">Home</a>
-        </li>
-        <li class="mb-1">
-          <a href="/clusters" class="btn rounded text-white">Clusters</a>
-        </li>
-        <li class="mb-1">
-          <a href="/spaces" class="btn rounded text-white">Spaces</a>
-        </li>
-        <li class="mb-1">
-          <a href="/addons" class="btn rounded text-white">Addons</a>
-        </li>
-<!--        <li class="mb-1">-->
-<!--            <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#dashboard-collapse" aria-expanded="false">-->
-<!--                Dashboard-->
-<!--            </button>-->
-<!--            <div class="collapse" id="dashboard-collapse">-->
-<!--                <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">-->
-<!--                    <li><a href="#" class="link-dark rounded">Overview</a></li>-->
-<!--                    <li><a href="#" class="link-dark rounded">Weekly</a></li>-->
-<!--                    <li><a href="#" class="link-dark rounded">Monthly</a></li>-->
-<!--                    <li><a href="#" class="link-dark rounded">Annually</a></li>-->
-<!--                </ul>-->
-<!--            </div>-->
-<!--        </li>-->
-<!--        <li class="mb-1">-->
-<!--            <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#orders-collapse" aria-expanded="false">-->
-<!--                Orders-->
-<!--            </button>-->
-<!--            <div class="collapse" id="orders-collapse">-->
-<!--                <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">-->
-<!--                    <li><a href="#" class="link-dark rounded">New</a></li>-->
-<!--                    <li><a href="#" class="link-dark rounded">Processed</a></li>-->
-<!--                    <li><a href="#" class="link-dark rounded">Shipped</a></li>-->
-<!--                    <li><a href="#" class="link-dark rounded">Returned</a></li>-->
-<!--                </ul>-->
-<!--            </div>-->
-<!--        </li>-->
-        <li class="border-top my-3"></li>
-        <li class="mb-1">
-            <button class="btn btn-toggle align-items-center rounded collapsed text-white" data-bs-toggle="collapse" data-bs-target="#account-collapse" aria-expanded="false">
-                Account
-            </button>
-            <div class="collapse" id="account-collapse">
-                <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                    <li><a href="#" class="link-dark rounded">Profile</a></li>
-                    <li><a href="#" class="link-dark rounded">Settings</a></li>
-                    <li><a href="#" class="link-dark rounded" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                      Kubeconfig
-                    </a></li>
-                    <%= link_to "Sign Out", destroy_user_session_path, data: { turbo_method: :delete }, class: "link-dark rounded" %>
-                </ul>
-            </div>
-        </li>
-    </ul>
+<div class="flex-shrink-0 p-3 bg-white" style="width: 280px;">
+  <a href="/" class="d-flex align-items-center pb-3 mb-3 link-dark text-decoration-none border-bottom">
+    <svg class="bi me-2" width="30" height="24"><use xlink:href="#bootstrap"/></svg>
+    <span class="fs-5 fw-semibold">LaunchboxHQ</span>
+  </a>
+  <ul class="list-unstyled ps-0">
+    <li class="mb-1">
+      <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#clusters-collapse" aria-expanded="true">
+        Clusters
+      </button>
+      <div class="collapse show" id="clusters-collapse">
+        <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+          <li><a href="/clusters" class="link-dark rounded">Clusters</a></li>
+          <li><a href="/cluster_addons" class="link-dark rounded">Addons</a></li>
+          <li><a href="/agents" class="link-dark rounded">Agents</a></li>
+        </ul>
+      </div>
+    </li>
+    <li class="mb-1">
+      <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#spaces-collapse" aria-expanded="false">
+        Spaces
+      </button>
+      <div class="collapse" id="spaces-collapse">
+        <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+          <li><a href="/spaces" class="link-dark rounded">Spaces</a></li>
+          <li><a href="/addons" class="link-dark rounded">Addons</a></li>
+          <li><a href="/secrets" class="link-dark rounded">Secrets</a></li>
+        </ul>
+      </div>
+    </li>
+    <li class="mb-1">
+      <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#catalog-collapse" aria-expanded="false">
+        Service Catalog
+      </button>
+      <div class="collapse" id="catalog-collapse">
+        <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+          <li><a href="/service_catalog" class="link-dark rounded">Catalog</a></li>
+        </ul>
+      </div>
+    </li>
+
+    <li class="border-top my-3"></li>
+    <li class="mb-1">
+      <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#account-collapse" aria-expanded="false">
+        Account
+      </button>
+      <div class="collapse" id="account-collapse">
+        <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+          <li><a href="#" class="link-dark rounded">Access Tokens</a></li>
+          <li><a href="#" class="link-dark rounded">Integrations</a></li>
+          <li><a href="#" class="link-dark rounded">Profile</a></li>
+          <li>
+            <a href="#" class="link-dark rounded" data-bs-toggle="modal" data-bs-target="#kubeConfigModal">
+            Kubeconfig
+            </a>
+          </li>
+          <%= link_to "Sign Out", destroy_user_session_path, data: { turbo_method: :delete }, class: "link-dark rounded" %>
+        </ul>
+      </div>
+    </li>
+  </ul>
 </div>
 
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="kubeConfigModal" tabindex="-1" aria-labelledby="kubeConfigModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Kubeconfig User block</h5>
+        <h5 class="modal-title" id="kubeConfigModalLabel">Kubeconfig User block</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
@@ -73,15 +73,15 @@
           <code>
 user:
 - name: <%= current_user.email %>
-  user:
+            user:
     exec:
       apiVersion: client.authentication.k8s.io/v1beta1
       args:
       - oidc-login
       - get-token
       - --oidc-issuer-url=<%= @domain || "http://localhost:3000" %>
-      - --oidc-client-id=<%= @client.uid %>
-      - --oidc-extra-scope=email
+            - --oidc-client-id=<%= @client.uid %>
+            - --oidc-extra-scope=email
       command: kubectl
       env: null
       interactiveMode: IfAvailable
@@ -91,7 +91,6 @@ user:
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
       </div>
     </div>
   </div>

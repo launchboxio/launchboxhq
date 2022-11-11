@@ -17,14 +17,20 @@
   </head>
 
   <body>
-      <% if current_user %>
-        <%= render "partials/sidebar" %>
+    <% if current_user %>
+      <%= render "partials/sidebar" %>
+      <div class="container-fluid">
         <%#= render "partials/navbar" %>
         <%#= render "partials/breadcrumbs" %>
-      <% end %>
-      <div class="container-fluid">
         <%= render "partials/flashes" %>
         <%= yield %>
       </div>
+    <% else %>
+    <div class="container-fluid">
+      <%= render "partials/flashes" %>
+      <%= yield %>
+    </div>
+    <% end %>
+
   </body>
 </html>

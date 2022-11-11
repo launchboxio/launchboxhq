@@ -1,0 +1,7 @@
+require "test_helper"
+
+class ClusterAddonSubscriptionTest < ActiveSupport::TestCase
+  # test "the truth" do
+  #   assert true
+  # end
+end

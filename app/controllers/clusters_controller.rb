@@ -1,11 +1,12 @@
 class ClustersController < AuthenticatedController
   before_action :add_initial_breadcrumbs
+  before_action :get_cluster, except: [:index, :new, :import, :create]
+
   def index
     @clusters = Cluster.all
   end
 
   def show
-    @cluster = Cluster.find(params[:id])
     breadcrumbs.add @cluster.name, cluster_path
   end
 
@@ -13,19 +14,17 @@ class ClustersController < AuthenticatedController
     @cluster = Cluster.new
   end
 
-  def import
-    @cluster = Cluster.new
-  end
-
   def create
     @cluster = Cluster.new(cluster_params)
     @cluster.user = current_user
-    if @cluster.save
-      if @action == "create"
-        CreateClusterJob.perform_now(@cluster.id)
-      elsif @action == "import"
-        ImportClusterConfigurationJob.perform_now(@cluster.id)
+
+    if params[:addons]
+      params[:addons].each do |addon, value|
+        value == "on" && @space.addons << Addon.find(addon)
       end
+    end
+
+    if @cluster.save
       redirect_to @cluster
     else
       redirect_to :back
@@ -41,6 +40,11 @@ class ClustersController < AuthenticatedController
   end
 
   private
+  # TODO: Only pull clusters the user has access to
+  def get_cluster
+    @cluster = Cluster.find(params[:id])
+  end
+
   def cluster_params
     params.require(:cluster).permit(:host, :token, :ca_crt, :name)
   end

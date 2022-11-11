@@ -5,12 +5,15 @@ class Api::V1::AgentsController < ActionController::API
   def create
     token = params[:token]
     if @cluster.agent_token != token
-      render json: {status: "error", code: 400}, status: :bad_request
+      render json: {status: "error", code: 401}, status: :bad_request
     else
       @agent = @cluster.agents.build(agent_params)
       @agent.last_communication = DateTime.now
-      @agent.save!
-      render json: @agent, status: :ok
+      if @agent.save
+        render json: @agent, status: :ok
+      else
+        render json: {status: "error", code: 400}, status: :bad_request
+      end
     end
   end
 

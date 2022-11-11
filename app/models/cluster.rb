@@ -7,6 +7,7 @@ class Cluster < ApplicationRecord
 
   has_many :spaces
   has_many :agents
+  has_many :cluster_addons, :through => :cluster_addon_subscriptions
 
   belongs_to :user, optional: true
   before_create :generate_slug, :generate_agent_token

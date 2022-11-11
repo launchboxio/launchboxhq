@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_11_10_192753) do
+ActiveRecord::Schema[7.0].define(version: 2022_11_11_011744) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -79,6 +79,35 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_10_192753) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["cluster_id"], name: "index_agents_on_cluster_id"
+  end
+
+  create_table "cluster_addon_subscriptions", force: :cascade do |t|
+    t.bigint "cluster_id"
+    t.bigint "cluster_addon_id"
+    t.string "chart"
+    t.string "repo"
+    t.string "version"
+    t.string "release"
+    t.string "namespace"
+    t.string "value"
+    t.string "values_merge_type"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["cluster_addon_id"], name: "index_cluster_addon_subscriptions_on_cluster_addon_id"
+    t.index ["cluster_id"], name: "index_cluster_addon_subscriptions_on_cluster_id"
+  end
+
+  create_table "cluster_addons", force: :cascade do |t|
+    t.string "chart"
+    t.string "repo"
+    t.string "version"
+    t.string "username_encrypted"
+    t.string "password_encrypted"
+    t.string "release"
+    t.string "namespace"
+    t.text "values"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "clusters", force: :cascade do |t|
