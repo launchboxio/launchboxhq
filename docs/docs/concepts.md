@@ -39,3 +39,12 @@ They can be installed multiple times per cluster if desired. They consist of ser
 Service Catalogs represent the business services that engineers are developing. They are most often tied to Git 
 repositories, and are bundled for easy installation into new spaces 
 
+### LaunchboxHQ 
+
+The core server component, LaunchboxHQ handles user authentication / OIDC, cluster and space management, as well as 
+integrations with other 3rd party providers. 
+
+### Agent 
+
+The agent runs on host Kubernetes clusters that are managed by LaunchboxHQ. They have permissions to manage resources on 
+the host cluster, and receive GRPC commands from LaunchboxHQ
