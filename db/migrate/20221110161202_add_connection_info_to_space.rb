@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AddConnectionInfoToSpace < ActiveRecord::Migration[7.0]
   def change
     add_column :spaces, :host, :string

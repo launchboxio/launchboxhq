@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Agent < ApplicationRecord
   include Vault::EncryptedModel
   vault_lazy_decrypt!

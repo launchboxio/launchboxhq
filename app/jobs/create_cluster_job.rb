@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateClusterJob < ApplicationJob
   queue_as :default
 

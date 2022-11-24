@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 Rails.application.routes.draw do
   resources :cluster_addons
   use_doorkeeper_openid_connect
@@ -24,9 +26,9 @@ Rails.application.routes.draw do
   scope module: :api, defaults: { format: :json }, path: 'api' do
     namespace :v1 do
       resources :clusters
-      resources :agents, only: [:create, :show, :update, :destroy]
+      resources :agents, only: %i[create show update destroy]
     end
   end
 
-  root "spaces#index"
+  root 'spaces#index'
 end

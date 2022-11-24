@@ -47,4 +47,4 @@ integrations with other 3rd party providers.
 ### Agent 
 
 The agent runs on host Kubernetes clusters that are managed by LaunchboxHQ. They have permissions to manage resources on 
-the host cluster, and receive GRPC commands from LaunchboxHQ
+the host cluster, and receive GRPC commands from LaunchboxHQ to execute

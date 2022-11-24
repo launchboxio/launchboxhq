@@ -1,35 +1,26 @@
+# frozen_string_literal: true
+
 class ClusterAddonsController < ApplicationController
-  before_action :get_cluster_addon, except: [:index, :new, :create]
+  before_action :find_cluster_addon, except: %i[index new create]
   def index
     @addons = ClusterAddon.all
   end
 
-  def show
+  def show; end
 
-  end
+  def edit; end
 
-  def edit
+  def new; end
 
-  end
+  def create; end
 
-  def new
+  def update; end
 
-  end
-
-  def create
-
-  end
-
-  def update
-
-  end
-
-  def destroy
-
-  end
+  def destroy; end
 
   private
-  def get_cluster_addon
+
+  def find_cluster_addon
     @addon = ClusterAddon.find(param[:id])
   end
 end

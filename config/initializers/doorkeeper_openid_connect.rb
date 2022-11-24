@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
 Doorkeeper::OpenidConnect.configure do
-  issuer do |request|
-    ENV['OIDC_DOMAIN'] || "http://localhost:3000"
+  issuer do |_request|
+    ENV['OIDC_DOMAIN'] || 'http://localhost:3000'
   end
 
-  signing_key ENV['OIDC_SIGNING_KEY'] || File.read(ENV['OIDC_SIGNING_KEY_FILE'] || "/certs/private_key.pem")
+  signing_key ENV['OIDC_SIGNING_KEY'] || File.read(ENV['OIDC_SIGNING_KEY_FILE'] || '/certs/private_key.pem')
 
   subject_types_supported [:public]
 
@@ -14,12 +14,9 @@ Doorkeeper::OpenidConnect.configure do
     User.find_by(id: access_token.resource_owner_id)
   end
 
-  auth_time_from_resource_owner do |resource_owner|
-    # Example implementation:
-    resource_owner.current_sign_in_at
-  end
+  auth_time_from_resource_owner(&:current_sign_in_at)
 
-  reauthenticate_resource_owner do |resource_owner, return_to|
+  reauthenticate_resource_owner do |resource_owner, _return_to|
     # Example implementation:
     # store_location_for resource_owner, return_to
     sign_out resource_owner
@@ -38,7 +35,7 @@ Doorkeeper::OpenidConnect.configure do
     # redirect_to account_select_url
   end
 
-  subject do |resource_owner, application|
+  subject do |resource_owner, _application|
     # Example implementation:
     resource_owner.id
 
@@ -57,9 +54,7 @@ Doorkeeper::OpenidConnect.configure do
 
   # Example claims:
   claims do
-    claim :email, response: [:id_token] do |resource_owner|
-      resource_owner.email
-    end
+    claim :email, response: [:id_token], &:email
     #
     # claim :preferred_username, response: [:id_token, :user_info] do |resource_owner|
     #   resource_owner.email

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AddonsController < AuthenticatedController
   def index
     @addons = Addon.all
@@ -16,7 +18,7 @@ class AddonsController < AuthenticatedController
     if @addon.save
       redirect_to @addon
     else
-      render "new"
+      render 'new'
     end
   end
 
@@ -29,13 +31,11 @@ class AddonsController < AuthenticatedController
     if @addon.update addon_params
       redirect_to @addon
     else
-      render "edit"
+      render 'edit'
     end
   end
 
-  def delete
-
-  end
+  def delete; end
 
   private
 

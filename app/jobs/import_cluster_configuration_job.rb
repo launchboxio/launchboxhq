@@ -1,18 +1,20 @@
+# frozen_string_literal: true
+
 class ImportClusterConfigurationJob < ApplicationJob
   queue_as :default
 
   def perform(*args)
     @cluster = Cluster.find(args.first)
     @options = {
-      auth_options:  { bearer_token: @cluster.token },
+      auth_options: { bearer_token: @cluster.token },
       ssl_options: { verify_ssl: OpenSSL::SSL::VERIFY_NONE }
     }
 
     conn = Faraday.new(
       url: @cluster.host,
-      params: {param: '1'},
-      headers: {'Authorization' => "Bearer #{@cluster.token}"},
-      ssl: { :verify => false }
+      params: { param: '1' },
+      headers: { 'Authorization' => "Bearer #{@cluster.token}" },
+      ssl: { verify: false }
     ) do |f|
       f.response :json
     end

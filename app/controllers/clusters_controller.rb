@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 class ClustersController < AuthenticatedController
   before_action :add_initial_breadcrumbs
-  before_action :get_cluster, except: [:index, :new, :import, :create]
+  before_action :find_cluster, except: %i[index new import create]
 
   def index
     @clusters = Cluster.all
@@ -18,10 +20,8 @@ class ClustersController < AuthenticatedController
     @cluster = Cluster.new(cluster_params)
     @cluster.user = current_user
 
-    if params[:addons]
-      params[:addons].each do |addon, value|
-        value == "on" && @space.addons << Addon.find(addon)
-      end
+    params[:addons]&.each do |addon, value|
+      value == 'on' && (@cluster.addons << ClusterAddon.find(addon))
     end
 
     if @cluster.save
@@ -31,17 +31,14 @@ class ClustersController < AuthenticatedController
     end
   end
 
-  def update
+  def update; end
 
-  end
-
-  def delete
-
-  end
+  def delete; end
 
   private
+
   # TODO: Only pull clusters the user has access to
-  def get_cluster
+  def find_cluster
     @cluster = Cluster.find(params[:id])
   end
 
@@ -50,6 +47,6 @@ class ClustersController < AuthenticatedController
   end
 
   def add_initial_breadcrumbs
-    breadcrumbs.add "Clusters", clusters_path
+    breadcrumbs.add 'Clusters', clusters_path
   end
 end

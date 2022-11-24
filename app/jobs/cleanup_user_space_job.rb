@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CleanupUserSpaceJob < ApplicationJob
   queue_as :default
 
@@ -7,7 +9,7 @@ class CleanupUserSpaceJob < ApplicationJob
     cluster = Cluster.find(cluster_id)
 
     @options = {
-      auth_options:  { bearer_token: cluster.token },
+      auth_options: { bearer_token: cluster.token },
       ssl_options: { verify_ssl: OpenSSL::SSL::VERIFY_NONE }
     }
 

@@ -1,4 +1,6 @@
-require "vault/rails"
+# frozen_string_literal: true
+
+require 'vault/rails'
 
 Vault::Rails.configure do |vault|
   # Use Vault in transit mode for encrypting and decrypting data. If
@@ -12,12 +14,12 @@ Vault::Rails.configure do |vault|
   # prefixed with this application name. If you change the name of the
   # application, you will need to migrate the encrypted data to the new
   # key namespace. Default: ENV["VAULT_RAILS_APPLICATION"].
-  vault.application = "launchboxhq"
+  vault.application = 'launchboxhq'
 
   # The address of the Vault server. Default: ENV["VAULT_ADDR"].
-  vault.address = ENV["VAULT_ADDR"] || "http://127.0.0.1:8200"
+  vault.address = ENV['VAULT_ADDR'] || 'http://127.0.0.1:8200'
 
   # The token to communicate with the Vault server.
   # Default: ENV["VAULT_TOKEN"].
-  vault.token = ENV["VAULT_TOKEN"] || ""
+  vault.token = ENV['VAULT_TOKEN'] || ''
 end

@@ -1,10 +1,14 @@
-class Api::V1::ClustersController < Api::V1::ApiController
-  def index
-    @clusters = Cluster.all
-    render :json => @clusters
-  end
+# frozen_string_literal: true
 
-  def show
+module Api
+  module V1
+    class ClustersController < Api::V1::ApiController
+      def index
+        @clusters = Cluster.all
+        render json: @clusters
+      end
 
+      def show; end
+    end
   end
 end

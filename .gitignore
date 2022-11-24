@@ -39,3 +39,5 @@
 data
 .idea
 private_key.pem
+
+kubeconfig
