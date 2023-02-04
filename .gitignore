@@ -41,3 +41,6 @@ data
 private_key.pem
 
 kubeconfig
+
+.terraform
+terraform.tfstate*
