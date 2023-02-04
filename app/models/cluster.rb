@@ -7,7 +7,7 @@ class Cluster < ApplicationRecord
   vault_attribute :token
   vault_attribute :agent_token
 
-  has_many :spaces
+  has_many :projects
   has_many :agents
   has_many :cluster_addons, through: :cluster_addon_subscriptions
 

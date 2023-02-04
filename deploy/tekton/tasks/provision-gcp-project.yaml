@@ -1,0 +1,64 @@
+---
+apiVersion: tekton.dev/v1beta1
+kind: Pipeline
+metadata:
+  name: provision-gcp-project
+  annotations:
+    tekton.dev/pipelines.minVersion: '0.12.1'
+    tekton.dev/tags: platform, gcp
+    tekton.dev/platforms: "linux/amd64"
+spec:
+  description: >-
+    This Pipeline creates a GCP project and configures it, launches the GKE cluster, and initializes the 
+    environment for deployment of LaunchboxHQ
+  workspaces:
+    - name: source
+      description: The workspace containing the source code which is to be build, pushed and deployed
+  params:
+    - name: tenantId
+      type: string
+      description: The unique identifier for the new tenant
+
+  tasks:
+    ### Create the project and service accounts for ClusterAPI and Packer
+    - name: create-gcp-project
+      image: google/cloud-sdk:latest
+      env:
+        - name: TENANT_ID
+          value: $(params.tenantId)
+      script: |
+        #!/bin/sh 
+        set -eu -o pipefail 
+        
+        # Create the project
+        gcloud projects describe "${TENANT_ID}" || gcloud projects create "${TENANT_ID}"
+        
+        # Enable required services
+        gcloud services enable kubernetes
+        gcloud services enable redis
+        gcloud services enable ...
+        
+        # Create the Cluster API service account, and attach permissions
+        gcloud iam service-accounts create "${TENANT_ID}-cluster-api" --display-name="${TENANT_ID} ClusterAPI" || true
+        
+        # Create the Packer service account, and attach permissions
+        gcloud iam service-accounts create "${TENANT_ID}-crossplane" --display-name="${TENANT_ID} Packer" || true
+
+    ### Build the AMI for GKE deployments
+    # Reference:
+    - name: build-machine-images
+
+    ### Provision the ClusterAPI resource, and wait for cluster to be ready
+    - name: provision-gke-cluster
+      script: | 
+        kubectl apply -f ...
+
+    ### Create service accounts for Crossplane
+    - name: create-crossplane-service-account
+      script: |
+        gcloud iam service-accounts create "${TENANT_ID}-crossplane" --display-name="${TENANT_ID} Crossplane" || true
+
+    ### Install and Configure Crossplane and appropriate providers
+    - name: deploy-crossplane
+      script: |
+        kubectl apply -f ...

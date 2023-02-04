@@ -2,7 +2,7 @@
 
 require 'test_helper'
 
-class SpacesControllerTest < ActionDispatch::IntegrationTest
+class ProjectsControllerTest < ActionDispatch::IntegrationTest
   # test "the truth" do
   #   assert true
   # end

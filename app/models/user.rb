@@ -5,7 +5,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable,
          :confirmable, :lockable, :timeoutable, :trackable, :omniauthable
 
-  has_and_belongs_to_many :spaces
+  has_many :projects
 
   has_many :access_grants,
            class_name: 'Doorkeeper::AccessGrant',

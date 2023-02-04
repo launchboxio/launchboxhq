@@ -1,13 +1,26 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+
+  namespace :auth do
+    resources :cluster_roles
+    resources :roles
+    resources :groups
+  end
+
+  resources :organizations
   resources :cluster_addons
-  use_doorkeeper_openid_connect
-  use_doorkeeper
   resources :addons
-  devise_for :admins
-  devise_for :users
-  get 'auth/:provider/callback', to: 'sessions#create'
+
+  scope constraints: { subdomain: 'auth' } do
+    use_doorkeeper_openid_connect
+    use_doorkeeper
+
+    devise_for :admins
+    devise_for :users
+
+    get 'auth/:provider/callback', to: 'sessions#create'
+  end
 
   resources :clusters do
     collection do
@@ -15,7 +28,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :spaces do
+  resources :projects do
     member do
       get :logs
     end
@@ -25,10 +38,23 @@ Rails.application.routes.draw do
 
   scope module: :api, defaults: { format: :json }, path: 'api' do
     namespace :v1 do
-      resources :clusters
+      resources :clusters do
+        resources :cluster_addons
+      end
       resources :agents, only: %i[create show update destroy]
+      resources :projects do
+        resources :addons
+      end
+      resources :addons
     end
   end
 
-  root 'spaces#index'
+  scope module: :tenants, constraints: { subdomain: 'tenants' } do
+    resources :tenants
+  end
+
+  root 'projects#index'
+
+  # Configure tenants section
+  #
 end

@@ -1,0 +1,52 @@
+---
+apiVersion: apiextensions.crossplane.io/v1
+kind: CompositeResourceDefinition
+metadata:
+  name: xplatform.core.launchboxhq.io
+spec:
+  group: core.launchboxhq.io
+  names:
+    kind: xplatform
+    plural: xplatforms
+  claimNames:
+    kind: platform
+    plural: platforms
+  defaultCompositionRef:
+    name: demo
+  versions:
+    - name: v1alpha1
+      served: true
+      referenceable: true
+      schema:
+        openAPIV3Schema:
+          type: object
+          properties:
+            spec:
+              type: object
+              properties:
+                launchbox:
+                  type: object
+                  properties:
+                    version:
+                      type: string
+                    config:
+                      type: object
+                      properties: {}
+                      required: []
+                  required:
+                    - version
+                    - config
+                postgres:
+                  type: object
+                  properties:
+                    version:
+                      type: string
+                vault:
+                  type: object
+                  properties:
+                    version:
+                      type: string
+              required:
+                - launchbox
+                - postgres
+                - vault

@@ -43,7 +43,7 @@ class ClustersController < AuthenticatedController
   end
 
   def cluster_params
-    params.require(:cluster).permit(:host, :token, :ca_crt, :name)
+    params.require(:cluster).permit(:host, :token, :ca_crt, :name, :provider, :region, :connection_type)
   end
 
   def add_initial_breadcrumbs

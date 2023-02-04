@@ -4,12 +4,16 @@ module Api
   module V1
     class AgentsController < ActionController::API
       respond_to :json
-      before_action :cluster
+      before_action :find_cluster
       before_action :verify_agent_token
 
       def create
         @agent = @cluster.agents.build(agent_params)
         @agent.last_communication = DateTime.now
+        # Create the application so the agent can use client credentials
+        @application = Doorkeeper::Application.new
+        @application.owner = @agent
+
         if @agent.save
           render json: @agent, status: :ok
         else
@@ -21,7 +25,7 @@ module Api
 
       private
 
-      def cluster
+      def find_cluster
         @cluster = Cluster.find(params[:cluster_id])
       end
 

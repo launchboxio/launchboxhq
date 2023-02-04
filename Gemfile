@@ -21,6 +21,9 @@ gem 'gruf', '~> 2.16'
 gem 'jsonapi-serializer', '~> 2.2'
 gem 'rack-cors', '~> 1.1'
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
+gem 'paper_trail'
+gem 'json-schema'
+gem 'acts-as-taggable-on', '~> 9.0'
 
 # Devise and doorkeeper
 gem 'devise', '~> 4.8'
@@ -48,6 +51,7 @@ group :development, :test do
   gem 'debug', platforms: %i[mri mingw x64_mingw]
   gem 'rubocop', '~> 1.38'
   gem 'rubocop-rails', '~> 2.17'
+  gem 'rspec-rails'
 end
 
 group :development do
@@ -59,4 +63,6 @@ group :test do
   gem 'capybara'
   gem 'selenium-webdriver'
   gem 'webdrivers'
+  gem 'factory_bot_rails'
+  gem 'faker'
 end

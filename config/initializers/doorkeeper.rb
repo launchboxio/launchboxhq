@@ -231,9 +231,9 @@ Doorkeeper.configure do
   # Define access token scopes for your provider
   # For more information go to
   # https://doorkeeper.gitbook.io/guides/ruby-on-rails/scopes
-  #
-  default_scopes  :read, :email
-  optional_scopes :write, :openid
+
+  default_scopes  :read_clusters, :read_addons, :user
+  optional_scopes :manage_clusters, :manage_addons
 
   # Allows to restrict only certain scopes for grant_type.
   # By default, all the scopes will be available for all the grant types.
@@ -351,7 +351,7 @@ Doorkeeper.configure do
   #   https://datatracker.ietf.org/doc/html/rfc6819#section-4.4.2
   #   https://datatracker.ietf.org/doc/html/rfc6819#section-4.4.3
   #
-  grant_flows %w[authorization_code implicit_oidc]
+  grant_flows %w[authorization_code implicit_oidc client_credentials]
 
   # Allows to customize OAuth grant flows that +each+ application support.
   # You can configure a custom block (or use a class respond to `#call`) that must

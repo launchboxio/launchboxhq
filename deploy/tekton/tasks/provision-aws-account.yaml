@@ -1,0 +1,5 @@
+### Create the account
+### Create IAM Role for ClusterAPI
+### Use it to provision the cluster
+### Create IAM Role Crossplane
+### Install and Configure Crossplane and appropriate providers

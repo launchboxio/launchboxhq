@@ -5,4 +5,8 @@ class AgentsController < ApplicationController
     @clusters = Cluster.all
     @agents = @clusters.map(&:agents).flatten
   end
+
+  def show; end
+
+  def new; end
 end

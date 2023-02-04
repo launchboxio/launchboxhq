@@ -2,7 +2,7 @@
 
 require 'test_helper'
 
-class SpaceTest < ActiveSupport::TestCase
+class ProjectdTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end

@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 class ClusterAddon < ApplicationRecord
-  include Vault::EncryptedModel
-  vault_lazy_decrypt!
-  vault_attribute :username
-  vault_attribute :password
+  has_paper_trail
+  acts_as_taggable_on :tags
 end
