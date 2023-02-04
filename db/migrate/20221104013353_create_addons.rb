@@ -5,7 +5,7 @@ class CreateAddons < ActiveRecord::Migration[7.0]
     create_table :addons do |t|
       t.string :name
       t.text :json_schema
-
+      t.text :defaults
       t.timestamps
     end
   end

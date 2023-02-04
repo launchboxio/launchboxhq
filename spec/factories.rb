@@ -6,6 +6,9 @@ FactoryBot.define do
     version { Faker::App.semantic_version }
     provider { 'aws' }
     status { Faker::Boolean.boolean }
+    oauth_application {
+      Doorkeeper::Application.create!(name: SecureRandom.uuid, confidential: true, redirect_uri: "https://localhost:8080")
+    }
   end
 
   factory 'doorkeeper/application' do

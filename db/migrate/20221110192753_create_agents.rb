@@ -7,9 +7,6 @@ class CreateAgents < ActiveRecord::Migration[7.0]
       t.datetime :last_communication
       t.string :status
 
-      t.string :access_token_encrypted
-      t.string :refresh_token_encrypted
-
       t.string :ip_address
       t.string :pod_name
       t.string :node_name

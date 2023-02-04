@@ -22,26 +22,12 @@ Rails.application.routes.draw do
     get 'auth/:provider/callback', to: 'sessions#create'
   end
 
-  resources :clusters do
-    collection do
-      get :import
-    end
-  end
-
-  resources :projects do
-    member do
-      get :logs
-    end
-  end
-
-  resources :agents
-
   scope module: :api, defaults: { format: :json }, path: 'api' do
     namespace :v1 do
       resources :clusters do
         resources :cluster_addons
+        resources :agents
       end
-      resources :agents, only: %i[create show update destroy]
       resources :projects do
         resources :addons
       end
@@ -55,6 +41,4 @@ Rails.application.routes.draw do
 
   root 'projects#index'
 
-  # Configure tenants section
-  #
 end

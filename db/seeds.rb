@@ -7,3 +7,28 @@
 #
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
+
+# Databases
+# - mysql
+# - postgresql
+# - rds-mysql (aws)
+# - rds-postgres (aws)
+# - cloud-sql-mysql (gcp)
+# - cloud-sql-postgres (gcp)
+
+# Cache
+# - redis
+# - memcache
+
+# Filestore
+# - s3
+# - gcs
+
+# Search
+# - elasticsearch
+
+# Queuing
+# - kafka
+# - sns (aws)
+# - sqs (aws)
+# - pubsub (gcp)

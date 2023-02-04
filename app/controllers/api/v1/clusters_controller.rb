@@ -16,7 +16,14 @@ module Api
         render json: @cluster
       end
 
-      def create; end
+      def create
+        application = Doorkeeper::Application.create!(name: SecureRandom.uuid, confidential: true, redirect_uri: "https://localhost:8080")
+        @cluster = Cluster.new(cluster_params)
+        @cluster.oauth_application = application
+        @cluster.save!
+        render :json => @cluster, :include => [:oauth_application]
+      end
+
       def update; end
       def destroy; end
 
@@ -24,6 +31,10 @@ module Api
 
       def find_cluster
         @cluster = Cluster.find(params[:id])
+      end
+
+      def cluster_params
+        params.require(:cluster).permit(:name)
       end
     end
   end

@@ -33,6 +33,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_30_050256) do
   create_table "addons", force: :cascade do |t|
     t.string "name"
     t.text "json_schema"
+    t.text "defaults"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -65,8 +66,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_30_050256) do
     t.bigint "cluster_id"
     t.datetime "last_communication"
     t.string "status"
-    t.string "access_token_encrypted"
-    t.string "refresh_token_encrypted"
     t.string "ip_address"
     t.string "pod_name"
     t.string "node_name"
@@ -129,10 +128,11 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_30_050256) do
     t.string "host"
     t.string "ca_crt_encrypted"
     t.string "token_encrypted"
+    t.bigint "oauth_application_id"
     t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "agent_token_encrypted"
+    t.index ["oauth_application_id"], name: "index_clusters_on_oauth_application_id"
     t.index ["user_id"], name: "index_clusters_on_user_id"
   end
 

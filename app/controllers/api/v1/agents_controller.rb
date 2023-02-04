@@ -4,15 +4,13 @@ module Api
   module V1
     class AgentsController < ActionController::API
       respond_to :json
+      before_action -> { doorkeeper_authorize! :agent }
       before_action :find_cluster
       before_action :verify_agent_token
 
       def create
         @agent = @cluster.agents.build(agent_params)
         @agent.last_communication = DateTime.now
-        # Create the application so the agent can use client credentials
-        @application = Doorkeeper::Application.new
-        @application.owner = @agent
 
         if @agent.save
           render json: @agent, status: :ok
@@ -34,17 +32,11 @@ module Api
       end
 
       def verify_agent_token
-        return missing_agent_token_error unless params[:token]
-
-        return invalid_agent_token_error unless params[:token] == @cluster.agent_token
+        @cluster.oauth_application.id === doorkeeper_token.application_id
       end
 
       def missing_agent_token_error
         render json: { error: 'Please provide an agent token', code: 401 }, status: :unauthorized
-      end
-
-      def invalid_agent_token_error
-        render json: { error: 'Invalid agent token found', code: 403 }, status: :forbidden
       end
     end
   end
