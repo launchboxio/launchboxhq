@@ -1,0 +1,45 @@
+#!/usr/bin/env bash
+
+# Start minikube
+minikube start --profile launchboxhq
+
+# Install launchbox service account
+kubectl apply -f deploy/minikube.yaml
+
+# Install crossplane and providers
+helm install crossplane \
+  --namespace crossplane-system \
+  --create-namespace crossplane-stable/crossplane
+
+echo '
+apiVersion: pkg.crossplane.io/v1
+kind: Provider
+metadata:
+  name: provider-helm
+spec:
+  package: "crossplane/provider-helm:master"
+' | kubectl apply -f
+
+echo "Waiting for all components to become ready..."
+# TODO: Put a wait here to ensure all pods are running
+token=$(kubectl get secret \
+  launchboxhq-secret \
+  -n lbx-system \
+  -o jsonpath={.data.token} \|
+  base64 --decode)
+host=$(kubectl config view | yq '.clusters[] | select(.name == "launchboxhq") | .cluster.server')
+ca_crt=$(cat $(kubectl config view | yq '.clusters[] | select(.name == "launchboxhq") | .cluster.certificate-authority'))
+
+cat << EOF
+All components for launchbox successfully installed. Please follow
+the documentation for starting the local HQ server.
+
+Once the server is up and databases migrated, run the following
+$ rails c
+> application = Doorkeeper::Application.create(name: "minikube", redirect_uri: "http://localhost:8080")
+> Cluster.create(name: "minikube", oauth_application: application, managed: false, ca_crt: "${ca_crt}", host: "${host}", token: "${token}")
+
+You can then login to the Launchbox UI, and create your first project!
+Report bugs to:
+up home page:
+EOF

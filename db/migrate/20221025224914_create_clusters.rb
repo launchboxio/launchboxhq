@@ -12,8 +12,10 @@ class CreateClusters < ActiveRecord::Migration[7.0]
       t.string :host
       t.string :ca_crt_encrypted
       t.string :token_encrypted
-      t.belongs_to :oauth_application
+      t.string :connection_method
+      t.string :managed, default: false
 
+      t.belongs_to :oauth_application
       t.belongs_to :user, optional: true
 
       t.timestamps

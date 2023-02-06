@@ -128,6 +128,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_30_050256) do
     t.string "host"
     t.string "ca_crt_encrypted"
     t.string "token_encrypted"
+    t.string "connection_method"
+    t.string "managed", default: "f"
     t.bigint "oauth_application_id"
     t.bigint "user_id"
     t.datetime "created_at", null: false

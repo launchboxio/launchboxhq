@@ -15,9 +15,7 @@ class Cluster < ApplicationRecord
   belongs_to :oauth_application, class_name: 'Doorkeeper::Application'
 
   private
-
   def generate_slug
     self.slug = Haiku.call(variant: -> { SecureRandom.alphanumeric(5).downcase })
   end
-
 end

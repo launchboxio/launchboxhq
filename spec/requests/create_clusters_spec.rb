@@ -1,13 +1,14 @@
 require 'rails_helper'
 
 RSpec.describe 'Create clusters', type: :request do
+  before { host! "api.lvh.me" }
   let(:application) { FactoryBot.create('doorkeeper/application') }
   let(:user)        { FactoryBot.create(:user) }
   let(:token)       { FactoryBot.create('doorkeeper/access_token', application:, resource_owner_id: user.id, scopes: 'manage_clusters') }
 
-  describe 'POST /api/v1/clusters' do
+  describe 'POST /v1/clusters' do
     before do
-      post '/api/v1/clusters' , params: {
+      post '/v1/clusters' , params: {
         cluster: { name: Faker::App.name }
       }, headers: {
         Authorization: "Bearer #{token.token}",

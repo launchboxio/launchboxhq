@@ -6,13 +6,16 @@ Doorkeeper.configure do
   orm :active_record
 
   # This block will be called to check whether the resource owner is authenticated or not.
+  # resource_owner_authenticator do
+  #   current_user || redirect_to(new_user_session_url)
+  # end
+
   resource_owner_authenticator do
-    if current_user
-      current_user
-    else
-      redirect_to(new_user_session_url)
-      nil
-    end
+    #raise "Please configure doorkeeper resource_owner_authenticator block located in #{__FILE__}"
+    # Put your resource owner authentication logic here.
+    # Example implementation:
+    session[:user_return_to] = request.fullpath
+    current_user || redirect_to(new_user_session_url)
   end
 
   # If you didn't skip applications controller from Doorkeeper routes in your application routes.rb
@@ -232,8 +235,8 @@ Doorkeeper.configure do
   # For more information go to
   # https://doorkeeper.gitbook.io/guides/ruby-on-rails/scopes
 
-  default_scopes  :read_clusters, :read_addons, :user
-  optional_scopes :manage_clusters, :manage_addons, :agent
+  default_scopes  :read_clusters, :read_projects, :read_addons, :user
+  optional_scopes :manage_clusters, :manage_projects, :manage_addons, :agent, :openid
 
   # Allows to restrict only certain scopes for grant_type.
   # By default, all the scopes will be available for all the grant types.

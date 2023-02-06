@@ -22,13 +22,17 @@ Rails.application.routes.draw do
     get 'auth/:provider/callback', to: 'sessions#create'
   end
 
-  scope module: :api, defaults: { format: :json }, path: 'api' do
+  scope module: :api, defaults: { format: :json }, constraints: { subdomain: 'api' } do
     namespace :v1 do
       resources :clusters do
         resources :cluster_addons
         resources :agents
       end
       resources :projects do
+        member do
+          post 'pause'
+          post 'resume'
+        end
         resources :addons
       end
       resources :addons
@@ -39,6 +43,6 @@ Rails.application.routes.draw do
     resources :tenants
   end
 
-  root 'projects#index'
+  root 'components#index'
 
 end

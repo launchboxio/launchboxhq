@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class ApplicationController < ActionController::Base
-  before_action :load_oidc
+  # before_action :load_oidc
 
   private
 

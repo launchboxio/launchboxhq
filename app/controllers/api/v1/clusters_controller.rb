@@ -4,7 +4,7 @@ module Api
   module V1
     class ClustersController < Api::V1::ApiController
       before_action :find_cluster, except: %i[index new create]
-      before_action -> { doorkeeper_authorize! :read_clusters }, only: %i[index show]
+      before_action -> { doorkeeper_authorize! :read_clusters, :manage_clusters }, only: %i[index show]
       before_action -> { doorkeeper_authorize! :manage_clusters }, only: %i[create update destroy]
 
       def index
@@ -21,6 +21,7 @@ module Api
         @cluster = Cluster.new(cluster_params)
         @cluster.oauth_application = application
         @cluster.save!
+        Clusters::CreateClusterJob.perform_later(@cluster.id) if @cluster.managed?
         render :json => @cluster, :include => [:oauth_application]
       end
 
@@ -34,7 +35,7 @@ module Api
       end
 
       def cluster_params
-        params.require(:cluster).permit(:name)
+        params.require(:cluster).permit(:name, :region, :version, :provider, :connection_method, :managed, :host, :ca_crt, :token)
       end
     end
   end

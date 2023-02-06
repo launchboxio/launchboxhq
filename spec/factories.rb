@@ -29,5 +29,9 @@ FactoryBot.define do
     json_schema { '{a: b}' }
   end
 
+  factory :project do
+    name { Faker::App.name }
+  end
+
   factory 'doorkeeper/access_token' do; end
 end
