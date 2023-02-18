@@ -44,3 +44,5 @@ kubeconfig
 
 .terraform
 terraform.tfstate*
+
+config.json

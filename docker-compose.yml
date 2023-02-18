@@ -23,3 +23,21 @@ services:
     environment:
       VAULT_ADDR: http://127.0.0.1:8200
     entrypoint: vault server -config=/vault/config/vault.json
+
+  centrifugal:
+    image: centrifugo/centrifugo
+    command: centrifugo -c config.json --engine=redis --redis_address=redis:6379 --log-level=debug
+    ports:
+      - "8000:8000"
+    volumes:
+      - "./config.json:/centrifugo/config.json"
+    ulimits:
+      nproc: 65536
+      nofile:
+        soft: 65536
+        hard: 65536
+
+  redis:
+    image: redis
+    ports:
+      - "6379:6379"
