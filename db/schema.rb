@@ -16,24 +16,26 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_30_050256) do
 
   create_table "addon_subscriptions", force: :cascade do |t|
     t.bigint "project_id"
+    t.bigint "cluster_id"
     t.bigint "addon_id"
-    t.string "chart"
-    t.string "repo"
     t.string "version"
-    t.string "release"
     t.string "namespace"
-    t.string "value"
+    t.string "values"
     t.string "values_merge_type"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["addon_id"], name: "index_addon_subscriptions_on_addon_id"
+    t.index ["cluster_id"], name: "index_addon_subscriptions_on_cluster_id"
     t.index ["project_id"], name: "index_addon_subscriptions_on_project_id"
   end
 
   create_table "addons", force: :cascade do |t|
     t.string "name"
+    t.boolean "cluster_attachable"
+    t.boolean "project_attachable"
+    t.text "definition"
     t.text "json_schema"
-    t.text "defaults"
+    t.text "mapping"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
