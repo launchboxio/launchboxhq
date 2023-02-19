@@ -10,7 +10,7 @@ const oidcConfig = {
   authority: "http://auth.lvh.me:3000",
   client_id: "Q3AXCW0w4ckl1w0cmdl2NALnSM91NOibmkspvJBY6HM",
   redirect_uri: "http://app.lvh.me:3000",
-  scope: "openid manage_clusters manage_projects",
+  scope: "openid manage_clusters manage_projects manage_addons",
   userStore: new WebStorageStateStore({
     store: localStorage
   }),

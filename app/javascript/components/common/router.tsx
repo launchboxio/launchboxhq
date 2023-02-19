@@ -50,14 +50,14 @@ const router = createHashRouter([
       children: [{
         path: "",
         element: <AddonPages.List />,
-        loader: Client.Projects.list
+        loader: Client.Addons.list
       }, {
         path: "new",
         element: <AddonPages.New />
       },{
         path: ":addonId",
         element: <AddonPages.View />,
-        loader: Client.Projects.get
+        loader: Client.Addons.get
       }]
     }, {
       path: "catalogs",
