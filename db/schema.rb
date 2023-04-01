@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_01_30_050256) do
+ActiveRecord::Schema[7.0].define(version: 2023_02_19_163811) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -32,8 +32,11 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_30_050256) do
 
   create_table "addons", force: :cascade do |t|
     t.string "name"
+    t.boolean "cluster_attachable"
+    t.boolean "project_attachable"
+    t.text "definition"
     t.text "json_schema"
-    t.text "defaults"
+    t.text "mapping"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -134,6 +137,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_30_050256) do
     t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.text "manifest"
     t.index ["oauth_application_id"], name: "index_clusters_on_oauth_application_id"
     t.index ["user_id"], name: "index_clusters_on_user_id"
   end
