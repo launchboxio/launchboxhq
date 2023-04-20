@@ -13,11 +13,11 @@ RSpec.describe 'Create projects', type: :request do
       post '/v1/projects', params: {
         project: {
           name: Faker::App.name,
-          cluster_id: cluster.id,
           memory: 8192,
           cpu: 4,
           disk: 100
-        }
+        },
+        cluster_id: cluster.id
       }, headers: {
         Authorization: "Bearer #{token.token}",
         Accept: 'application/json'

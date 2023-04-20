@@ -7,7 +7,6 @@ module Api
       before_action -> { doorkeeper_authorize! :agent }
       before_action :find_cluster
       before_action :verify_agent_token
-
       def create
         @agent = @cluster.agents.build(agent_params)
         @agent.last_communication = DateTime.now
@@ -15,11 +14,9 @@ module Api
         if @agent.save
           render json: @agent, status: :ok
         else
-          render json: { status: 'error', code: 400 }, status: :bad_request
+
         end
       end
-
-      def destroy; end
 
       private
 
