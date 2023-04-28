@@ -21,6 +21,8 @@ const AutomaticRedirect = (props: any) => {
 
   // automatically sign-in
   React.useEffect(() => {
+    console.log(hasAuthParams())
+    console.log(auth)
     if (!hasAuthParams() &&
       !auth.isAuthenticated && !auth.activeNavigator && !auth.isLoading) {
       auth.signinRedirect();

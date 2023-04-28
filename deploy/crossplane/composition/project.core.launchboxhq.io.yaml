@@ -23,36 +23,8 @@ spec:
               version: 0.13.0
             namespace: # patched
             values: # patched
-#              syncer:
-#                extraArgs: []
-#              sync:
-#                # We don't want to deploy ingress controllers in each cluster
-#                ingresses:
-#                  enabled: true
-#                # Copy serviceaccounts to host cluster. This way we can just use
-#                # the generated OIDC for the host cluster, instead of having to
-#                # configure IRSA for each vcluster instance
-#                serviceaccounts:
-#                  enabled: true
-#              ingress:
-#                enabled: true
-#                host: # patched
-#                ingressClassName: nginx
-#              init:
-#                manifests: |-
-#              vcluster:
-#                extraArgs:
-#                  - --kube-apiserver-arg=--oidc-username-claim=preferred_username
-#                image: rancher/k3s:v1.24.1-k3s1
-#                resources:
-#                  limits:
-#                    cpu: # patched
-#                    memory: # patched
-#                  requests:
-#                    cpu: # patched
-#                    memory: # patched
       patches:
-        - fromFieldPath: metadata.name
+        - fromFieldPath: metadata.labels[crossplane.io/claim-name]
           toFieldPath: metadata.annotations[crossplane.io/external-name]
           policy:
             fromFieldPath: Required

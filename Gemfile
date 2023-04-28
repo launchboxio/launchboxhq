@@ -47,6 +47,9 @@ gem 'redis', '~> 4.0'
 gem 'vault', '~> 0.17.0'
 gem 'vault-rails', '~> 0.8.0'
 
+# RealTime Communication
+gem 'cent'
+
 group :development, :test do
   gem 'debug', platforms: %i[mri mingw x64_mingw]
   gem 'rubocop', '~> 1.38'
