@@ -10,12 +10,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_05_04_005333) do
+ActiveRecord::Schema[7.0].define(version: 2023_05_05_151609) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "addon_subscriptions", force: :cascade do |t|
-    t.bigint "project_id"
+    t.bigint "space_id"
     t.bigint "addon_id"
     t.string "chart"
     t.string "repo"
@@ -27,18 +27,17 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_04_005333) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["addon_id"], name: "index_addon_subscriptions_on_addon_id"
-    t.index ["project_id"], name: "index_addon_subscriptions_on_project_id"
+    t.index ["space_id"], name: "index_addon_subscriptions_on_space_id"
   end
 
   create_table "addons", force: :cascade do |t|
     t.string "name"
-    t.boolean "cluster_attachable"
-    t.boolean "project_attachable"
-    t.text "definition"
     t.text "json_schema"
-    t.text "mapping"
+    t.text "defaults"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "oci_registry"
+    t.string "oci_version"
   end
 
   create_table "admins", force: :cascade do |t|
@@ -69,27 +68,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_04_005333) do
     t.bigint "cluster_id"
     t.datetime "last_communication"
     t.string "status"
+    t.string "access_token_encrypted"
+    t.string "refresh_token_encrypted"
     t.string "ip_address"
     t.string "pod_name"
     t.string "node_name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["cluster_id"], name: "index_agents_on_cluster_id"
-  end
-
-  create_table "auth_cluster_roles", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "auth_groups", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "auth_roles", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
   end
 
   create_table "cluster_addon_subscriptions", force: :cascade do |t|
@@ -131,14 +117,11 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_04_005333) do
     t.string "host"
     t.string "ca_crt_encrypted"
     t.string "token_encrypted"
-    t.string "connection_method"
-    t.string "managed", default: "f"
-    t.bigint "oauth_application_id"
     t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "agent_token_encrypted"
     t.text "manifest"
-    t.index ["oauth_application_id"], name: "index_clusters_on_oauth_application_id"
     t.index ["user_id"], name: "index_clusters_on_user_id"
   end
 
@@ -176,7 +159,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_04_005333) do
     t.string "name", null: false
     t.string "uid", null: false
     t.string "secret", null: false
-    t.text "redirect_uri"
+    t.text "redirect_uri", null: false
     t.string "scopes", default: "", null: false
     t.boolean "confidential", default: true, null: false
     t.datetime "created_at", null: false
@@ -201,7 +184,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_04_005333) do
     t.index ["name"], name: "index_organizations_on_name", unique: true
   end
 
-  create_table "projects", force: :cascade do |t|
+  create_table "spaces", force: :cascade do |t|
     t.string "name"
     t.string "status"
     t.string "slug"
@@ -219,9 +202,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_04_005333) do
     t.string "host"
     t.text "ca_crt_encrypted"
     t.string "token_encrypted"
-    t.index ["cluster_id"], name: "index_projects_on_cluster_id"
-    t.index ["slug"], name: "index_projects_on_slug", unique: true
-    t.index ["user_id"], name: "index_projects_on_user_id"
+    t.index ["cluster_id"], name: "index_spaces_on_cluster_id"
+    t.index ["slug"], name: "index_spaces_on_slug", unique: true
+    t.index ["user_id"], name: "index_spaces_on_user_id"
   end
 
   create_table "taggings", force: :cascade do |t|
@@ -253,17 +236,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_04_005333) do
     t.datetime "updated_at", null: false
     t.integer "taggings_count", default: 0
     t.index ["name"], name: "index_tags_on_name", unique: true
-  end
-
-  create_table "tenants", force: :cascade do |t|
-    t.string "name"
-    t.string "domain"
-    t.string "email"
-    t.string "provider"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["domain"], name: "index_tenants_on_domain", unique: true
-    t.index ["name"], name: "index_tenants_on_name", unique: true
   end
 
   create_table "users", force: :cascade do |t|
