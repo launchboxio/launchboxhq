@@ -8,6 +8,7 @@ import ProjectPages from "../projects"
 import CatalogPages from "../catalogs"
 import ServicePages from "../services"
 import AddonPages from "../addons"
+import AccessTokenPages from "../access_tokens"
 
 import Client from "../client"
 
@@ -58,6 +59,12 @@ const router = createHashRouter([
         path: ":addonId",
         element: <AddonPages.View />,
         loader: Client.Projects.get
+      }]
+    }, {
+      path: "access_tokens",
+      children: [{
+        path: "",
+        element: <AccessTokenPages.List />,
       }]
     }, {
       path: "catalogs",

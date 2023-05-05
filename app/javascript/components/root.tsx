@@ -8,7 +8,7 @@ import { Spinner } from "@blueprintjs/core";
 
 const oidcConfig = {
   authority: "http://auth.lvh.me:3000",
-  client_id: "Q3AXCW0w4ckl1w0cmdl2NALnSM91NOibmkspvJBY6HM",
+  client_id: "pYYco8NXap8qyaT6S1qw70209J47GMmSi3FZ5q55M7s",
   redirect_uri: "http://app.lvh.me:3000",
   scope: "openid manage_clusters manage_projects",
   userStore: new WebStorageStateStore({

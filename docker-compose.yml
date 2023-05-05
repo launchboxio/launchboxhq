@@ -26,7 +26,7 @@ services:
 
   centrifugal:
     image: centrifugo/centrifugo
-    command: centrifugo -c config.json --engine=redis --redis_address=redis:6379 --log-level=debug
+    command: centrifugo -c config.json --engine=redis --redis_address=redis:6379
     ports:
       - "8000:8000"
     volumes:

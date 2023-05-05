@@ -15,3 +15,4 @@ export default function() {
     </Page>
   )
 }
+// Doorkeeper::AccessToken.create!(application_id: nil, resource_owner_id: @user.id, scopes: 'public')

@@ -4,7 +4,7 @@ import { User } from "oidc-client-ts"
 axios.defaults.baseURL = 'http://api.lvh.me:3000';
 
 axios.interceptors.request.use((value: any): any => {
-  const oidcStorage = localStorage.getItem(`oidc.user:http://auth.lvh.me:3000:Q3AXCW0w4ckl1w0cmdl2NALnSM91NOibmkspvJBY6HM`)
+  const oidcStorage = localStorage.getItem(`oidc.user:http://auth.lvh.me:3000:pYYco8NXap8qyaT6S1qw70209J47GMmSi3FZ5q55M7s`)
   if (!oidcStorage) {
     return value;
   }

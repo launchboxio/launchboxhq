@@ -10,41 +10,6 @@ export interface Installation {
   host: string;
 }
 
-const renderInstallation: ItemRenderer<Installation> = (install, { handleClick, handleFocus, modifiers, query }) => {
-  if (!modifiers.matchesPredicate) {
-    return null;
-  }
-  return (
-    <MenuItem
-      active={modifiers.active}
-      disabled={modifiers.disabled}
-      key={install.host}
-      label={install.host}
-      onClick={handleClick}
-      onFocus={handleFocus}
-      roleStructure="listoption"
-    />
-  );
-};
-
-const InstallSelect: React.FC = () => {
-  const [selectedFilm, setSelectedFilm] = React.useState<Installation | undefined>();
-  return (
-    <Select2<Installation>
-      filterable={false}
-      items={[{
-        host: "launchboxhq.io"
-      }]}
-      itemRenderer={renderInstallation}
-      noResults={<MenuItem disabled={true} text="No results." roleStructure="listoption" />}
-      onItemSelect={setSelectedFilm}
-      popoverProps={{ minimal: true }}
-    >
-      <Button text={selectedFilm?.host} rightIcon="double-caret-vertical" placeholder="Select an installation" />
-    </Select2>
-  );
-};
-
 export default function() {
   const auth = useAuth()
 
@@ -52,7 +17,6 @@ export default function() {
     <Navbar>
       <Navbar.Group align={Alignment.LEFT}>
         <Navbar.Heading>LaunchboxHQ</Navbar.Heading>
-        <InstallSelect />
         <Navbar.Divider />
         <Link to="clusters">
           <Button className="bp4-minimal" icon="cargo-ship" text="Clusters"/>
@@ -85,6 +49,9 @@ export default function() {
               <MenuItem text={"Profile"} />
               <MenuItem text={"Accounts"} />
               <MenuItem text={"Notifications"} />
+              <Link to="/access_tokens">
+                <MenuItem text={"Access Tokens"} />
+              </Link>
               <MenuItem text={"Logout"} onClick={() => void auth.removeUser()}/>
             </Menu>
           }
