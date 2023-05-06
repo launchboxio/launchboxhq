@@ -12,13 +12,24 @@ module Api
       def show
         render json: @addon
       end
+
       def create;
         @addon = Addon.new(addon_params)
         @addon.save!
         render :json => @addon
       end
-      def update; end
-      def destroy; end
+
+      def update
+        @addon = Addon.find(params[:id])
+        @addon.attributes = addon_params
+        @addon.save!
+        render :json => @addon
+      end
+
+      def destroy
+        @addon = Addon.find(params[:id])
+        @addon.destroy!
+      end
 
       private
 

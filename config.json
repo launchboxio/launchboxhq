@@ -9,5 +9,9 @@
   "admin": true,
   "client_insecure": true,
   "allow_subscribe_for_client": true,
-  "log_level": "debug"
+  "log_level": "debug",
+  "namespaces": [
+    {"name": "clusters"},
+    {"name": "projects"}
+  ]
 }
