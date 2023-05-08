@@ -2,5 +2,10 @@
 
 module ApplicationCable
   class Channel < ActionCable::Channel::Base
+    def subscribed
+      puts "Subscribing"
+      reject unless cluster
+      stream_for cluster
+    end
   end
 end

@@ -33,7 +33,7 @@ Rails.application.routes.draw do
           post 'pause'
           post 'resume'
         end
-        resources :addons
+        resources :addons, controller: 'project_addons'
       end
       resources :addons
     end

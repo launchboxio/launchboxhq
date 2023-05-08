@@ -12,12 +12,10 @@ module Api
       end
 
       def show
-        render json: @project
+        render json: @project, :include => [:addons]
       end
 
       def create
-        puts params
-
         cluster = Cluster.find(params[:cluster_id])
         @project = current_resource_owner.projects.build(project_params)
         @project.cluster = cluster

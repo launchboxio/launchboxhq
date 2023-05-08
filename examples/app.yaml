@@ -1,0 +1,9 @@
+---
+apiVersion: addons.launchboxhq.io/v1alpha1
+kind: RedisCluster
+metadata:
+  name: test
+  namespace: abcd-1234
+spec:
+  password: cA2LTyrJGKVTZc9FMcq8
+  size: 2Gi

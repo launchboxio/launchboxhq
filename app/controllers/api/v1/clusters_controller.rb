@@ -9,6 +9,10 @@ module Api
 
       def index
         @clusters = Cluster.all
+
+        @clusters.each do |cluster|
+          ClusterChannel.broadcast_to(cluster, "Test")
+        end
         render json: @clusters
       end
 
