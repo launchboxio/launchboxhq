@@ -7,7 +7,7 @@ module Api
       before_action :find_project, except: %i[index new create]
 
       def index
-        @projects = current_resource_owner.projects
+        @projects = Project.all
         render json: @projects
       end
 

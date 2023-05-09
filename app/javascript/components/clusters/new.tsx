@@ -31,8 +31,8 @@ export default function() {
 
   const handleSubmit = async e => {
     e.preventDefault()
-    const managed = (tab === 'managed')
-    const res = await Client.Clusters.create( {...cluster, managed } )
+    // const managed = (tab === 'managed')
+    const res = await Client.Clusters.create( {...cluster } )
     toaster.show({
       message: "Cluster created!",
       intent: "success",
