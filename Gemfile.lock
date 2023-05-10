@@ -89,6 +89,9 @@ GEM
     bindex (0.8.1)
     bootsnap (1.13.0)
       msgpack (~> 1.2)
+    bootstrap_form (5.1.0)
+      actionpack (>= 5.2)
+      activemodel (>= 5.2)
     breadcrumbs (0.3.0)
       actionview
       activesupport
@@ -121,6 +124,9 @@ GEM
       responders
       warden (~> 1.2.3)
     diff-lcs (1.5.0)
+    docker-api (2.2.0)
+      excon (>= 0.47.0)
+      multi_json
     domain_name (0.5.20190701)
       unf (>= 0.0.5, < 1.0.0)
     doorkeeper (5.6.0)
@@ -134,6 +140,7 @@ GEM
       railties (>= 3.2)
     e2mmap (0.1.0)
     erubi (1.11.0)
+    excon (0.99.0)
     factory_bot (6.2.1)
       activesupport (>= 5.0.0)
     factory_bot_rails (6.2.0)
@@ -428,12 +435,14 @@ DEPENDENCIES
   acts-as-taggable-on (~> 9.0)
   bcrypt (~> 3.1)
   bootsnap
+  bootstrap_form (~> 5.1)
   breadcrumbs (~> 0.3.0)
   capybara
   cent
   cssbundling-rails (~> 1.1)
   debug
   devise (~> 4.8)
+  docker-api
   doorkeeper (~> 5.6)
   doorkeeper-openid_connect (~> 1.8)
   dotenv-rails (~> 2.8)

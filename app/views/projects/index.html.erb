@@ -1,7 +1,13 @@
-<h1>Projects</h1>
+<h2>Projects</h2>
 
 <% @projects.each do |project| %>
-  <%= @project.name %>
+  <div class="col-md-3">
+    <div class="card" style="width: 18rem;" onclick="location.href = '/projects/<%= project.id %>';">
+      <div class="card-body">
+        <h5 class="card-title"><%= project.name %></h5>
+      </div>
+    </div>
+  </div>
 <% end %>
 
-<a href="/projects/new" class="btn btn-primary">Create Project</a>
+<a href="/projects/new">Create new project</a>

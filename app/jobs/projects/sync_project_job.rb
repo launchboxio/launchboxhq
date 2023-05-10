@@ -8,9 +8,6 @@ module Projects
       @project = Project.find(args.first)
       @cluster = Cluster.find(@project.cluster_id)
 
-      # Connect to centrifuge
-      client = Cent::Client.new(api_key: 'key')
-
       # We want to generate the configuration for our project
       payload = {}
 
