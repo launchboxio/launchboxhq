@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_05_07_192712) do
+ActiveRecord::Schema[7.0].define(version: 2023_05_04_005333) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -24,11 +24,11 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_07_192712) do
     t.string "namespace"
     t.string "value"
     t.string "values_merge_type"
+    t.json "overrides"
+    t.json "mapings"
+    t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.json "overrides"
-    t.string "name"
-    t.json "mappings"
     t.index ["addon_id"], name: "index_addon_subscriptions_on_addon_id"
     t.index ["project_id"], name: "index_addon_subscriptions_on_project_id"
   end
@@ -37,10 +37,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_07_192712) do
     t.string "name"
     t.text "json_schema"
     t.text "defaults"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
     t.string "oci_registry"
     t.string "oci_version"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "admins", force: :cascade do |t|
@@ -120,12 +120,13 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_07_192712) do
     t.string "token_encrypted"
     t.string "connection_method"
     t.string "managed", default: "f"
+    t.text "manifest"
     t.bigint "oauth_application_id"
     t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.text "manifest"
     t.index ["oauth_application_id"], name: "index_clusters_on_oauth_application_id"
+    t.index ["slug"], name: "index_clusters_on_slug", unique: true
     t.index ["user_id"], name: "index_clusters_on_user_id"
   end
 
@@ -201,11 +202,11 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_07_192712) do
     t.datetime "last_paused_at"
     t.datetime "last_started_at"
     t.text "last_error"
+    t.string "host"
+    t.string "ca_crt_encrypted"
+    t.string "token_encrypted"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "host"
-    t.text "ca_crt_encrypted"
-    t.string "token_encrypted"
     t.index ["cluster_id"], name: "index_projects_on_cluster_id"
     t.index ["slug"], name: "index_projects_on_slug", unique: true
     t.index ["user_id"], name: "index_projects_on_user_id"

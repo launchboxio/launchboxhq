@@ -15,6 +15,10 @@ class CreateAddonSubscriptions < ActiveRecord::Migration[7.0]
       t.string :value
       t.string :values_merge_type
 
+      t.json :overrides
+      t.json :mapings
+      t.string :name
+
       t.timestamps
     end
   end

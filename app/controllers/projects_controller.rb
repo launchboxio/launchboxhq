@@ -13,9 +13,11 @@ class ProjectsController < AuthenticatedController
   def show; end
 
   def create
+    puts "Creating project"
     @project = current_user.projects.build(project_params)
     # Select a cluster at random
     @project.cluster = @clusters.sample
+    puts @project.cluster.id
     if @project.save
       Projects::SyncProjectJob.perform_later(@project.id)
       redirect_to @project

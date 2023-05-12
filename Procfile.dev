@@ -1,4 +1,4 @@
-web: bin/rails server -p 3000 -b lvh.me
+web: bin/rails server -p 3000 -b 0.0.0.0
 js: yarn build --watch
 types: yarn check-types
 css: yarn build:css --watch

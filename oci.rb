@@ -1,4 +1,5 @@
 require 'docker'
+require 'yaml'
 
 puts Docker.info
 
@@ -8,5 +9,6 @@ image = Docker::Image.create('fromImage' => artifact)
 # puts image.GraphDriver
 filepath = image.json['GraphDriver']['Data']['UpperDir']
 
-file = File.open("#{filepath}/package.yaml")
+file = File.read("#{filepath}/package.yaml")
 puts file
+obj = YAML.load(file)

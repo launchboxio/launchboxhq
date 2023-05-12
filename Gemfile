@@ -26,6 +26,7 @@ gem 'json-schema'
 gem 'acts-as-taggable-on', '~> 9.0'
 gem "bootstrap_form", "~> 5.1"
 gem 'docker-api'
+gem 'yaml'
 
 # Devise and doorkeeper
 gem 'devise', '~> 4.8'
