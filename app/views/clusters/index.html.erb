@@ -1,0 +1,11 @@
+<% @clusters.each do |cluster| %>
+  <div class="col-md-3">
+    <div class="card" style="width: 18rem;" onclick="location.href = '/clusters/<%= cluster.id %>';">
+      <div class="card-body">
+        <h5 class="card-title"><%= cluster.name %></h5>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<a href="/clusters/new">Create new cluster</a>

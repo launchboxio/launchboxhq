@@ -22,3 +22,12 @@ roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
   name: cluster-admin
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: launchboxhq
+  namespace: lbx-system
+  annotations:
+    kubernetes.io/service-account.name: launchboxhq
+type: kubernetes.io/service-account-token

@@ -7,7 +7,7 @@ module Api
       before_action :find_project, except: %i[index new create]
 
       def index
-        @projects = current_resource_owner.projects
+        @projects = Project.all
         render json: @projects
       end
 
@@ -16,12 +16,18 @@ module Api
       end
 
       def create
+        puts "Looking for cluster"
         cluster = Cluster.find(params[:cluster_id])
+        puts "Found cluster"
         @project = current_resource_owner.projects.build(project_params)
         @project.cluster = cluster
-        @project.save!
-        Projects::CreateProjectJob.perform_later(@project.id)
-        render json: @project
+        puts "Cluster set on project"
+        if @project.save
+          Projects::CreateProjectJob.perform_later(@project.id)
+          render json: @project
+        else
+          render 'new'
+        end
       end
 
       def pause

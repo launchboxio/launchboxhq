@@ -24,5 +24,13 @@ module Launchboxhq
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
     config.action_cable.url = "/cable"
+
+    config.to_prepare do
+      Devise::SessionsController.layout "auth"
+      Devise::RegistrationsController.layout "auth"
+      Devise::ConfirmationsController.layout "auth"
+      Devise::UnlocksController.layout "auth"
+      Devise::PasswordsController.layout "auth"
+    end
   end
 end

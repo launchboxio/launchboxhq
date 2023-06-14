@@ -1,0 +1,11 @@
+<h1>Creating a new project</h1>
+
+<div class="card">
+  <%= bootstrap_form_for(@project) do |f| %>
+    <%= f.text_field :name %>
+    <%= f.text_field :cpu %>
+    <%= f.text_field :memory %>
+    <%= f.text_field :disk %>
+    <%= f.submit "Submit" %>
+  <% end %>
+</div>

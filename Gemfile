@@ -24,6 +24,9 @@ gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 gem 'paper_trail'
 gem 'json-schema'
 gem 'acts-as-taggable-on', '~> 9.0'
+gem "bootstrap_form", "~> 5.1"
+gem 'docker-api'
+gem 'yaml'
 
 # Devise and doorkeeper
 gem 'devise', '~> 4.8'
@@ -69,3 +72,5 @@ group :test do
   gem 'factory_bot_rails'
   gem 'faker'
 end
+
+gem "cssbundling-rails", "~> 1.1"

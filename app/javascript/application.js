@@ -2,3 +2,4 @@
 import "@hotwired/turbo-rails"
 // import "xterm/lib/xterm.js"
 import "./components/application"
+import * as bootstrap from "bootstrap"
