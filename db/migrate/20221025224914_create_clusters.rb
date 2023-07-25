@@ -13,7 +13,7 @@ class CreateClusters < ActiveRecord::Migration[7.0]
       t.string :ca_crt_encrypted
       t.string :token_encrypted
       t.string :connection_method
-      t.string :managed, default: false
+      t.boolean :managed, default: false
 
       t.text :manifest
 

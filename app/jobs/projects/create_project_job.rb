@@ -92,6 +92,5 @@ module Projects
         # client.patch_namespace(project.slug, {})
       end
     end
-
   end
 end

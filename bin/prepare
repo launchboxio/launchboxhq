@@ -1,0 +1,22 @@
+#!/usr/bin/env sh
+
+PROFILE="launchboxhq"
+echo "Installing gems..."
+bundle install
+
+echo "Verifying minikube is running..."
+if ! minikube status --profile "${PROFILE}"; then
+  minikube start \
+    --profile launchboxhq
+fi
+
+echo "Verifying our services are running..."
+docker compose up -d
+
+echo "Setting up cluster connection..."
+kubectl apply -f deploy/dev/manifest.yaml
+CA_CRT=$(kubectl get secret launchboxhq -n lbx-system -o jsonpath='{.data.ca\.crt}')
+TOKEN=$(kubectl get secret launchboxhq -n lbx-system -o jsonpath='{.data.token}')
+echo "Cluster.create(token: \"${TOKEN}\", ca_crt: \"${CA_CRT}\")" | bundle exec rails c
+
+clusterctl init --infrastructure vcluster

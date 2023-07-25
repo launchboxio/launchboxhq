@@ -7,19 +7,101 @@ module Projects
 
       @project = Project.find(args.first)
       @cluster = Cluster.find(@project.cluster_id)
+      # @client = @cluster.client('infrastructure.cluster.x-k8s.io/v1alpha1')
+      cert_store = OpenSSL::X509::Store.new
+      cert_store.add_cert(OpenSSL::X509::Certificate.new(@cluster.ca_crt))
+      @options = {
+        auth_options: { bearer_token: @cluster.token },
+        ssl_options: {
+          cert_store: cert_store,
+          verify_ssl: OpenSSL::SSL::VERIFY_PEER
+        }
+      }
 
-      # We want to generate the configuration for our project
-      payload = {}
+      ensure_namespace
+      ensure_infrastructure
+      ensure_cluster
 
-      # Send our webhook
-      client.publish(channel: "clusters:#{@cluster.id}", data: {
-        :event => 'apply_manifest',
-        :payload => payload.to_json
-      }.to_json)
+      # Finally, poll for completion
+    end
 
-      # Monitor the deployment
-      # For time until timeout, we want to check the project
-      # to see if it's status has changed from "created".
+    def ensure_namespace
+      namespace = Kubeclient::Resource.new(
+        kind: 'Namespace',
+        metadata: {
+          name: @project.slug
+        }
+      )
+      client = Kubeclient::Client.new(@cluster.host, 'v1', **@options)
+      begin
+        client.create_namespace(namespace)
+      rescue
+        client.update_namespace(namespace)
+      end
+    end
+
+    def ensure_infrastructure
+      client = Kubeclient::Client.new("#{@cluster.host}/apis/infrastructure.cluster.x-k8s.io", 'v1alpha1', **@options)
+      resource = Kubeclient::Resource.new(
+        metadata: {
+          name: @project.slug,
+          namespace: @project.slug
+        },
+        spec: {
+          controlPlaneEndpoint: {
+            host: "",
+            port: 0
+          },
+          helmRelease: {
+            chart: {}
+          },
+          kubernetesVersion: '1.23.0'
+        }
+      )
+      begin
+        client.create_vcluster(resource)
+      rescue Kubeclient::HttpError => e
+        if e.error_code == 409
+          existing = client.get_vcluster @project.slug, @project.slug
+          existing.spec = resource.spec
+          client.update_vcluster(existing)
+        end
+      end
+    end
+
+    def ensure_cluster
+      client = Kubeclient::Client.new("#{@cluster.host}/apis/cluster.x-k8s.io", 'v1beta1', **@options)
+      resource = Kubeclient::Resource.new({
+        metadata: {
+          name: @project.slug,
+          namespace: @project.slug
+        },
+        spec: {
+          controlPlaneRef: {
+            apiVersion: 'infrastructure.cluster.x-k8s.io/v1alpha1',
+            kind: 'VCluster',
+            name: @project.slug,
+          },
+          infrastructureRef: {
+            apiVersion: 'infrastructure.cluster.x-k8s.io/v1alpha1',
+            kind: 'VCluster',
+            name: @project.slug,
+          }
+        }
+      })
+      begin
+        client.create_cluster(resource)
+      rescue Kubeclient::HttpError => e
+        if e.error_code == 409
+          existing = client.get_cluster @project.slug, @project.slug
+          existing.spec = resource.spec
+          client.update_cluster(existing)
+        end
+      end
+    end
+
+    def values
+
     end
   end
 end
