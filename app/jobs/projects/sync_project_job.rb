@@ -7,6 +7,7 @@ module Projects
 
       @project = Project.find(args.first)
       @cluster = Cluster.find(@project.cluster_id)
+      @project.update(status: 'provisioning')
       cert_store = OpenSSL::X509::Store.new
       cert_store.add_cert(OpenSSL::X509::Certificate.new(@cluster.ca_crt))
       @options = {
@@ -21,7 +22,7 @@ module Projects
       ensure_infrastructure
       ensure_cluster
 
-      # Finally, poll for completion
+      @project.update(status: 'provisioned')
     end
 
     def ensure_namespace
