@@ -7,7 +7,6 @@ module Projects
 
       @project = Project.find(args.first)
       @cluster = Cluster.find(@project.cluster_id)
-      # @client = @cluster.client('infrastructure.cluster.x-k8s.io/v1alpha1')
       cert_store = OpenSSL::X509::Store.new
       cert_store.add_cert(OpenSSL::X509::Certificate.new(@cluster.ca_crt))
       @options = {
@@ -53,7 +52,8 @@ module Projects
             port: 0
           },
           helmRelease: {
-            chart: {}
+            chart: {},
+            values: values
           },
           kubernetesVersion: '1.23.0'
         }
@@ -101,7 +101,29 @@ module Projects
     end
 
     def values
-
+      template = %q{
+vcluster:
+  extraArgs: []
+#    - "--kube-apiserver-arg=--oidc-username-claim=preferred_username"
+  resources:
+    limits:
+      cpu: <%= @project.cpu %>
+      memory: "<%= @project.memory %>Mi"
+storage:
+  persistence: true
+  size: "<%= @project.disk %>Gi"
+sync:
+  ingresses:
+    enabled: true
+  serviceaccounts:
+    enabled: true
+ingress:
+  enabled: true
+}
+      ryaml = ERB.new(template)
+      b = binding
+      b.local_variable_set(:project, @project)
+      ryaml.result(b)
     end
   end
 end
