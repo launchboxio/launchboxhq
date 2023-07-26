@@ -1,0 +1,45 @@
+repositories:
+  - name: bitnami
+    url: registry-1.docker.io/bitnamicharts
+    oci: true
+  - name: hashicorp
+    url: https://helm.releases.hashicorp.com
+
+releases:
+  - name: postgres
+    namespace: lbx-system
+    chart: bitnami/postgresql
+    version: 12.6.9
+    values:
+      - architecture: standalone
+
+  - name: redis
+    namespace: lbx-system
+    chart: bitnami/redis
+    version: 17.13.2
+    values:
+      - architecture: standalone
+
+  - name: vault
+    namespace: lbx-system
+    chart: hashicorp/vault
+    version: 0.25.0
+    values:
+      - server:
+          standalone:
+            config: |
+              ui = true
+              
+              listener "tcp" {
+                tls_disable = 1
+                address = "[::]:8200"
+                cluster_address = "[::]:8201"
+                telemetry {
+                  unauthenticated_metrics_access = "true"
+                }
+              }
+              storage "file" {
+                path = "/vault/data"
+              }
+        injector:
+          enabled: false

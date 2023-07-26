@@ -4,6 +4,9 @@ Rails.application.routes.draw do
 
   devise_for :users
 
+  get '/status/ready', to: 'status#ready'
+  get '/status/health', to: 'status#health'
+
   namespace :auth do
     resources :cluster_roles
     resources :roles
@@ -26,12 +29,10 @@ Rails.application.routes.draw do
 
   resources :access_tokens, only: [:create, :update, :delete]
 
-  scope constraints: { subdomain: 'auth' } do
-    use_doorkeeper_openid_connect
-    use_doorkeeper
+  use_doorkeeper_openid_connect
+  use_doorkeeper
 
-    get 'auth/:provider/callback', to: 'sessions#create'
-  end
+  get 'auth/:provider/callback', to: 'sessions#create'
 
   namespace :api, defaults: { format: :json } do
     namespace :v1 do

@@ -1,0 +1,50 @@
+apiVersion: skaffold/v4beta6
+kind: Config
+metadata:
+  name: launchboxhq
+build:
+  artifacts:
+    - image: app
+deploy:
+  helm:
+    releases:
+      - name: launchboxhq
+        chartPath: deploy/charts/launchboxhq
+        namespace: lbx-system
+        setValueTemplates:
+          image.repository: "{{.IMAGE_REPO_app}}"
+          image.tag: "{{.IMAGE_TAG_app}}@{{.IMAGE_DIGEST_app}}"
+        valuesFiles:
+          - deploy/charts/launchboxhq/values.yaml
+        setValues:
+          server:
+            env:
+              DATABASE_URL: postgresql://postgres:9CUl96gRci@postgres-postgresql:5432
+              OIDC_SIGNING_KEY_FILE: /certs/private_key.pem
+            volumeMounts:
+              - name: signing-cert
+                mountPath: /certs
+                readOnly: true
+            volumes:
+              - name: signing-cert
+                secret:
+                  secretName: signing-certificate
+
+        version: 0.1.0
+portForward:
+  - resourceType: service
+    resourceName: vault
+    namespace: lbx-system
+    port: 8200
+  - resourceType: service
+    resourceName: redis-master
+    namespace: lbx-system
+    port: 6379
+  - resourceType: service
+    resourceName: postgres-postgresql
+    namespace: lbx-system
+    port: 5432
+  - resourceType: service
+    resourceName: launchboxhq
+    namespace: lbx-system
+    port: 3000

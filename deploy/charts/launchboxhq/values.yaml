@@ -5,7 +5,7 @@
 replicaCount: 1
 
 image:
-  repository: nginx
+  repository: ghcr.io/launchboxio/launchboxhq
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
   tag: ""
@@ -38,7 +38,7 @@ securityContext: {}
 
 service:
   type: ClusterIP
-  port: 80
+  port: 3000
 
 ingress:
   enabled: false
@@ -100,3 +100,13 @@ vault:
 # Configuration for the optional Redis chart
 redis:
   enabled: false
+
+server:
+  env: {}
+
+  volumes: []
+  volumeMounts: []
+
+jobs:
+  migration:
+    restartPolicy: Never

@@ -105,7 +105,11 @@ module Projects
       template = %q{
 vcluster:
   extraArgs: []
-#    - "--kube-apiserver-arg=--oidc-username-claim=preferred_username"
+   - "--kube-apiserver-arg=--oidc-username-claim=preferred_username"
+   - "--kube-apiserver-arg=--oidc-issuer-url=http://minikube.docker.internal/oauth2/aus94zuko1QlEE5Qm5d7"
+   - "--kube-apiserver-arg=--oidc-client-id=0oa94zu5m3tQpadSR5d7"
+   - "--kube-apiserver-arg=--oidc-username-claim=email"
+   - "--kube-apiserver-arg=--oidc-groups-claim=groups"
   resources:
     limits:
       cpu: <%= @project.cpu %>

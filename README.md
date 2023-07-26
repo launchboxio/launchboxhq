@@ -15,7 +15,7 @@ git clone git@github.com:launchboxio/launchboxhq
 
 # Generate a signing key for OIDC requests 
 openssl genpkey -algorithm RSA -out private_key.pem -pkeyopt rsa_keygen_bits:2048
-
+kubectl create secret generic signing-certificate --from-file=private_key.pem -n lbx-system
 # Start Vault and Postgres
 docker-compose up -d 
 
