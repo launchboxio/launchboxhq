@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
 module Projects
-  class PauseProjectJob < ApplicationJob
-    queue_as :default
+  class PauseProjectJob
+    include Sidekiq::Job
 
     # https://github.com/loft-sh/vcluster/blob/main/cmd/vclusterctl/cmd/pause.go
-    def perform(*args)
-      @project = Project.find(args.first)
+    def perform(project_id)
+      @project = Project.find(project_id)
       @cluster = Cluster.find(@project.cluster_id)
       cert_store = OpenSSL::X509::Store.new
       cert_store.add_cert(OpenSSL::X509::Certificate.new(@cluster.ca_crt))

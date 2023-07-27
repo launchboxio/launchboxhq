@@ -19,7 +19,7 @@ class ProjectsController < AuthenticatedController
     @project.cluster = @clusters.sample
     puts @project.cluster.id
     if @project.save
-      Projects::SyncProjectJob.perform_later(@project.id)
+      Projects::SyncProjectJob.perform_async(@project.id)
       redirect_to @project
     else
       render 'new'

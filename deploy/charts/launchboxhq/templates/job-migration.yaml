@@ -29,4 +29,12 @@ spec:
             - name: {{ $key }}
               value: {{ $value | quote }}
             {{- end }}
+          {{- with .Values.server.volumeMounts }}
+          volumeMounts:
+          {{- toYaml . | nindent 12 }}
+          {{- end }}
       restartPolicy: {{ .Values.jobs.migration.restartPolicy }}
+      {{- with .Values.server.volumes }}
+      volumes:
+      {{- toYaml . | nindent 8 }}
+      {{- end }}

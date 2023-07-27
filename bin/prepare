@@ -9,14 +9,15 @@ if ! minikube status --profile "${PROFILE}"; then
   minikube start \
     --profile launchboxhq
 fi
+# Ensure we're on the minikube context
+kubectl config use-context "${PROFILE}"
+
+echo "Enabling ingress addon"
+minikube addons enable ingress --profile "${PROFILE}"
 
 echo "Verifying our services are running..."
-docker compose up -d
+helmfile apply
 
-echo "Setting up cluster connection..."
-kubectl apply -f deploy/dev/manifest.yaml
-CA_CRT=$(kubectl get secret launchboxhq -n lbx-system -o jsonpath='{.data.ca\.crt}')
-TOKEN=$(kubectl get secret launchboxhq -n lbx-system -o jsonpath='{.data.token}')
-echo "Cluster.create(token: \"${TOKEN}\", ca_crt: \"${CA_CRT}\")" | bundle exec rails c
-
+echo "Initializing Vault..."
+# TODO: Add Vault initialization and whatnot
 clusterctl init --infrastructure vcluster

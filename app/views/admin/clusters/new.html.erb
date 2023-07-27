@@ -2,6 +2,7 @@
 
 <div class="card">
   <%= bootstrap_form_for([:admin, @cluster]) do |f| %>
+    <%= f.text_field :name %>
     <%= f.text_area :ca_crt %>
     <%= f.text_field :host %>
     <%= f.password_field :token %>

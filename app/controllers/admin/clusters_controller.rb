@@ -20,7 +20,7 @@ module Admin
       @cluster = Cluster.new(cluster_params)
       @cluster.oauth_application = application
       if @cluster.save
-        Clusters::CreateClusterJob.perform_later(@cluster.id) if @cluster.managed?
+        Clusters::CreateClusterJob.perform_async(@cluster.id) if @cluster.managed?
         # TODO: Fix our redirect here
         # undefined method `cluster_url'
         redirect_to @cluster

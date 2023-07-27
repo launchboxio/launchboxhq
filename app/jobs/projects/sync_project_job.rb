@@ -1,22 +1,12 @@
 module Projects
-  class SyncProjectJob < ApplicationJob
-    queue_as :default
+  class SyncProjectJob
+    include Sidekiq::Job
 
-    def perform(*args)
-      timeout = 300
+    def perform(project_id)
 
-      @project = Project.find(args.first)
+      @project = Project.find(project_id)
       @cluster = Cluster.find(@project.cluster_id)
       @project.update(status: 'provisioning')
-      cert_store = OpenSSL::X509::Store.new
-      cert_store.add_cert(OpenSSL::X509::Certificate.new(@cluster.ca_crt))
-      @options = {
-        auth_options: { bearer_token: @cluster.token },
-        ssl_options: {
-          cert_store: cert_store,
-          verify_ssl: OpenSSL::SSL::VERIFY_PEER
-        }
-      }
 
       ensure_namespace
       ensure_infrastructure
@@ -32,7 +22,9 @@ module Projects
           name: @project.slug
         }
       )
-      client = Kubeclient::Client.new(@cluster.host, 'v1', **@options)
+      client = @cluster.get_client("", "v1")
+      puts client.api_endpoint.host
+      puts client.api_endpoint.path
       begin
         client.create_namespace(namespace)
       rescue
@@ -41,7 +33,9 @@ module Projects
     end
 
     def ensure_infrastructure
-      client = Kubeclient::Client.new("#{@cluster.host}/apis/infrastructure.cluster.x-k8s.io", 'v1alpha1', **@options)
+      client = @cluster.get_client("/apis/infrastructure.cluster.x-k8s.io", 'v1alpha1')
+      puts client.api_endpoint.host
+      puts client.api_endpoint.path
       resource = Kubeclient::Resource.new(
         metadata: {
           name: @project.slug,
@@ -71,7 +65,7 @@ module Projects
     end
 
     def ensure_cluster
-      client = Kubeclient::Client.new("#{@cluster.host}/apis/cluster.x-k8s.io", 'v1beta1', **@options)
+      client = @cluster.get_client("/apis/cluster.x-k8s.io", 'v1beta1')
       resource = Kubeclient::Resource.new({
         metadata: {
           name: @project.slug,
@@ -104,10 +98,10 @@ module Projects
     def values
       template = %q{
 vcluster:
-  extraArgs: []
+  extraArgs:
    - "--kube-apiserver-arg=--oidc-username-claim=preferred_username"
-   - "--kube-apiserver-arg=--oidc-issuer-url=http://minikube.docker.internal/oauth2/aus94zuko1QlEE5Qm5d7"
-   - "--kube-apiserver-arg=--oidc-client-id=0oa94zu5m3tQpadSR5d7"
+   - "--kube-apiserver-arg=--oidc-issuer-url=https://launchboxhq.local"
+   - "--kube-apiserver-arg=--oidc-client-id=lNylsUBcv_6pFwITm2CxTOGd3k_tr7kmeG4TJp4gruk"
    - "--kube-apiserver-arg=--oidc-username-claim=email"
    - "--kube-apiserver-arg=--oidc-groups-claim=groups"
   resources:

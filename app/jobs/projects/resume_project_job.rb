@@ -1,12 +1,10 @@
 # frozen_string_literal: true
 
 module Projects
-  class ResumeProjectJob < ApplicationJob
-    queue_as :default
+  class ResumeProjectJob
+    include Sidekiq::Job
 
-    def perform(*args)
-      # Do something later
-      project_id = args.first
+    def perform(project_id)
       @project = Project.find(project_id)
       @cluster = Cluster.find(@project.cluster_id)
       cert_store = OpenSSL::X509::Store.new

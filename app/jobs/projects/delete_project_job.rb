@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 module Projects
-  class DeleteProjectJob < ApplicationJob
-    queue_as :default
+  class DeleteProjectJob
+    include Sidekiq::Job
 
-    def perform(*args)
-      @project = Project.find(args.first)
+    def perform(project_id)
+      @project = Project.find(project_id)
       @project.update(status: "terminating")
       @cluster = Cluster.find(@project.cluster_id)
 

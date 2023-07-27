@@ -19,6 +19,8 @@ releases:
     version: 17.13.2
     values:
       - architecture: standalone
+        auth:
+          enabled: false
 
   - name: vault
     namespace: lbx-system

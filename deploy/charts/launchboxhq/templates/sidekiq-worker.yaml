@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "launchboxhq.fullname" . }}
+  name: {{ include "launchboxhq.fullname" . }}-worker
   labels:
     {{- include "launchboxhq.labels" . | nindent 4 }}
 spec:
@@ -11,6 +11,7 @@ spec:
   selector:
     matchLabels:
       {{- include "launchboxhq.selectorLabels" . | nindent 6 }}
+      component: "worker"
   template:
     metadata:
       {{- with .Values.podAnnotations }}
@@ -19,6 +20,7 @@ spec:
       {{- end }}
       labels:
         {{- include "launchboxhq.selectorLabels" . | nindent 8 }}
+        component: "worker"
     spec:
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
@@ -27,6 +29,7 @@ spec:
       serviceAccountName: {{ include "launchboxhq.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
+
       containers:
         - name: {{ .Chart.Name }}
           securityContext:
@@ -38,18 +41,8 @@ spec:
             - name: {{ $key }}
               value: {{ $value | quote }}
             {{- end }}
-          ports:
-            - name: http
-              containerPort: 3000
-              protocol: TCP
-          livenessProbe:
-            httpGet:
-              path: /status/health
-              port: http
-          readinessProbe:
-            httpGet:
-              path: /status/ready
-              port: http
+          command: ["bundle", "exec", "sidekiq"]
+          ports: []
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           {{- with .Values.server.volumeMounts }}
