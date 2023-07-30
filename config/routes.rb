@@ -22,7 +22,9 @@ Rails.application.routes.draw do
 
   resources :organizations
 
-  resources :projects
+  resources :projects do
+    get :kubeconfig, on: :member
+  end
 
   # Profile routes
   get '/profile', to: 'profile#index'

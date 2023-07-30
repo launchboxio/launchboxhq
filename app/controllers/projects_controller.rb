@@ -13,7 +13,6 @@ class ProjectsController < AuthenticatedController
   def show; end
 
   def create
-    puts "Creating project"
     @project = current_user.projects.build(project_params)
     # Select a cluster at random
     @project.cluster = @clusters.sample
@@ -24,6 +23,12 @@ class ProjectsController < AuthenticatedController
     else
       render 'new'
     end
+  end
+
+  def kubeconfig
+    @oidc_issuer = "https://launchboxhq.local"
+    @oidc_client_id = "abcd1234"
+    render 'kubeconfig', :layout => false, content_type: "application/x-yaml"
   end
 
   private

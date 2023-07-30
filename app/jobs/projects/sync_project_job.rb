@@ -8,9 +8,30 @@ module Projects
       @cluster = Cluster.find(@project.cluster_id)
       @project.update(status: 'provisioning')
 
+      # Create our resources
       ensure_namespace
       ensure_infrastructure
       ensure_cluster
+
+      # Backfill our project with the information from the generated cluster
+      client = @cluster.get_client("", "v1")
+      loop do
+        begin
+          secret = client.get_secret("vc-#{@project.slug}", @project.slug)
+          @project.update(ca_crt: secret.data['certificate-authority'])
+          break
+        rescue Kubeclient::HttpError => e
+          puts e
+          # Handle all errors except for "Not Found"
+          if e.error_code != 404
+            @project.update(status: "failed")
+            raise
+          end
+
+          sleep 1
+        end
+      end
+
 
       @project.update(status: 'provisioned')
     end
@@ -96,6 +117,8 @@ module Projects
     end
 
     def values
+      # TODO: Add manifests for users
+      # TODO: Add manifests for giving launchbox admin access
       template = %q{
 vcluster:
   extraArgs:
@@ -118,6 +141,11 @@ sync:
     enabled: true
 ingress:
   enabled: true
+  annotations:
+    nginx.ingress.kubernetes.io/backend-protocol: HTTPS
+    nginx.ingress.kubernetes.io/ssl-passthrough: "true"
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+  host: "api.<%= @project.slug %>.launchboxhq.local"
 }
       ryaml = ERB.new(template)
       b = binding
