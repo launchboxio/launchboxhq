@@ -4,6 +4,16 @@ repositories:
     oci: true
   - name: hashicorp
     url: https://helm.releases.hashicorp.com
+#  - name: twuni
+#    url: https://helm.twun.io
+#  - name: ingress-nginx
+#    url: https://kubernetes.github.io/ingress-nginx
+
+hooks:
+  - events: ["prepare", "cleanup"]
+    showlogs: true
+    command: "kubectl"
+    args: ["apply", "-f", "deploy/dev/*"]
 
 releases:
   - name: postgres
@@ -12,6 +22,26 @@ releases:
     version: 12.6.9
     values:
       - architecture: standalone
+#
+#  - name: registry
+#    namespace: lbx-system
+#    chart: twuni/docker-registry
+#    version: 2.2.2
+#    values:
+#      - service:
+#          type: ClusterIP
+#        ingress:
+#          enabled: true
+#          annotations:
+#            cert-manager.io/cluster-issuer: internal-ca-issuer
+#            nginx.ingress.kubernetes.io/proxy-body-size: 500m
+#          hosts:
+#            - registry.launchboxhq.local
+#          tls:
+#            - secretName: launchbox-local-tls
+#              hosts:
+#                - registry.launchboxhq.local
+#
 
   - name: redis
     namespace: lbx-system
@@ -21,6 +51,17 @@ releases:
       - architecture: standalone
         auth:
           enabled: false
+#
+#  - name: ingress-nginx
+#    namespace: lbx-system
+#    chart: ingress-nginx/ingress-nginx
+#    version: 4.7.1
+#    values:
+#      - controller:
+#          hostPort:
+#            enabled: true
+#          service:
+#            type: ClusterIP
 
   - name: vault
     namespace: lbx-system
