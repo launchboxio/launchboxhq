@@ -26,8 +26,8 @@ class ProjectsController < AuthenticatedController
   end
 
   def kubeconfig
+    @application = Doorkeeper::Application.find_by(name: "oidc")
     @oidc_issuer = "https://launchboxhq.local"
-    @oidc_client_id = "abcd1234"
     render 'kubeconfig', :layout => false, content_type: "application/x-yaml"
   end
 
