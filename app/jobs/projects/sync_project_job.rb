@@ -119,18 +119,25 @@ module Projects
     def values
       # TODO: Add manifests for users
       # TODO: Add manifests for giving launchbox admin access
-      template = %q{
+      template = '
 vcluster:
   extraArgs:
    - "--kube-apiserver-arg=--oidc-username-claim=preferred_username"
    - "--kube-apiserver-arg=--oidc-issuer-url=https://launchboxhq.local"
    - "--kube-apiserver-arg=--oidc-client-id=lNylsUBcv_6pFwITm2CxTOGd3k_tr7kmeG4TJp4gruk"
+   - "--kube-apiserver-arg=--oidc-ca-file=/oidc-certs/ca.crt"
    - "--kube-apiserver-arg=--oidc-username-claim=email"
    - "--kube-apiserver-arg=--oidc-groups-claim=groups"
   resources:
     limits:
       cpu: <%= @project.cpu %>
       memory: "<%= @project.memory %>Mi"
+  volumeMounts:
+    - mountPath: /data
+      name: data
+    - name: launchbox-local-tls
+      mountPath: "/oidc-certs"
+      readOnly: true
 storage:
   persistence: true
   size: "<%= @project.disk %>Gi"
@@ -141,12 +148,35 @@ sync:
     enabled: true
 ingress:
   enabled: true
+  ingressClassName: "nginx"
   annotations:
     nginx.ingress.kubernetes.io/backend-protocol: HTTPS
     nginx.ingress.kubernetes.io/ssl-passthrough: "true"
     nginx.ingress.kubernetes.io/ssl-redirect: "true"
   host: "api.<%= @project.slug %>.launchboxhq.local"
-}
+volumes:
+  - name: launchbox-local-tls
+    secret:
+      secretName: root-secret
+      items:
+      - key: ca.crt
+        path: ca.crt
+init:
+  manifests: |
+    ---
+    apiVersion: rbac.authorization.k8s.io/v1
+    kind: ClusterRoleBinding
+    metadata:
+      name: admins
+    subjects:
+    - kind: User
+      name: <%= @project.user.email %>
+      apiGroup: rbac.authorization.k8s.io
+    roleRef:
+      kind: ClusterRole
+      name: cluster-admin
+      apiGroup: rbac.authorization.k8s.io
+'
       ryaml = ERB.new(template)
       b = binding
       b.local_variable_set(:project, @project)
