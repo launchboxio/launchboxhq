@@ -8,9 +8,30 @@ module Projects
       @cluster = Cluster.find(@project.cluster_id)
       @project.update(status: 'provisioning')
 
+      # Create our resources
       ensure_namespace
       ensure_infrastructure
       ensure_cluster
+
+      # Backfill our project with the information from the generated cluster
+      client = @cluster.get_client("", "v1")
+      loop do
+        begin
+          secret = client.get_secret("vc-#{@project.slug}", @project.slug)
+          @project.update(ca_crt: secret.data['certificate-authority'])
+          break
+        rescue Kubeclient::HttpError => e
+          puts e
+          # Handle all errors except for "Not Found"
+          if e.error_code != 404
+            @project.update(status: "failed")
+            raise
+          end
+
+          sleep 1
+        end
+      end
+
 
       @project.update(status: 'provisioned')
     end
@@ -96,18 +117,27 @@ module Projects
     end
 
     def values
-      template = %q{
+      # TODO: Add manifests for users
+      # TODO: Add manifests for giving launchbox admin access
+      template = '
 vcluster:
   extraArgs:
    - "--kube-apiserver-arg=--oidc-username-claim=preferred_username"
    - "--kube-apiserver-arg=--oidc-issuer-url=https://launchboxhq.local"
    - "--kube-apiserver-arg=--oidc-client-id=lNylsUBcv_6pFwITm2CxTOGd3k_tr7kmeG4TJp4gruk"
+   - "--kube-apiserver-arg=--oidc-ca-file=/oidc-certs/ca.crt"
    - "--kube-apiserver-arg=--oidc-username-claim=email"
    - "--kube-apiserver-arg=--oidc-groups-claim=groups"
   resources:
     limits:
       cpu: <%= @project.cpu %>
       memory: "<%= @project.memory %>Mi"
+  volumeMounts:
+    - mountPath: /data
+      name: data
+    - name: launchbox-local-tls
+      mountPath: "/oidc-certs"
+      readOnly: true
 storage:
   persistence: true
   size: "<%= @project.disk %>Gi"
@@ -118,7 +148,35 @@ sync:
     enabled: true
 ingress:
   enabled: true
-}
+  ingressClassName: "nginx"
+  annotations:
+    nginx.ingress.kubernetes.io/backend-protocol: HTTPS
+    nginx.ingress.kubernetes.io/ssl-passthrough: "true"
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+  host: "api.<%= @project.slug %>.launchboxhq.local"
+volumes:
+  - name: launchbox-local-tls
+    secret:
+      secretName: root-secret
+      items:
+      - key: ca.crt
+        path: ca.crt
+init:
+  manifests: |
+    ---
+    apiVersion: rbac.authorization.k8s.io/v1
+    kind: ClusterRoleBinding
+    metadata:
+      name: admins
+    subjects:
+    - kind: User
+      name: <%= @project.user.email %>
+      apiGroup: rbac.authorization.k8s.io
+    roleRef:
+      kind: ClusterRole
+      name: cluster-admin
+      apiGroup: rbac.authorization.k8s.io
+'
       ryaml = ERB.new(template)
       b = binding
       b.local_variable_set(:project, @project)

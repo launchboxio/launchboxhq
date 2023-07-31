@@ -22,6 +22,9 @@ spec:
     name: selfsigned-cluster-issuer
     kind: ClusterIssuer
     group: cert-manager.io
+  secretTemplate:
+    annotations:
+      kubed.appscode.com/sync: ""
 ---
 apiVersion: cert-manager.io/v1
 kind: ClusterIssuer

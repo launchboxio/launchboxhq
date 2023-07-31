@@ -236,7 +236,7 @@ Doorkeeper.configure do
   # https://doorkeeper.gitbook.io/guides/ruby-on-rails/scopes
 
   default_scopes  :read_clusters, :read_projects, :read_addons, :user
-  optional_scopes :manage_clusters, :manage_projects, :manage_addons, :agent, :openid
+  optional_scopes :manage_clusters, :manage_projects, :manage_addons, :agent, :openid, :email
 
   # Allows to restrict only certain scopes for grant_type.
   # By default, all the scopes will be available for all the grant types.

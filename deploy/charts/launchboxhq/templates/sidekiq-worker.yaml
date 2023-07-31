@@ -4,6 +4,7 @@ metadata:
   name: {{ include "launchboxhq.fullname" . }}-worker
   labels:
     {{- include "launchboxhq.labels" . | nindent 4 }}
+    component: worker
 spec:
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
@@ -11,7 +12,7 @@ spec:
   selector:
     matchLabels:
       {{- include "launchboxhq.selectorLabels" . | nindent 6 }}
-      component: "worker"
+      component: worker
   template:
     metadata:
       {{- with .Values.podAnnotations }}
@@ -20,7 +21,7 @@ spec:
       {{- end }}
       labels:
         {{- include "launchboxhq.selectorLabels" . | nindent 8 }}
-        component: "worker"
+        component: worker
     spec:
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
@@ -42,7 +43,10 @@ spec:
               value: {{ $value | quote }}
             {{- end }}
           command: ["bundle", "exec", "sidekiq"]
-          ports: []
+          ports:
+            - name: http
+              containerPort: 5000
+              protocol: TCP
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           {{- with .Values.server.volumeMounts }}

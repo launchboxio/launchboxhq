@@ -54,16 +54,14 @@ Doorkeeper::OpenidConnect.configure do
 
   # Example claims:
   claims do
-    claim :email do |resource_owner|
-      resource_owner.email
-    end
+    # claim :email, response: [:id_token, :user_info], &:email
 
-    claim :preferred_username do |resource_owner|
-      resource_owner.email
-    end
+    claim :preferred_username, &:email
 
     # claim :email, response: [:id_token], &:email
-
+    claim :email, response: [:id_token, :user_info] do |resource_owner|
+      resource_owner.email
+    end
     #
     # claim :preferred_username, response: [:id_token, :user_info] do |resource_owner|
     #   resource_owner.email

@@ -15,6 +15,7 @@ spec:
       {{- end }}
       labels:
         {{- include "launchboxhq.selectorLabels" . | nindent 8 }}
+        component: migrations
     spec:
       containers:
         - name: {{ .Chart.Name }}
