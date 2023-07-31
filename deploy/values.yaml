@@ -1,0 +1,30 @@
+ingress:
+  enabled: true
+  annotations:
+    cert-manager.io/cluster-issuer: "internal-ca-issuer"
+  hosts:
+    - host: launchboxhq.local
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+  tls:
+    - secretName: launchbox-local-tls
+      hosts:
+        - launchboxhq.local
+
+server:
+  env:
+    DATABASE_URL: postgresql://postgres:9CUl96gRci@postgres-postgresql:5432
+    OIDC_SIGNING_KEY_FILE: /certs/private_key.pem
+    REDIS_URL: redis://redis-master:6379/0
+    VAULT_ADDR: http://vault:8200
+    VAULT_TOKEN: hvs.vmZRU6fvizA2cd3eJ99oxeuJ
+    OIDC_DOMAIN: https://launchboxhq.local
+  volumeMounts:
+    - name: signing-cert
+      mountPath: /certs
+      readOnly: true
+  volumes:
+    - name: signing-cert
+      secret:
+        secretName: signing-certificate

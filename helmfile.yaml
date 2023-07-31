@@ -4,6 +4,8 @@ repositories:
     oci: true
   - name: hashicorp
     url: https://helm.releases.hashicorp.com
+  - name: appscode
+    url: https://charts.appscode.com/stable/
 #  - name: twuni
 #    url: https://helm.twun.io
 #  - name: ingress-nginx
@@ -22,6 +24,12 @@ releases:
     version: 12.6.9
     values:
       - architecture: standalone
+
+  - name: kubed
+    namespace: kube-system
+    chart: appscode/kubed
+    version: 0.13.2
+
 #
 #  - name: registry
 #    namespace: lbx-system
@@ -86,3 +94,6 @@ releases:
               }
         injector:
           enabled: false
+
+
+# 192.168.49.2
