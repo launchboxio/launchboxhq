@@ -1,12 +1,17 @@
 default: &default
   vcluster:
-    template_file: vcluster.yml
+    template_file: <%= ENV["TEMPLATE_FILE"] || "vcluster.yml" %>
+    vcluster_chart_version: 0.15.2
     default_kubernetes_version: 1.23.0
+    cluster_domain: <%= ENV["CLUSTER_DOMAIN"] || "launchboxhq.io" %>
+    oidc_issuer_url: <%= ENV["OIDC_ISSUER_URL"] || "https://launchboxhq.io" %>
 
 development:
   <<: *default
   vcluster:
     template_file: deploy/vcluster.yml
+    cluster_domain: "launchboxhq.local"
+    oidc_issuer_url: "https://launchboxhq.local"
 
 test:
   <<: *default

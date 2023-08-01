@@ -3,7 +3,7 @@ globalAnnotations:
 vcluster:
   extraArgs:
     - "--kube-apiserver-arg=--oidc-username-claim=preferred_username"
-    - "--kube-apiserver-arg=--oidc-issuer-url=<%= @oidc_issuer_url %>"
+    - "--kube-apiserver-arg=--oidc-issuer-url=<%= Rails.configuration.launchbox[:vcluster][:oidc_issuer_url] %>"
     - "--kube-apiserver-arg=--oidc-client-id=<%= @oidc_client_id %>"
     - "--kube-apiserver-arg=--oidc-username-claim=email"
     - "--kube-apiserver-arg=--oidc-groups-claim=groups"
@@ -27,7 +27,7 @@ ingress:
     nginx.ingress.kubernetes.io/backend-protocol: HTTPS
     nginx.ingress.kubernetes.io/ssl-passthrough: "true"
     nginx.ingress.kubernetes.io/ssl-redirect: "true"
-  host: "api.<%= @project.slug %>.launchboxhq.local"
+  host: "api.<%= @project.slug %>.<%= Rails.configuration.launchbox[:vcluster][:cluster_domain] %>"
 
 init:
   manifests: |
