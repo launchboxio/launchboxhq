@@ -3,7 +3,7 @@ globalAnnotations:
 vcluster:
   extraArgs:
     - "--kube-apiserver-arg=--oidc-username-claim=preferred_username"
-    - "--kube-apiserver-arg=--oidc-issuer-url=https://launchboxhq.local"
+    - "--kube-apiserver-arg=--oidc-issuer-url=<%= Rails.configuration.launchbox[:vcluster][:oidc_issuer_url] %>"
     - "--kube-apiserver-arg=--oidc-client-id=lNylsUBcv_6pFwITm2CxTOGd3k_tr7kmeG4TJp4gruk"
     - "--kube-apiserver-arg=--oidc-ca-file=/oidc-certs/ca.crt"
     - "--kube-apiserver-arg=--oidc-username-claim=email"
@@ -33,7 +33,7 @@ ingress:
     nginx.ingress.kubernetes.io/backend-protocol: HTTPS
     nginx.ingress.kubernetes.io/ssl-passthrough: "true"
     nginx.ingress.kubernetes.io/ssl-redirect: "true"
-  host: "api.<%= @project.slug %>.launchboxhq.local"
+  host: "api.<%= @project.slug %>.<%= Rails.configuration.launchbox[:vcluster][:cluster_domain] %>"
 volumes:
   - name: launchbox-local-tls
     secret:
