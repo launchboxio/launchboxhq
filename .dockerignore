@@ -4,6 +4,9 @@
 !app
 !bin
 !config
+# This doesn't need to be mounted to the container
+# TODO: Remove this mount when we figure something else out
+!deploy/vcluster.yml
 !db
 !dist
 !lib
@@ -24,3 +27,4 @@
 !Rakefile
 !tsconfig.json
 !yarn.lock
+!vcluster.yml

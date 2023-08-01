@@ -32,5 +32,7 @@ module Launchboxhq
       Devise::UnlocksController.layout "auth"
       Devise::PasswordsController.layout "auth"
     end
+
+    config.launchbox = config_for(:launchbox)
   end
 end
