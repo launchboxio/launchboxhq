@@ -16,7 +16,6 @@ class Cluster < ApplicationRecord
 
   def get_client(path, api_version)
     if self.ca_crt.blank? || self.token.blank?
-      puts "Returning default client"
       auth_options = {
         bearer_token_file: '/var/run/secrets/kubernetes.io/serviceaccount/token'
       }
@@ -31,7 +30,6 @@ class Cluster < ApplicationRecord
         ssl_options:  ssl_options
       )
     else
-      puts "Returning remote client"
       cert_store = OpenSSL::X509::Store.new
       cert_store.add_cert(OpenSSL::X509::Certificate.new(self.ca_crt))
       @options = {

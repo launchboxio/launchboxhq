@@ -1,0 +1,15 @@
+default: &default
+  vcluster:
+    template_file: vcluster.yml
+    default_kubernetes_version: 1.23.0
+
+development:
+  <<: *default
+  vcluster:
+    template_file: deploy/vcluster.yml
+
+test:
+  <<: *default
+
+production:
+  <<: *default
