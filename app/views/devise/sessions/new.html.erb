@@ -1,3 +1,9 @@
+<% flash.each do |type, msg| %>
+  <div>
+    <%= msg %>
+  </div>
+<% end %>
+
 <div class="row justify-content-md-center">
   <div class="col-md-3">
     <div class="card">
@@ -20,10 +26,10 @@
             <%= f.label :remember_me %>
           </div>
         <% end %>
-        <%= render "devise/shared/links" %>
       </div>
       <%= f.submit "Log in", class: "btn btn-primary" %>
       <% end %>
+      <%= button_to "Sign in with Github", omniauth_authorize_path('user', 'github') %>
     </div>
   </div>
 </div>
