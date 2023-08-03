@@ -1,1 +1,15 @@
 <h2><%= @project.name %></h2>
+
+<h3>Users</h3>
+<ul class="list-group">
+  <% @project.users.each do |user| %>
+  <li class="list-group-item">
+    <%= button_to "delete", project_user_path(@project, user), :method => :delete %> <%= user.email %>
+  </li>
+  <% end %>
+</ul>
+<%= form_with url: project_users_path(@project) do |form| %>
+  <%= form.label :email %>
+  <%= form.email_field :email %>
+  <%= form.submit "Submit" %>
+<% end %>

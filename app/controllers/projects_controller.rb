@@ -1,4 +1,8 @@
 class ProjectsController < AuthenticatedController
+  # TODO: This allows any user with access to a project
+  # to perform update / delete actions on it. We should
+  # allow all with access to read the project data,
+  # but only the creator should have destructive permissions
   before_action :find_project, except: %i[index new create]
   before_action :find_clusters
 
@@ -31,9 +35,17 @@ class ProjectsController < AuthenticatedController
     render 'kubeconfig', :layout => false, content_type: "application/x-yaml"
   end
 
+  def add_user
+
+  end
+
+  def remove_user
+
+  end
+
   private
   def find_project
-    @project = Project.find(params[:id])
+    @project = current_user.projects.find(params[:id])
   end
 
   def project_params
