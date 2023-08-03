@@ -35,14 +35,6 @@ class ProjectsController < AuthenticatedController
     render 'kubeconfig', :layout => false, content_type: "application/x-yaml"
   end
 
-  def add_user
-
-  end
-
-  def remove_user
-
-  end
-
   private
   def find_project
     @project = current_user.projects.find(params[:id])
