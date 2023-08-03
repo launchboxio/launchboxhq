@@ -46,3 +46,4 @@ kubeconfig
 terraform.tfstate*
 
 config.json
+skaffold.env

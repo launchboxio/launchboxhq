@@ -14,6 +14,8 @@ deploy:
         setValueTemplates:
           image.repository: "{{.IMAGE_REPO_app}}"
           image.tag: "{{.IMAGE_TAG_app}}@{{.IMAGE_DIGEST_app}}"
+          server.env.GITHUB_KEY: "{{.GITHUB_KEY}}"
+          server.env.GITHUB_SECRET: "{{.GITHUB_SECRET}}"
         valuesFiles:
           - deploy/charts/launchboxhq/values.yaml
         setValues:

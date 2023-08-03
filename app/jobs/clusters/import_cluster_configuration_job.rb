@@ -23,7 +23,6 @@ module Clusters
       response = conn.get('/version')
       body = response.body
 
-      puts body['gitVersion']
       # Get region, provider, things like that :shrug:
       @cluster.version = "#{body['major']}.#{body['minor']}"
       @cluster.save

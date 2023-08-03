@@ -3,7 +3,9 @@
 class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable,
-         :confirmable, :lockable, :timeoutable, :trackable, :omniauthable
+         :confirmable, :lockable, :timeoutable, :trackable
+
+  devise :omniauthable, omniauth_providers: %i[github]
 
   has_many :projects
 
@@ -18,4 +20,5 @@ class User < ApplicationRecord
            dependent: :delete_all
 
   has_one :profile
+  has_many :vcs_connections
 end

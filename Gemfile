@@ -11,6 +11,7 @@ gem 'rails', '~> 7.0.2', '>= 7.0.2.4'
 gem 'sprockets-rails'
 gem 'stimulus-rails'
 gem 'turbo-rails'
+gem "cssbundling-rails", "~> 1.1"
 # gem "jbuilder", github: 'rails/jbuilder'
 gem 'bcrypt', '~> 3.1'
 gem 'bootsnap', require: false
@@ -35,6 +36,7 @@ gem 'doorkeeper-openid_connect', '~> 1.8'
 
 # Omniauth and providers
 gem 'omniauth', '~> 2.1'
+gem "omniauth-rails_csrf_protection", "~> 1.0"
 gem 'omniauth-atlassian-bitbucket'
 gem 'omniauth-github', github: 'omniauth/omniauth-github', branch: 'master'
 gem 'omniauth-gitlab'
@@ -52,6 +54,9 @@ gem 'vault-rails', '~> 0.8.0'
 
 # RealTime Communication
 gem 'cent'
+
+# Background processing
+gem "sidekiq", "~> 7.1"
 
 group :development, :test do
   gem 'debug', platforms: %i[mri mingw x64_mingw]
@@ -73,6 +78,4 @@ group :test do
   gem 'faker'
 end
 
-gem "cssbundling-rails", "~> 1.1"
 
-gem "sidekiq", "~> 7.1"

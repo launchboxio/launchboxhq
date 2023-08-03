@@ -1,0 +1,11 @@
+<h1>Settings</h1>
+
+<ul class="list-group">
+  <% current_user.vcs_connections.each do |conn| %>
+    <li class="list-group-item">
+      <%= conn.provider %> - <%= conn.email %> - <%= conn.uid %>
+    </li>
+  <% end %>
+
+  <%= button_to "Link Github account", omniauth_authorize_path('user', 'github'), data: { turbo: false } %>
+</ul>

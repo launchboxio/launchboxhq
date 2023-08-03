@@ -1,17 +1,20 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  root 'projects#index'
 
-  devise_for :users
+  devise_for :users, controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
+  use_doorkeeper_openid_connect
+  use_doorkeeper
 
   get '/status/ready', to: 'status#ready'
   get '/status/health', to: 'status#health'
 
-  namespace :auth do
-    resources :cluster_roles
-    resources :roles
-    resources :groups
-  end
+  # namespace :auth do
+  #   resources :cluster_roles
+  #   resources :roles
+  #   resources :groups
+  # end
 
   scope '/admin/', module: :admin, as: :admin do
     root 'clusters#index'
@@ -28,13 +31,9 @@ Rails.application.routes.draw do
 
   # Profile routes
   get '/profile', to: 'profile#index'
+  get '/settings', to: 'settings#index'
 
   resources :access_tokens, only: [:create, :update, :delete]
-
-  use_doorkeeper_openid_connect
-  use_doorkeeper
-
-  get 'auth/:provider/callback', to: 'sessions#create'
 
   namespace :api, defaults: { format: :json } do
     namespace :v1 do
@@ -56,7 +55,5 @@ Rails.application.routes.draw do
   scope module: :tenants, constraints: { subdomain: 'tenants' } do
     resources :tenants
   end
-
-  root 'projects#index'
 
 end

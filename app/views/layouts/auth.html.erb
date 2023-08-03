@@ -6,24 +6,12 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"></script>
 </head>
 <body>
-  <div class="row">
-    <div class="col-xs-10 col-xs-offset-1">
-      <% flash.each do |type, msg| %>
-        <% if type == "notice" %>
-          <div class="alert alert-success">
-        <% elsif type == "alert" %>
-          <div class="alert alert-danger">
-        <% else %>
-          <div class='alert alert-<%= "#{type}" %>'>
-        <% end %>
-        <a href="#" class="close" data-dismiss="alert">&#215;</a>
-        <ul>
-          <li>
-            <%= msg %>
-          </li>
-        </ul>
-      <% end %>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-xs-10 col-xs-offset-1">
+        <%= render "partials/flashes" %>
       </div>
     </div>
     <%= yield %>
+  </div>
 </body>

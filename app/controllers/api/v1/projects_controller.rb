@@ -16,12 +16,9 @@ module Api
       end
 
       def create
-        puts "Looking for cluster"
         cluster = Cluster.find(params[:cluster_id])
-        puts "Found cluster"
         @project = current_resource_owner.projects.build(project_params)
         @project.cluster = cluster
-        puts "Cluster set on project"
         if @project.save
           Projects::CreateProjectJob.perform_later(@project.id)
           render json: @project
