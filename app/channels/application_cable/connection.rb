@@ -6,7 +6,6 @@ module ApplicationCable
 
     def connect
       self.cluster = authenticate!
-      puts self.cluster.inspect
     end
 
     protected

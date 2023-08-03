@@ -1,18 +1,18 @@
 class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   def github
     auth = request.env['omniauth.auth']
-    puts auth.inpect
 
     if user_signed_in?
       # The user is already signed in. Attach the VCS connection,
       # and redirect back to settings
       @user = current_user
-      @user.vcs_connections.find_or_create_by(provider: auth.provider, uid: auth.uid) do |connection|
-        connection.access_token = auth.credentials.token
-        connection.refresh_token = auth.credentials.refresh_token
-        connection.expiry = auth.credentials.expiry
-      end
-      redirect_to settings_path
+      @connection = @user.vcs_connections.find_or_create_by(provider: auth.provider, uid: auth.uid)
+      @connection.access_token = auth.credentials.token
+      @connection.refresh_token = auth.credentials.refresh_token
+      @connection.expiry = auth.credentials.expiry
+      @connection.email = auth.info.email
+      @connection.save!
+      redirect_to settings_path and return
     end
     # First, we check if a user already exists with the current
     @user = User.find_by(email: auth.info.email)
@@ -20,11 +20,12 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
       # If the provider matches, we log them in, and ensure
       # the VCS connection is stored
       if @user.provider == auth.provider && @user.uid == auth.uid
-        @user.vcs_connections.find_or_create_by(provider: auth.provider, uid: auth.uid) do |connection|
-          connection.access_token = auth.credentials.token
-          connection.refresh_token = auth.credentials.refresh_token
-          connection.expiry = auth.credentials.expiry
-        end
+        @connection = @user.vcs_connections.find_or_create_by(provider: auth.provider, uid: auth.uid)
+        @connection.access_token = auth.credentials.token
+        @connection.refresh_token = auth.credentials.refresh_token
+        @connection.expiry = auth.credentials.expiry
+        @connection.email = auth.info.email
+        @connection.save!
         sign_in_and_redirect projects_path, event: :authentication
         set_flash_message(:notice, :success, kind: 'Github') if is_navigational_format?
       else
@@ -32,7 +33,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
         # email, and then tried to login with Github. We only want to support this
         # for adding providers to an existing account (handled above). So here, we just flash an
         # error message and request login again
-        redirect_to new_user_session_path, notice: 'This email is registered with a different provider'
+        redirect_to new_user_session_path, notice: 'This email is registered with a different provider' and return
       end
     else
 
@@ -45,11 +46,12 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
       end
 
       if @user.persisted?
-        @user.vcs_connections.find_or_create_by(provider: auth.provider, uid: auth.uid) do |connection|
-          connection.access_token = auth.credentials.token
-          connection.refresh_token = auth.credentials.refresh_token
-          connection.expiry = auth.credentials.expiry
-        end
+        @connection = @user.vcs_connections.find_or_create_by(provider: auth.provider, uid: auth.uid)
+        @connection.access_token = auth.credentials.token
+        @connection.refresh_token = auth.credentials.refresh_token
+        @connection.expiry = auth.credentials.expiry
+        @connection.email = auth.info.email
+        @connection.save!
         sign_in_and_redirect projects_path, event: :authentication # this will throw if @user is not activated
         set_flash_message(:notice, :success, kind: "Github") if is_navigational_format?
       else

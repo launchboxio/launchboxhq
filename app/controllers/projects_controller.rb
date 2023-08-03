@@ -16,7 +16,6 @@ class ProjectsController < AuthenticatedController
     @project = current_user.projects.build(project_params)
     # Select a cluster at random
     @project.cluster = @clusters.sample
-    puts @project.cluster.id
     if @project.save
       Projects::SyncProjectJob.perform_async(@project.id)
       redirect_to @project
