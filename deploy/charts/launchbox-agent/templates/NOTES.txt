@@ -1,2 +1,0 @@
-1. Get the secret for the deployed service account
-2. Give it to Launchbox

@@ -1,8 +1,0 @@
-{{- if eq .Values.cloud "amazon" }}
-apiVersion: infrastructure.cluster.x-k8s.io/v1beta1
-kind: AWSManagedMachinePool
-metadata:
-  name: {{ .Release.Name }}
-  namespace: {{ .Release.Namespace }}
-spec: {}
-{{- end }}
