@@ -3,7 +3,7 @@ class ProjectsController < AuthenticatedController
   before_action :find_clusters
 
   def index
-    @projects = Project.all
+    @projects = current_user.projects.all
   end
 
   def new
@@ -13,10 +13,11 @@ class ProjectsController < AuthenticatedController
   def show; end
 
   def create
-    @project = current_user.projects.build(project_params)
+    @project = Project.build(project_params)
     # Select a cluster at random
     @project.cluster = @clusters.sample
     if @project.save
+      @project.users << current_user
       Projects::SyncProjectJob.perform_async(@project.id)
       redirect_to @project
     else

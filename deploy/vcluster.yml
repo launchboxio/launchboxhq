@@ -49,9 +49,11 @@ init:
     metadata:
       name: admins
     subjects:
+    <% @project.users.each do |user| %>
     - kind: User
-      name: <%= @project.user.email %>
+      name: <%= user.email %>
       apiGroup: rbac.authorization.k8s.io
+    <% end %>
     roleRef:
       kind: ClusterRole
       name: cluster-admin
