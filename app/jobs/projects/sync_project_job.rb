@@ -32,6 +32,8 @@ module Projects
         end
       end
 
+      ensure_kubernetes_provider
+      ensure_helm_provider
 
       @project.update(status: 'provisioned')
     end
@@ -108,6 +110,66 @@ module Projects
           existing = client.get_cluster @project.slug, @project.slug
           existing.spec = resource.spec
           client.update_cluster(existing)
+        end
+      end
+    end
+
+    def ensure_kubernetes_provider
+      client = @cluster.get_client("/apis/kubernetes.crossplane.io", 'v1alpha1')
+      resource = Kubeclient::Resource.new({
+        metadata: {
+          name: @project.slug
+        },
+        spec: {
+          credentials: {
+            source: "Secret",
+            secretRef: {
+              namespace: @project.slug,
+              name: "vc-#{@project.slug}",
+              key: "config"
+            }
+          }
+        }
+      })
+      begin
+        client.create_provider_config(resource)
+      rescue Kubeclient::HttpError => e
+        if e.error_code == 409
+          existing = client.get_provider_config @project.slug
+          existing.spec = resource.spec
+          client.update_provider_config(existing)
+        else
+          raise
+        end
+      end
+    end
+
+    def ensure_helm_provider
+      client = @cluster.get_client("/apis/helm.crossplane.io", 'v1beta1')
+      resource = Kubeclient::Resource.new({
+        metadata: {
+          name: @project.slug
+        },
+        spec: {
+          credentials: {
+            source: "Secret",
+            secretRef: {
+              namespace: @project.slug,
+              name: "vc-#{@project.slug}",
+              key: "config"
+            }
+          }
+        }
+      })
+      begin
+        client.create_provider_config(resource)
+      rescue Kubeclient::HttpError => e
+        if e.error_code == 409
+          existing = client.get_provider_config @project.slug
+          existing.spec = resource.spec
+          client.update_provider_config(existing)
+        else
+          raise
         end
       end
     end

@@ -39,7 +39,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
       else
         # The user exists, but with a different provider. For example, they registered with
         # email, and then tried to login with Github. We only want to support this
-        # for adding eproviders to an existing account (handled above). So here, we just flash an
+        # for adding providers to an existing account (handled above). So here, we just flash an
         # error message and request login again
         redirect_to new_user_session_path, notice: 'This email is registered with a different provider' and return
       end
