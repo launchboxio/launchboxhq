@@ -1,9 +1,13 @@
 class ProjectsController < AuthenticatedController
+  # TODO: This allows any user with access to a project
+  # to perform update / delete actions on it. We should
+  # allow all with access to read the project data,
+  # but only the creator should have destructive permissions
   before_action :find_project, except: %i[index new create]
   before_action :find_clusters
 
   def index
-    @projects = Project.all
+    @projects = current_user.projects.all
   end
 
   def new
@@ -13,10 +17,11 @@ class ProjectsController < AuthenticatedController
   def show; end
 
   def create
-    @project = current_user.projects.build(project_params)
+    @project = Project.build(project_params)
     # Select a cluster at random
     @project.cluster = @clusters.sample
     if @project.save
+      @project.users << current_user
       Projects::SyncProjectJob.perform_async(@project.id)
       redirect_to @project
     else
@@ -32,7 +37,7 @@ class ProjectsController < AuthenticatedController
 
   private
   def find_project
-    @project = Project.find(params[:id])
+    @project = current_user.projects.find(params[:id])
   end
 
   def project_params

@@ -27,6 +27,7 @@ Rails.application.routes.draw do
 
   resources :projects do
     get :kubeconfig, on: :member
+    resources :projects_users, path: 'users', as: 'users', only: [:create, :destroy]
   end
 
   # Profile routes
