@@ -26,6 +26,10 @@ sync:
     enabled: true
   serviceaccounts:
     enabled: true
+syncer:
+  extraArgs:
+    - --tls-san="<%= @project.slug %>.<%= @project.slug %>"
+    - --out-kube-config-server=https://<%= @project.slug %>.<%= @project.slug %>
 ingress:
   enabled: true
   ingressClassName: "nginx"
