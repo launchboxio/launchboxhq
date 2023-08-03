@@ -8,4 +8,6 @@
   <% end %>
 
   <%= button_to "Link Github account", omniauth_authorize_path('user', 'github'), data: { turbo: false } %>
+  <%= button_to "Link Gitlab account", omniauth_authorize_path('user', 'gitlab'), data: { turbo: false } %>
+  <%= button_to "Link Bitbucket account", omniauth_authorize_path('user', 'bitbucket'), data: { turbo: false } %>
 </ul>

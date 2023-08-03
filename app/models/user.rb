@@ -5,7 +5,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable,
          :confirmable, :lockable, :timeoutable, :trackable
 
-  devise :omniauthable, omniauth_providers: %i[github]
+  devise :omniauthable, omniauth_providers: %i[github gitlab bitbucket]
 
   has_many :projects
 

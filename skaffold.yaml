@@ -16,6 +16,10 @@ deploy:
           image.tag: "{{.IMAGE_TAG_app}}@{{.IMAGE_DIGEST_app}}"
           server.env.GITHUB_KEY: "{{.GITHUB_KEY}}"
           server.env.GITHUB_SECRET: "{{.GITHUB_SECRET}}"
+          server.env.GITLAB_KEY: "{{.GITLAB_KEY}}"
+          server.env.GITLAB_SECRET: "{{.GITLAB_SECRET}}"
+          server.env.BITBUCKET_KEY: "{{.BITBUCKET_KEY}}"
+          server.env.BITBUCKET_SECRET: "{{.BITBUCKET_SECRET}}"
         valuesFiles:
           - deploy/charts/launchboxhq/values.yaml
         setValues:
