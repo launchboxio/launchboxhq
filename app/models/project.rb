@@ -8,6 +8,7 @@ class Project < ApplicationRecord
 
   has_many :addon_subscriptions
   has_many :addons, through: :addon_subscriptions
+  has_many :terraform_states, as: :states
 
   has_and_belongs_to_many :users
   before_create :generate_slug

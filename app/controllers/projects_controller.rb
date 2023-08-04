@@ -1,10 +1,14 @@
-class ProjectsController < AuthenticatedController
+class ProjectsController < Projects::ApplicationController
+
+  before_action :find_project, except: %i[index new create]
+  before_action :find_clusters
+
   # TODO: This allows any user with access to a project
   # to perform update / delete actions on it. We should
   # allow all with access to read the project data,
   # but only the creator should have destructive permissions
-  before_action :find_project, except: %i[index new create]
-  before_action :find_clusters
+  # Once we have destructive actions, modify them here
+  before_action :authorize_admin, only: %i[]
 
   def index
     @projects = current_user.projects.all
@@ -35,10 +39,7 @@ class ProjectsController < AuthenticatedController
     render 'kubeconfig', :layout => false, content_type: "application/x-yaml"
   end
 
-  private
-  def find_project
-    @project = current_user.projects.find(params[:id])
-  end
+
 
   def project_params
     params.require(:project).permit(:cluster_id, :name, :memory, :cpu, :disk)

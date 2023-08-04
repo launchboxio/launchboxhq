@@ -27,7 +27,15 @@ Rails.application.routes.draw do
 
   resources :projects do
     get :kubeconfig, on: :member
-    resources :projects_users, path: 'users', as: 'users', only: [:create, :destroy]
+    scope module: :projects do
+      resources :users, path: 'users', as: 'users', only: [:create, :destroy]
+      resources :terraform, only: [:index, :create] do
+        collection do
+          match 'lock', via: :lock
+          match 'unlock', via: :unlock
+        end
+      end
+    end
   end
 
   # Profile routes
@@ -47,6 +55,7 @@ Rails.application.routes.draw do
           post 'pause'
           post 'resume'
         end
+
         resources :addons, controller: 'project_addons'
       end
       resources :addons
