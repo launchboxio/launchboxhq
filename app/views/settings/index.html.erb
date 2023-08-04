@@ -1,13 +1,39 @@
-<h1>Settings</h1>
+<div class="row">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item active" aria-current="page">Settings</li>
+    </ol>
+  </nav>
+</div>
 
-<ul class="list-group">
-  <% current_user.vcs_connections.each do |conn| %>
-    <li class="list-group-item">
-      <%= conn.provider %> - <%= conn.email %> - <%= conn.uid %>
-    </li>
-  <% end %>
-
-  <%= button_to "Link Github account", omniauth_authorize_path('user', 'github'), data: { turbo: false } %>
-  <%= button_to "Link Gitlab account", omniauth_authorize_path('user', 'gitlab'), data: { turbo: false } %>
-  <%= button_to "Link Bitbucket account", omniauth_authorize_path('user', 'bitbucket'), data: { turbo: false } %>
-</ul>
+<div class="row">
+  <div class="col-md-4">
+    <div class="card">
+      <div class="card-header">VCS Connections</div>
+      <div class="card-body">
+        <ul class="list-group">
+          <% current_user.vcs_connections.each do |conn| %>
+            <li class="list-group-item">
+              <%= conn.provider %> - <%= conn.email %> - <%= conn.uid %>
+            </li>
+          <% end %>
+        </ul>
+        <div class="row">
+          <a href="<%= omniauth_authorize_path('user', 'github') %>">
+            <button type="button" class="btn">Sign in with Github</button>
+          </a>
+        </div>
+        <div class="row">
+          <a href="<%= omniauth_authorize_path('user', 'gitlab') %>">
+            <button type="button" class="btn">Sign in with Gitlab</button>
+          </a>
+        </div>
+        <div class="row">
+          <a href="<%= omniauth_authorize_path('user', 'bitbucket') %>">
+            <button type="button" class="btn">Sign in with Bitbucket</button>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

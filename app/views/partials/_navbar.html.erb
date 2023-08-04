@@ -34,7 +34,10 @@
             <li><a class="dropdown-item" href="/settings">Accounts</a></li>
             <li><a class="dropdown-item" href="#">Access Tokens</a></li>
             <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Logout</a></li>
+            <li>
+              <!-- TODO: This button doesn't trigger the page to refresh -->
+              <%= button_to "Logout", destroy_user_session_path, method: :delete, class: 'btn-link dropdown-item', data: { turbolinks: false }  %>
+            </li>
           </ul>
         </li>
       </ul>
