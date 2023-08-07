@@ -20,3 +20,18 @@
   <%= form.email_field :email %>
   <%= form.submit "Submit" %>
 <% end %>
+
+<h3>Addons</h3>
+<% if @project.addon_subscriptions.length == 0 %>
+  <div class="alert alert-info">
+    No addons have been added to this project
+  </div>
+<% else %>
+<ul class="list-group">
+  <% @project.addon_subscriptions.each do |subscription| %>
+  <li class="list-group-item">
+    <%= subscription.addon.name %>
+  </li>
+  <% end %>
+</ul>
+<% end %>
