@@ -9,6 +9,9 @@ class CreateAddons < ActiveRecord::Migration[7.0]
 
       t.string :oci_registry
       t.string :oci_version
+      t.string :pull_policy
+      t.string :activation_policy
+      t.string :status
 
       t.timestamps
     end

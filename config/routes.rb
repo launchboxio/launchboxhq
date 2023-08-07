@@ -26,8 +26,11 @@ Rails.application.routes.draw do
   resources :organizations
 
   resources :projects do
+    scope module: :projects do
+      resources :users, only: [:create, :destroy]
+      resources :addons
+    end
     get :kubeconfig, on: :member
-    resources :projects_users, path: 'users', as: 'users', only: [:create, :destroy]
   end
 
   # Profile routes

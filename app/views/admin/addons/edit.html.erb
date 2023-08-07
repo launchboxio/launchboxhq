@@ -1,0 +1,30 @@
+<div class="row">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="<%= admin_addons_path %>">Addons</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Edit addon</li>
+    </ol>
+  </nav>
+</div>
+
+
+<div class="row justify-content-md-center">
+  <div class="col-md-6">
+    <div class="card">
+      <%= bootstrap_form_for [:admin, @addon] do |f| %>
+        <div class="card-header"><%= @addon.name %></div>
+        <div class="card-body">
+          <%= f.text_field :oci_registry %>
+          <%= f.text_field :oci_version  %>
+          <%= f.select :pull_policy, ["IfNotPresent", "Always", "Never"] %>
+          <%= f.select :activation_policy, ["Automatic", "Manual"] %>
+          <%= f.text_area :json_schema %>
+
+        </div>
+        <div class="card-footer">
+          <%= f.submit "Update" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
