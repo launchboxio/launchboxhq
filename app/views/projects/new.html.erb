@@ -1,11 +1,28 @@
-<h1>Creating a new project</h1>
+<div class="row">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="<%= projects_path %>">Projects</a></li>
+      <li class="breadcrumb-item active" aria-current="page">New Project</li>
+    </ol>
+  </nav>
+</div>
 
-<div class="card">
-  <%= bootstrap_form_for(@project) do |f| %>
-    <%= f.text_field :name %>
-    <%= f.text_field :cpu %>
-    <%= f.text_field :memory %>
-    <%= f.text_field :disk %>
-    <%= f.submit "Submit" %>
-  <% end %>
+<div class="row justify-content-md-center">
+  <div class="col-md-4">
+    <div class="card">
+      <%= bootstrap_form_for(@project) do |f| %>
+      <div class="card-header">Details</div>
+      <div class="card-body">
+        <%= f.text_field :name %>
+        <%= f.text_field :cpu, append: "cores" %>
+        <%= f.text_field :memory, append: "Mi"  %>
+        <%= f.text_field :disk, append: "Gi" %>
+
+      </div>
+      <div class="card-footer">
+        <%= f.submit "Submit" %>
+      </div>
+      <% end %>
+    </div>
+  </div>
 </div>

@@ -11,6 +11,8 @@ deploy:
       - name: launchboxhq
         chartPath: deploy/charts/launchboxhq
         namespace: lbx-system
+        skipBuildDependencies: true
+        #        upgradeOnChange: false
         setValueTemplates:
           image.repository: "{{.IMAGE_REPO_app}}"
           image.tag: "{{.IMAGE_TAG_app}}@{{.IMAGE_DIGEST_app}}"

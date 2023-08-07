@@ -1,31 +1,49 @@
 <div class="row justify-content-md-center">
-  <div class="col-md-3">
+  <div class="col-md-6">
     <div class="card">
-      <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-      <div class="card-header bg-primary text-white">Login</div>
+      <div class="card-header">Login</div>
       <div class="card-body">
-        <div class="field">
-          <%= f.label :email %><br />
-          <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control"  %>
-        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+              <div class="field">
+                <%= f.label :email %><br />
+                <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control"  %>
+              </div>
 
-        <div class="field">
-          <%= f.label :password %><br />
-          <%= f.password_field :password, autocomplete: "current-password", class: "form-control" %>
-        </div>
+              <div class="field">
+                <%= f.label :password %><br />
+                <%= f.password_field :password, autocomplete: "current-password", class: "form-control" %>
+              </div>
 
-        <% if devise_mapping.rememberable? %>
-          <div class="field">
-            <%= f.check_box :remember_me %>
-            <%= f.label :remember_me %>
+              <% if devise_mapping.rememberable? %>
+                <div class="field">
+                  <%= f.check_box :remember_me %>
+                  <%= f.label :remember_me %>
+                </div>
+              <% end %>
+              <%= f.submit "Log in", class: "btn btn-primary" %>
+            <% end %>
           </div>
-        <% end %>
+          <div class="col-md-6">
+            <div class="row">
+              <a href="<%= omniauth_authorize_path('user', 'github') %>">
+                <button type="button" class="btn">Sign in with Github</button>
+              </a>
+            </div>
+            <div class="row">
+              <a href="<%= omniauth_authorize_path('user', 'gitlab') %>">
+                <button type="button" class="btn">Sign in with Gitlab</button>
+              </a>
+            </div>
+            <div class="row">
+              <a href="<%= omniauth_authorize_path('user', 'bitbucket') %>">
+                <button type="button" class="btn">Sign in with Bitbucket</button>
+              </a>
+            </div>
+          </div>
+        </div>
       </div>
-      <%= f.submit "Log in", class: "btn btn-primary" %>
-      <% end %>
-      <%= button_to "Sign in with Github", omniauth_authorize_path('user', 'github') %>
-      <%= button_to "Sign in with Gitlab", omniauth_authorize_path('user', 'gitlab') %>
-      <%= button_to "Sign in with Bitbucket", omniauth_authorize_path('user', 'bitbucket') %>
     </div>
   </div>
 </div>

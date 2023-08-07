@@ -1,4 +1,11 @@
-<h2><%= @project.name %></h2>
+<div class="row">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="<%= projects_path %>">Projects</a></li>
+      <li class="breadcrumb-item active" aria-current="page"><%= @project.name %></li>
+    </ol>
+  </nav>
+</div>
 
 <h3>Users</h3>
 <ul class="list-group">
