@@ -8,6 +8,7 @@ class Project < ApplicationRecord
 
   has_many :addon_subscriptions
   has_many :addons, through: :addon_subscriptions
+  accepts_nested_attributes_for :addon_subscriptions
 
   has_and_belongs_to_many :users
   before_create :generate_slug

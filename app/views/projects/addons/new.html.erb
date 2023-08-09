@@ -1,0 +1,26 @@
+<div class="row">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="<%= projects_path %>">Projects</a></li>
+      <li class="breadcrumb-item"><a href="<%= project_path(@project) %>"><%= @project.name %></a></li>
+      <li class="breadcrumb-item active" aria-current="page">Addons</li>
+    </ol>
+  </nav>
+</div>
+
+<div class="row justify-content-md-center">
+  <div class="col-md-6">
+    <div class="card">
+      <%= bootstrap_form_for(@addon, url: "/projects/#{@project.id}/addons") do |f| %>
+        <div class="card-header">Addon Info</div>
+        <div class="card-body">
+          <%= f.select :addon_id, @addons.map{|addon| [addon.name, addon.id]} %>
+          <%= f.text_field :name  %>
+        </div>
+        <div class="card-footer">
+          <%= f.submit "Submit" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

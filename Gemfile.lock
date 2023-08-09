@@ -195,6 +195,9 @@ GEM
     http-form_data (2.3.0)
     http-parser (1.2.3)
       ffi-compiler (>= 1.0, < 2.0)
+    httparty (0.21.0)
+      mini_mime (>= 1.0.0)
+      multi_xml (>= 0.5.2)
     httpclient (2.8.3)
     i18n (1.12.0)
       concurrent-ruby (~> 1.0)
@@ -464,6 +467,7 @@ DEPENDENCIES
   grpc-tools (~> 1.50)
   gruf (~> 2.16)
   haikunate (~> 0.1.1)
+  httparty (~> 0.21.0)
   jsbundling-rails
   json-schema
   jsonapi-serializer (~> 2.2)

@@ -6,6 +6,11 @@ repositories:
     url: https://helm.releases.hashicorp.com
   - name: appscode
     url: https://charts.appscode.com/stable/
+  - name: crossplane-stable
+    url: https://charts.crossplane.io/stable
+  - name: crossplane-contrib
+    url: xpkg.upbound.io/crossplane-contrib
+    oci: true
 #  - name: twuni
 #    url: https://helm.twun.io
 #  - name: ingress-nginx
@@ -93,7 +98,38 @@ releases:
                 path = "/vault/data"
               }
         injector:
-          enabled: false
+          enabled: true
 
+  - name: crossplane
+    namespace: crossplane-system
+    chart: crossplane-stable/crossplane
+    version: 1.13.1
+    values:
+      - provider:
+          packages: []
+#            These need custom controller configs, so
+#            we install them from deploy/dev
+#            - crossplanecontrib/provider-helm:master
+#            - crossplanecontrib/provider-kubernetes:master
+        args:
+          - --debug
+#          - --enable-external-secret-stores
 
-# 192.168.49.2
+# We currently can't store ether kubernetes or
+# helm values in vault, so we'll put a pin in
+# this one
+#  - name: ess-plugin-vault
+#    namespace: lbx-system
+#    chart: crossplane-contrib/ess-plugin-vault
+#    version: v0.1.0
+#    values:
+#      - podAnnotations:
+#          vault.hashicorp.com/agent-inject: "true"
+#          vault.hashicorp.com/agent-inject-token: "true"
+#          vault.hashicorp.com/role: crossplane
+#          vault.hashicorp.com/agent-run-as-user: "65532"
+#    hooks:
+#      - events: [ "cleanup" ]
+#        showlogs: true
+#        command: "kubectl"
+#        args: [ "apply", "-f", "deploy/dev/crossplane" ]

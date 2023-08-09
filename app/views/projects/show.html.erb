@@ -31,7 +31,11 @@
   <% @project.addon_subscriptions.each do |subscription| %>
   <li class="list-group-item">
     <%= subscription.addon.name %>
+    <%= button_to "delete", project_addon_path(@project, subscription), :method => :delete %>
   </li>
   <% end %>
 </ul>
 <% end %>
+<a href="<%= new_project_addon_path(@project) %>">
+  Attach Addon
+</a>
