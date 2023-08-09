@@ -1,5 +1,7 @@
 ## Feature List
 
+**NOTE:** These items are moved to the Github project
+
 ### Clusters
 
 - [ ] [Admin] Support creating clusters using ClusterAPI
