@@ -48,7 +48,7 @@ module Admin
 
     private
     def addon_params
-      params.require(:addon).permit(:name, :oci_registry, :oci_version, :json_schema, :pull_policy, :activation_policy, :template)
+      params.require(:addon).permit(:name, :oci_registry, :oci_version, :pull_policy, :activation_policy, :template)
     end
   end
 end

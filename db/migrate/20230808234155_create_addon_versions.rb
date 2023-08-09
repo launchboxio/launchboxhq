@@ -7,7 +7,6 @@ class CreateAddonVersions < ActiveRecord::Migration[7.0]
       t.boolean :default
       t.string :group
       t.json :schema
-      t.json :json_schema
 
       t.timestamps
     end
