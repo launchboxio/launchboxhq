@@ -20,6 +20,7 @@ module Admin
       @addon = Addon.find(params[:id])
       if @addon.update(addon_params)
         Addons::InstallAddonJob.perform_async @addon.id
+        Addons::AnalyzePackageJob.perform_async @addon.id
         redirect_to admin_addon_path(@addon), notice: 'Addon updated'
       else
         flash[:error] = @addon.errors.full_messages.to_sentence
@@ -31,6 +32,7 @@ module Admin
       @addon = Addon.new(addon_params)
       if @addon.save
         Addons::InstallAddonJob.perform_async @addon.id
+        Addons::AnalyzePackageJob.perform_async @addon.id
         redirect_to admin_addon_path(@addon), notice: 'Addon created'
       else
         flash[:error] = @addon.errors.full_messages.to_sentence
