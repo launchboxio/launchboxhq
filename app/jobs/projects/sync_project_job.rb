@@ -21,7 +21,6 @@ module Projects
           @project.update(ca_crt: secret.data['certificate-authority'])
           break
         rescue Kubeclient::HttpError => e
-          puts e
           # Handle all errors except for "Not Found"
           if e.error_code != 404
             @project.update(status: "failed")

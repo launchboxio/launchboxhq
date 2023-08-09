@@ -35,13 +35,9 @@ module Addons
           next if document.nil?
           next unless document['kind'] == "CompositeResourceDefinition"
 
-          puts document
           group = document['spec']['group']
           claim_name = document['spec']['claimNames']['kind']
           versions = document['spec']['versions']
-
-          puts versions
-          puts versions.class
 
           versions.each do |version|
             @version = @addon.addon_versions.find_or_create_by(version: version['name'])

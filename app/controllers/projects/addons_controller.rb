@@ -13,7 +13,6 @@ module Projects
     end
     def update; end
     def create
-      puts addon_params
       @sub = @project.addon_subscriptions.build(addon_params)
       if @sub.save
         redirect_to project_path(@project), notice: "Addon attached"
