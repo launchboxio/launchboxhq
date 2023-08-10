@@ -21,7 +21,6 @@ module Projects
           @project.update(ca_crt: secret.data['certificate-authority'])
           break
         rescue Kubeclient::HttpError => e
-          puts e
           # Handle all errors except for "Not Found"
           if e.error_code != 404
             @project.update(status: "failed")
@@ -36,6 +35,28 @@ module Projects
       ensure_helm_provider
 
       @project.update(status: 'provisioned')
+
+      @project.addon_subscriptions.each do |sub|
+        version = sub.addon.addon_versions.first
+        next if version.nil?
+        client = @cluster.get_client("/apis/#{version.group}", version.version)
+        resource = Kubeclient::Resource.new(
+          kind: version.claim_name,
+          apiVersion: "#{version.group}/#{version.version}",
+          metadata: {
+            name: sub.name,
+            namespace: @project.slug
+          },
+          spec: {
+            providerConfigRef: @project.slug
+          }
+        )
+        action=version.claim_name.gsub(/([A-Z]+)([A-Z][a-z])/, '\1_\2')
+                   .gsub(/([a-z\d])([A-Z])/, '\1_\2')
+                   .downcase
+
+        client.public_send("apply_#{action}", resource, field_manager: 'launchbox')
+      end
     end
 
     def ensure_namespace

@@ -6,14 +6,10 @@ class CreateClusterAddonSubscriptions < ActiveRecord::Migration[7.0]
       t.belongs_to :cluster
       t.belongs_to :cluster_addon
 
-      # Allow overriding addons when adding to cluster
-      t.string :chart
-      t.string :repo
-      t.string :version
-      t.string :release
-      t.string :namespace
-      t.string :value
-      t.string :values_merge_type
+      t.json :overrides
+      t.json :mappings
+      t.string :name
+
       t.timestamps
     end
   end
