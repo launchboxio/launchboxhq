@@ -105,14 +105,19 @@ releases:
     chart: crossplane-stable/crossplane
     version: 1.13.1
     values:
-      - provider:
-          packages: []
+#      - provider:
+#          packages: []
 #            These need custom controller configs, so
 #            we install them from deploy/dev
 #            - crossplanecontrib/provider-helm:master
 #            - crossplanecontrib/provider-kubernetes:master
-        args:
+      - args:
+          - --enable-composition-functions
           - --debug
+        xfn:
+          enabled: true
+          args:
+            - --debug
 #          - --enable-external-secret-stores
 
 # We currently can't store ether kubernetes or
