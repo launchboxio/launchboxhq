@@ -27,19 +27,13 @@
           </div>
           <div class="col-md-6">
             <div class="row">
-              <a href="<%= omniauth_authorize_path('user', 'github') %>">
-                <button type="button" class="btn">Sign in with Github</button>
-              </a>
+              <%= button_to "Login with Github", omniauth_authorize_path('user', 'github'), data: { turbo: false }, class: "btn btn-small" %>
             </div>
             <div class="row">
-              <a href="<%= omniauth_authorize_path('user', 'gitlab') %>">
-                <button type="button" class="btn">Sign in with Gitlab</button>
-              </a>
+              <%= button_to "Login with Gitlab", omniauth_authorize_path('user', 'gitlab'), data: { turbo: false }, class: "btn btn-small" %>
             </div>
             <div class="row">
-              <a href="<%= omniauth_authorize_path('user', 'bitbucket') %>">
-                <button type="button" class="btn">Sign in with Bitbucket</button>
-              </a>
+              <%= button_to "Login with Bitbucket", omniauth_authorize_path('user', 'bitbucket'), data: { turbo: false }, class: "btn btn-small" %>
             </div>
           </div>
         </div>

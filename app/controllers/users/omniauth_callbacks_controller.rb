@@ -25,6 +25,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
       # and redirect back to settings
       @user = current_user
       store_vcs_connection
+      set_flash_message(:notice, :success, kind: @auth.provider) if is_navigational_format?
       redirect_to settings_path and return
     end
     # First, we check if a user already exists with the current
@@ -34,8 +35,8 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
       # the VCS connection is stored
       if @user.provider == @auth.provider && @user.uid == @auth.uid
         store_vcs_connection
+        set_flash_message(:notice, :success, kind: @auth.provider) if is_navigational_format?
         sign_in_and_redirect projects_path, event: :authentication
-        set_flash_message(:notice, :success, kind: 'Github') if is_navigational_format?
       else
         # The user exists, but with a different provider. For example, they registered with
         # email, and then tried to login with Github. We only want to support this
@@ -55,8 +56,8 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
       if @user.persisted?
         store_vcs_connection
-        sign_in_and_redirect projects_path, event: :authentication # this will throw if @user is not activated
         set_flash_message(:notice, :success, kind: "Github") if is_navigational_format?
+        sign_in_and_redirect projects_path, event: :authentication # this will throw if @user is not activated
       else
         session["devise.facebook_data"] = @auth.except(:extra) # Removing extra as it can overflow some session stores
         redirect_to new_user_registration_url
