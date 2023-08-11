@@ -31,32 +31,12 @@ module Projects
         end
       end
 
-      ensure_kubernetes_provider
-      ensure_helm_provider
+      ensure_provider_config("/apis/kubernetes.crossplane.io", 'v1alpha1')
+      ensure_provider_config("/apis/helm.crossplane.io", 'v1beta1')
 
       @project.update(status: 'provisioned')
 
-      @project.addon_subscriptions.each do |sub|
-        version = sub.addon.addon_versions.first
-        next if version.nil?
-        client = @cluster.get_client("/apis/#{version.group}", version.version)
-        resource = Kubeclient::Resource.new(
-          kind: version.claim_name,
-          apiVersion: "#{version.group}/#{version.version}",
-          metadata: {
-            name: sub.name,
-            namespace: @project.slug
-          },
-          spec: {
-            providerConfigRef: @project.slug
-          }
-        )
-        action=version.claim_name.gsub(/([A-Z]+)([A-Z][a-z])/, '\1_\2')
-                   .gsub(/([a-z\d])([A-Z])/, '\1_\2')
-                   .downcase
-
-        client.public_send("apply_#{action}", resource, field_manager: 'launchbox')
-      end
+      apply_addon_subscriptions
     end
 
     def ensure_namespace
@@ -135,23 +115,42 @@ module Projects
       end
     end
 
-    def ensure_kubernetes_provider
-      client = @cluster.get_client("/apis/kubernetes.crossplane.io", 'v1alpha1')
+    def apply_addon_subscriptions
+      @project.addon_subscriptions.each do |sub|
+        version = sub.addon.addon_versions.first
+        next if version.nil?
+
+        apply_resource(sub, version)
+      end
+    end
+
+    def apply_resource(sub, version)
+      client = @cluster.get_client("/apis/#{version.group}", version.version)
+      resource = build_resource(sub)
+      action = version.claim_name.gsub(/([A-Z]+)([A-Z][a-z])/, '\1_\2')
+                      .gsub(/([a-z\d])([A-Z])/, '\1_\2')
+                      .downcase
+
+      client.public_send("apply_#{action}", resource, field_manager: 'launchbox')
+    end
+    
+    def ensure_provider_config(api_path, version)
+      client = @cluster.get_client(api_path, version)
       resource = Kubeclient::Resource.new({
-        metadata: {
-          name: @project.slug
-        },
-        spec: {
-          credentials: {
-            source: "Secret",
-            secretRef: {
-              namespace: @project.slug,
-              name: "vc-#{@project.slug}",
-              key: "config"
-            }
-          }
-        }
-      })
+                                            metadata: {
+                                              name: @project.slug
+                                            },
+                                            spec: {
+                                              credentials: {
+                                                source: "Secret",
+                                                secretRef: {
+                                                  namespace: @project.slug,
+                                                  name: "vc-#{@project.slug}",
+                                                  key: "config"
+                                                }
+                                              }
+                                            }
+                                          })
       begin
         client.create_provider_config(resource)
       rescue Kubeclient::HttpError => e
@@ -165,36 +164,21 @@ module Projects
       end
     end
 
-    def ensure_helm_provider
-      client = @cluster.get_client("/apis/helm.crossplane.io", 'v1beta1')
-      resource = Kubeclient::Resource.new({
+    def build_resource(sub)
+      Kubeclient::Resource.new(
+        kind: version.claim_name,
+        apiVersion: "#{version.group}/#{version.version}",
         metadata: {
-          name: @project.slug
+          name: sub.name,
+          namespace: @project.slug
         },
+        # TODO: Add spec inputs based on schema and subscription data
         spec: {
-          credentials: {
-            source: "Secret",
-            secretRef: {
-              namespace: @project.slug,
-              name: "vc-#{@project.slug}",
-              key: "config"
-            }
-          }
+          providerConfigRef: @project.slug
         }
-      })
-      begin
-        client.create_provider_config(resource)
-      rescue Kubeclient::HttpError => e
-        if e.error_code == 409
-          existing = client.get_provider_config @project.slug
-          existing.spec = resource.spec
-          client.update_provider_config(existing)
-        else
-          raise
-        end
-      end
+      )
     end
-
+    
     def values
       template = File.read(Rails.configuration.launchbox[:vcluster][:template_file])
       ryaml = ERB.new(template)
