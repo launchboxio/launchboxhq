@@ -126,7 +126,7 @@ module Projects
 
     def apply_resource(sub, version)
       client = @cluster.get_client("/apis/#{version.group}", version.version)
-      resource = build_resource(sub)
+      resource = build_resource(sub, version)
       action = version.claim_name.gsub(/([A-Z]+)([A-Z][a-z])/, '\1_\2')
                       .gsub(/([a-z\d])([A-Z])/, '\1_\2')
                       .downcase
@@ -164,7 +164,7 @@ module Projects
       end
     end
 
-    def build_resource(sub)
+    def build_resource(sub, version)
       Kubeclient::Resource.new(
         kind: version.claim_name,
         apiVersion: "#{version.group}/#{version.version}",
