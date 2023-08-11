@@ -24,9 +24,8 @@ module Projects
     end
 
     def destroy
-      # TODO: Call a job to uninstall the addon first
-      @addon.destroy
-      redirect_to project_path(@project), notice: "Addon deleted"
+      Addons::DeleteAddonJob.perform_async @addon.id
+      redirect_to project_path(@project), notice: "Addon uninstallation started"
     end
 
     private
