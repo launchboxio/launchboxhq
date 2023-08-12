@@ -35,9 +35,13 @@ Rails.application.routes.draw do
 
   # Profile routes
   get '/profile', to: 'profile#index'
-  get '/settings', to: 'settings#index'
 
-  resources :access_tokens, only: [:create, :update, :delete]
+  scope module: :settings do
+    get '/settings', to: 'settings#index'
+    resources :access_tokens, as: 'tokens', only: [:index, :new, :create, :destroy]
+    resources :connections, only: [:index, :destroy]
+  end
+
 
   namespace :api, defaults: { format: :json } do
     namespace :v1 do
