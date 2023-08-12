@@ -1,0 +1,25 @@
+<div class="row">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item">Settings</li>
+      <li class="breadcrumb-item">Access Tokens</li>
+      <li class="breadcrumb-item">New</li>
+    </ol>
+  </nav>
+</div>
+
+<div class="row">
+  <div class="col-md-6">
+    <div class="card">
+      <%= bootstrap_form_for(@token, url: tokens_path) do |f| %>
+        <div class="card-header">Details</div>
+        <div class="card-body">
+          <span>No fields to customize yet</span>
+        </div>
+        <div class="card-footer">
+          <%= f.submit "Submit" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
