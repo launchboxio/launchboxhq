@@ -17,16 +17,21 @@ class ProjectsController < AuthenticatedController
   def show; end
 
   def create
-    @project = Project.build(project_params)
-    # Select a cluster at random
+    @project = current_user.projects.build(project_params)
     @project.cluster = @clusters.sample
     if @project.save
-      @project.users << current_user
       Projects::SyncProjectJob.perform_async(@project.id)
       redirect_to @project
     else
       render 'new'
     end
+  end
+
+  def destroy
+    Projects::DeleteProjectJob.perform_async(@project.id)
+    @project.update(status: "pending-deletion")
+    flash[:notice] = "Project deleted"
+    redirect_to projects_path
   end
 
   def kubeconfig

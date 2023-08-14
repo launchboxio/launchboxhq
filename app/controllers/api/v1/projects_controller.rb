@@ -5,6 +5,7 @@ module Api
       before_action -> { doorkeeper_authorize! :read_projects, :manage_projects }, only: %i[index show]
       before_action -> { doorkeeper_authorize! :manage_projects }, only: %i[create update destroy pause resume]
       before_action :find_project, except: %i[index new create]
+      before_action :find_clusters
 
       def index
         @projects = Project.all
@@ -16,16 +17,20 @@ module Api
       end
 
       def create
-        cluster = Cluster.find(params[:cluster_id])
-        @project = current_resource_owner.projects.build(project_params)
-        @project.cluster = cluster
+        @project = Project.new(project_params)
+        @project.user = current_resource_owner
+        @project.cluster = @clusters.sample
         if @project.save
-          Projects::CreateProjectJob.perform_later(@project.id)
+          Projects::SyncProjectJob.perform_async(@project.id)
           render json: @project
         else
-          render 'new'
+          puts @project.errors.inspect
+          render json: {
+            errors: @project.errors.full_messages
+          }, status: 400
         end
       end
+
 
       def pause
         @project.update(status: 'pausing')
@@ -40,9 +45,9 @@ module Api
       end
 
       def destroy
-        @project.destroy
-        Projects::DeleteProjectJob.perform_later(@project.slug, @project.cluster_id)
-        render json: @project
+        Projects::DeleteProjectJob.perform_async(@project.id)
+        @project.update(status: "pending-deletion")
+        head :no_content
       end
 
       private
@@ -52,7 +57,11 @@ module Api
       end
 
       def project_params
-        params.require(:project).permit(:cluster_id, :name, :memory, :cpu, :disk)
+        params.require(:project).permit(:cluster_id, :name, :memory, :cpu, :disk, :gpu)
+      end
+
+      def find_clusters
+        @clusters = Cluster.all
       end
     end
   end
