@@ -4,6 +4,7 @@ module Api
       before_action :find_cluster, except: %i[index new create]
       before_action -> { doorkeeper_authorize! :read_addons, :manage_addons }, only: %i[index show]
       before_action -> { doorkeeper_authorize! :manage_addons }, only: %i[create update destroy]
+
       def index
         @addons = Addon.all
         render json: @addons

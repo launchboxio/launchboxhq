@@ -13,7 +13,7 @@ module Api
       end
 
       def show
-        render json: @project, :include => [:addons]
+        render json: @project, include: [:addons]
       end
 
       def create
@@ -54,6 +54,7 @@ module Api
 
       def find_project
         @project = Project.where(id: params[:id], user_id: current_resource_owner.id).first
+        render status: 404 if @project.nil?
       end
 
       def project_params
