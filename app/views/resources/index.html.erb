@@ -1,0 +1,19 @@
+<div class="row">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item active" aria-current="page">Services</li>
+    </ol>
+  </nav>
+</div>
+
+<% @resources.each do |resource| %>
+  <div class="col-md-3">
+    <div class="card" style="width: 18rem;" onclick="location.href = '/resources/<%= resource.id %>';">
+      <div class="card-body">
+        <h5 class="card-title">(<%= resource.vcs_connection.provider %>) <%= resource.repository %></h5>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<a href="<%= new_resource_path %>">Create new service</a>

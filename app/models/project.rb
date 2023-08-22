@@ -11,6 +11,7 @@ class Project < ApplicationRecord
   accepts_nested_attributes_for :addon_subscriptions
 
   has_and_belongs_to_many :users
+  has_and_belongs_to_many :resources
   before_create :generate_slug
 
   vault_lazy_decrypt!

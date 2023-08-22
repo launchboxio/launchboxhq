@@ -31,7 +31,9 @@ module Api
         end
       end
 
+      def catalog
 
+      end
       def pause
         @project.update(status: 'pausing')
         Projects::PauseProjectJob.perform_later(@project.id)

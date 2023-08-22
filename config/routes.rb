@@ -33,6 +33,8 @@ Rails.application.routes.draw do
     get :kubeconfig, on: :member
   end
 
+  resources :resources
+
   # Profile routes
   get '/profile', to: 'profile#index'
 

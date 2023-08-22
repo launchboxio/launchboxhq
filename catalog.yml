@@ -1,0 +1,8 @@
+---
+services:
+  - name: launchboxhq
+
+addons:
+  - name: redis
+  - name: vault
+  - name: postgres

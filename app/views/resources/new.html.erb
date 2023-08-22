@@ -1,0 +1,25 @@
+<div class="row">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="<%= resources_path %>">Services</a></li>
+      <li class="breadcrumb-item active" aria-current="page">New Service</li>
+    </ol>
+  </nav>
+</div>
+
+<div class="row justify-content-md-center">
+  <div class="col-md-4">
+    <div class="card">
+      <%= bootstrap_form_for(@resource) do |f| %>
+        <div class="card-header">Details</div>
+        <div class="card-body">
+          <%= f.select :vcs_connection_id, current_user.vcs_connections.map{|conn| ["#{conn.email} (#{conn.provider})", conn.id]} %>
+          <%= f.text_field :repository %>
+        </div>
+        <div class="card-footer">
+          <%= f.submit "Submit" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

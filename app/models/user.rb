@@ -10,6 +10,8 @@ class User < ApplicationRecord
   has_many :projects
   has_and_belongs_to_many :projects
 
+  has_many :resources
+
   has_many :access_grants,
            class_name: 'Doorkeeper::AccessGrant',
            foreign_key: :resource_owner_id,
