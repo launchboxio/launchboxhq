@@ -10,6 +10,8 @@ RUN chmod +x /usr/bin/entrypoint.sh
 ENTRYPOINT ["entrypoint.sh"]
 EXPOSE 3000
 
+COPY --from=alpine/helm:3.12.3 /usr/bin/helm /usr/bin/helm
+
 WORKDIR /launchbox
 COPY Gemfile /launchbox/Gemfile
 COPY Gemfile.lock /launchbox/Gemfile.lock

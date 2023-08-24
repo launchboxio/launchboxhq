@@ -24,6 +24,32 @@
 
 <div class="row">
   <div class="col-md-6">
+    <h3>Deployments</h3>
+    <% if @project.deployments.length == 0 %>
+      No deployments have been added to this project yet
+    <% else %>
+      <ul class="list-group">
+        <% @project.deployments.each do |deployment| %>
+          <li class="list-group-item">
+            <div class="row">
+              <div class="col-md-8">
+                <%= deployment.resource.repository %> (<%= deployment.resource.vcs_connection.provider %>)
+              </div>
+              <div class="col-md-4">
+                <%= button_to "delete", project_deployment_path(@project, deployment), :method => :delete, :class => 'btn btn-small float-end'  %>
+              </div>
+            </div>
+          </li>
+        <% end %>
+      </ul>
+    <% end %>
+    <a href="<%= new_project_deployment_path(@project) %>">
+      Add Deployment
+    </a>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-6">
     <h3>Addons</h3>
     <% if @project.addon_subscriptions.length == 0 %>
       <div class="alert alert-info">

@@ -44,6 +44,7 @@ gem 'omniauth-gitlab'
 # Kubernetes SDKs
 gem 'kubeclient', '~> 4.10'
 gem 'rhelm', '~> 0.2.0'
+gem 'ruby_helm'
 
 # Datastores
 gem 'haikunate', '~> 0.1.1'

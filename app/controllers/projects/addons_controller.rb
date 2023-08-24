@@ -35,7 +35,7 @@ module Projects
     end
 
     def addon_params
-      params.require(:addon_subscription).permit(:name, :addon_id, :name)
+      params.require(:addon_subscription).permit(:name, :addon_id)
     end
   end
 end

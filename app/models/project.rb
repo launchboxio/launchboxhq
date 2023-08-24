@@ -3,6 +3,9 @@
 class Project < ApplicationRecord
   has_paper_trail
   include Vault::EncryptedModel
+
+  alias_attribute :deployments, :resource_deployments
+
   belongs_to :cluster
   belongs_to :user
 
@@ -11,7 +14,9 @@ class Project < ApplicationRecord
   accepts_nested_attributes_for :addon_subscriptions
 
   has_and_belongs_to_many :users
-  has_and_belongs_to_many :resources
+  has_many :resource_deployments
+  has_many :resources, through: :resource_deployments
+
   before_create :generate_slug
 
   vault_lazy_decrypt!

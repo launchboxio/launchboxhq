@@ -29,6 +29,7 @@ Rails.application.routes.draw do
     scope module: :projects do
       resources :users, only: [:create, :destroy]
       resources :addons
+      resources :deployments
     end
     get :kubeconfig, on: :member
   end
