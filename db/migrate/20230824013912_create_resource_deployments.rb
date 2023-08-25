@@ -5,8 +5,9 @@ class CreateResourceDeployments < ActiveRecord::Migration[7.0]
       t.belongs_to :resource
 
       t.string :name
-      t.string :ref
+      t.string :namespace
 
+      t.string :ref
       t.timestamps
     end
   end
