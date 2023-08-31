@@ -58,6 +58,9 @@ Rails.application.routes.draw do
           post 'resume'
         end
         resources :addons, controller: 'project_addons'
+        scope module: :projects do
+          resources :secrets, only: [:create]
+        end
       end
       resources :addons
     end
@@ -66,5 +69,4 @@ Rails.application.routes.draw do
   scope module: :tenants, constraints: { subdomain: 'tenants' } do
     resources :tenants
   end
-
 end
