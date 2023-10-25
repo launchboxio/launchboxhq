@@ -2,8 +2,22 @@ FROM ruby:3.1.2
 
 RUN apt-get update -qq && \
     apt-get install -y \
+      ca-certificates \
+      curl \
+      gnupg
+RUN mkdir -p /etc/apt/keyrings
+RUN curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg
+
+RUN curl https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
+RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
+RUN echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_20.x nodistro main" | tee /etc/apt/sources.list.d/nodesource.list
+
+RUN apt-get update -qq && \
+    apt-get install -y \
       nodejs \
-      postgresql-client
+      postgresql-client \
+      yarn
+
 
 COPY entrypoint.sh /usr/bin/
 RUN chmod +x /usr/bin/entrypoint.sh
@@ -17,7 +31,8 @@ RUN bundle install
 
 COPY . /launchbox
 
-RUN rake assets:precompile
+RUN npm install
+RUN SECRET_KEY_BASE=`bin/rake secret` rake assets:precompile
 
 # Configure the main process to run when running the image
 CMD ["rails", "server", "-b", "0.0.0.0"]
