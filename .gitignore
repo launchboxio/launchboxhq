@@ -47,3 +47,5 @@ terraform.tfstate*
 
 config.json
 skaffold.env
+
+deploy/dev/values.yaml
