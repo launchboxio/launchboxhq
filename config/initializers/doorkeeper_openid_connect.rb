@@ -5,7 +5,13 @@ Doorkeeper::OpenidConnect.configure do
     ENV['OIDC_DOMAIN'] || 'http://localhost:3000'
   end
 
-  signing_key ENV['OIDC_SIGNING_KEY'] || File.read(ENV['OIDC_SIGNING_KEY_FILE']) || ""
+  if ENV['OIDC_SIGNING_KEY_FILE'].present?
+    signing_key File.read(ENV['OIDC_SIGNING_KEY_FILE'])
+  elsif ENV['OIDC_SIGNING_KEY'].present?
+    signing_key ENV['OIDC_SIGNING_KEY']
+  else
+    signing_key nil
+  end
 
   subject_types_supported [:public]
 
