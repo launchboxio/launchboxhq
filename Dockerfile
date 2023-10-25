@@ -16,5 +16,8 @@ COPY Gemfile.lock /launchbox/Gemfile.lock
 RUN bundle install
 
 COPY . /launchbox
+
+RUN rake assets:precompile
+
 # Configure the main process to run when running the image
 CMD ["rails", "server", "-b", "0.0.0.0"]
