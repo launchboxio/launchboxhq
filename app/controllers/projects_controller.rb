@@ -23,6 +23,7 @@ class ProjectsController < AuthenticatedController
       Projects::SyncProjectJob.perform_async(@project.id)
       redirect_to @project
     else
+      flash[:notice] = @project.errors.full_messages
       render 'new'
     end
   end
