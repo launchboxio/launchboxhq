@@ -17,7 +17,8 @@ class ProjectsController < AuthenticatedController
   def show; end
 
   def create
-    @project = current_user.projects.new(project_params)
+    @project = Project.new(project_params)
+    @project.users = [current_user]
     @project.cluster = @clusters.sample
     if @project.save
       Projects::SyncProjectJob.perform_async(@project.id)
