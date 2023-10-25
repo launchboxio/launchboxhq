@@ -76,6 +76,7 @@ Rails.application.configure do
     IPAddr.new("::/0"),      # All IPv6 addresses.
     "localhost",                  # The localhost reserved domain.
     ".lvh.me",                    # Additional comma-separated hosts for development.
-    "launchboxhq.local"
+    "launchboxhq.local",
+    "launchboxhq.dev",
   ]
 end
