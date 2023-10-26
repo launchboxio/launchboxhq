@@ -112,6 +112,8 @@ module Projects
           existing = client.get_cluster @project.slug, @project.slug
           existing.spec = resource.spec
           client.update_cluster(existing)
+        else
+          raise e
         end
       end
     end
