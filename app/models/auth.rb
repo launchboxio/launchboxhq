@@ -1,5 +1,5 @@
 module Auth
   def self.table_name_prefix
-    "auth_"
+    'auth_'
   end
 end
