@@ -8,10 +8,10 @@ default: &default
 
 development:
   <<: *default
-  vcluster:
-    template_file: deploy/vcluster.yml
-    cluster_domain: "launchboxhq.local"
-    oidc_issuer_url: "https://launchboxhq.local"
+#  vcluster:
+#    template_file: deploy/vcluster.yml
+#    cluster_domain: "launchboxhq.local"
+#    oidc_issuer_url: "https://launchboxhq.local"
 
 test:
   <<: *default

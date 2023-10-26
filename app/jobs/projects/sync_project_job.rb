@@ -2,6 +2,7 @@ module Projects
   class SyncProjectJob
     include Sidekiq::Job
 
+    # TODO: All of our error handlers are silencing error output
     def perform(project_id)
 
       @project = Project.find(project_id)
@@ -111,6 +112,8 @@ module Projects
           existing = client.get_cluster @project.slug, @project.slug
           existing.spec = resource.spec
           client.update_cluster(existing)
+        else
+          raise e
         end
       end
     end
@@ -133,7 +136,7 @@ module Projects
 
       client.public_send("apply_#{action}", resource, field_manager: 'launchbox')
     end
-    
+
     def ensure_provider_config(api_path, version)
       client = @cluster.get_client(api_path, version)
       resource = Kubeclient::Resource.new({
@@ -178,12 +181,14 @@ module Projects
         }
       )
     end
-    
+
     def values
+      client = Doorkeeper::Application.first
       template = File.read(Rails.configuration.launchbox[:vcluster][:template_file])
       ryaml = ERB.new(template)
       b = binding
       b.local_variable_set(:project, @project)
+      b.local_variable_set(:oidc_client_id, client.uid)
       ryaml.result(b)
     end
   end

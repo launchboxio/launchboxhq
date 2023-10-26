@@ -10,12 +10,6 @@ Rails.application.routes.draw do
   get '/status/ready', to: 'status#ready'
   get '/status/health', to: 'status#health'
 
-  # namespace :auth do
-  #   resources :cluster_roles
-  #   resources :roles
-  #   resources :groups
-  # end
-
   scope '/admin/', module: :admin, as: :admin do
     root 'clusters#index'
     resources :cluster_addons
@@ -59,9 +53,4 @@ Rails.application.routes.draw do
       resources :addons
     end
   end
-
-  scope module: :tenants, constraints: { subdomain: 'tenants' } do
-    resources :tenants
-  end
-
 end

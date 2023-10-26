@@ -8,6 +8,7 @@ class ProjectsController < AuthenticatedController
 
   def index
     @projects = current_user.projects.all
+    puts @projects.inspect
   end
 
   def new
@@ -17,7 +18,10 @@ class ProjectsController < AuthenticatedController
   def show; end
 
   def create
-    @project = current_user.projects.build(project_params)
+    puts current_user
+    @project = current_user.projects.create(project_params)
+    @project.user = current_user
+    puts @project.inspect
     @project.cluster = @clusters.sample
     if @project.save
       Projects::SyncProjectJob.perform_async(@project.id)

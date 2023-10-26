@@ -110,3 +110,5 @@ server:
 jobs:
   migration:
     restartPolicy: Never
+
+enableLocalCluster: true

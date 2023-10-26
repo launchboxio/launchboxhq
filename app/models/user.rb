@@ -8,7 +8,6 @@ class User < ApplicationRecord
   devise :omniauthable, omniauth_providers: %i[github gitlab bitbucket]
 
   has_many :projects
-  has_and_belongs_to_many :projects
 
   has_many :access_grants,
            class_name: 'Doorkeeper::AccessGrant',
