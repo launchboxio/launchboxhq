@@ -1,6 +1,5 @@
 default: &default
   vcluster:
-    template_file: <%= ENV["TEMPLATE_FILE"] || "vcluster.yml" %>
     vcluster_chart_version: 0.15.2
     default_kubernetes_version: 1.23.0
     cluster_domain: <%= ENV["CLUSTER_DOMAIN"] || "launchboxhq.io" %>

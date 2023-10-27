@@ -8,8 +8,8 @@ module Projects
       @project = Project.find(project_id)
       @cluster = Cluster.find(@project.cluster_id)
 
-      apps_client = @cluster.get_client('/apis/apps', 'v1')
-      apps_client.patch_stateful_set(@project.slug, { spec: { replicas: 1 } }, @project.slug)
+      client = @cluster.get_client('core.launchboxhq.io', 'v1alpha1')
+      client.patch_project(@project.slug, { spec: { paused: false } })
 
       @project.update(status: :running)
     end

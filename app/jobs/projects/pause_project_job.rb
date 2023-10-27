@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-# rubocop:disable Metrics/AbcSize
 module Projects
   class PauseProjectJob
     include Sidekiq::Job
@@ -9,19 +8,8 @@ module Projects
     def perform(project_id)
       @project = Project.find(project_id)
       @cluster = Cluster.find(@project.cluster_id)
-      client = @cluster.get_client('', 'v1')
-      apps_client = @cluster.get_client('/apis/apps', 'v1')
-
-      # Suspend the statefulset
-      apps_client.patch_stateful_set(@project.slug, { spec: { replicas: 0 } }, @project.slug)
-
-      # Delete created workloads
-      pods = client.get_pods(namespace: @project.slug, label_selector: "vcluster.loft.sh/managed-by=#{@project.slug}")
-      pods.each do |pod|
-        client.delete_pod(pod.name, @project.slug)
-      end
-      @project.update(status: :paused)
+      client = @cluster.get_client('core.launchboxhq.io', 'v1alpha1')
+      client.patch_project(@project.slug, { spec: { paused: true } })
     end
   end
 end
-# rubocop:enable Metrics/AbcSize
