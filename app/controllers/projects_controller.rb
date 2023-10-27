@@ -10,7 +10,6 @@ class ProjectsController < AuthenticatedController
 
   def index
     @projects = current_user.projects.all
-    puts @projects.inspect
   end
 
   def new
@@ -24,7 +23,7 @@ class ProjectsController < AuthenticatedController
     @project.user = current_user
     @project.cluster = @clusters.sample
 
-    if Projects::ProjectCreator(@project).execute
+    if Projects::ProjectCreateService.new(@project).execute
       redirect_to @project
     else
       flash[:notice] = @project.errors.full_messages
@@ -33,7 +32,7 @@ class ProjectsController < AuthenticatedController
   end
 
   def destroy
-    if Projects::ProjectDestroyer(@project).execute
+    if Projects::ProjectDestroyService.new(@project).execute
       flash[:notice] = 'Project deleted'
       redirect_to projects_path
     else

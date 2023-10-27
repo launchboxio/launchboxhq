@@ -1,17 +1,24 @@
 default: &default
   adapter: postgresql
-  encoding: unicode
-  url: <%= ENV["DATABASE_URL"] %>
-  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  username: postgres
+  host: localhost
+  password: password
+  database: launchboxhq_test
 
 development:
   <<: *default
+  username: postgres
+  host: localhost
+  password: password
   database: launchboxhq_development
 
 test:
   <<: *default
+  username: postgres
+  host: localhost
+  password: password
   database: launchboxhq_test
 
 production:
   <<: *default
-  database: launchboxhq_production
+  url: <%= ENV["DATABASE_URL"] %>

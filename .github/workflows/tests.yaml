@@ -32,8 +32,6 @@ jobs:
       - uses: ruby/setup-ruby@ec02537da5712d66d4d50a0f33b7eb52773b5ed1
       - run: bundle install
       - run: bundle exec rspec
-        # Once we start adding tests that pass, we'll require them
-        continue-on-error: true
 
 #  superlint:
 #    runs-on: ubuntu-latest

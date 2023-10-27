@@ -19,8 +19,6 @@ module Api
       end
 
       def create
-        @project.inspect
-
         @project.addon_subscriptions.create(subscription_params)
         # @project.addons.new(subscription_params)
         @project.save!

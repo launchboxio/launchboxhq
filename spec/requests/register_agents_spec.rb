@@ -14,13 +14,13 @@ RSpec.describe 'Agent registration', type: :request do
     before do
       client_id = cluster.oauth_application.uid
       client_secret = cluster.oauth_application.secret
-      post 'http://auth.lvh.me/oauth/token', params: {
+      post '/oauth/token', params: {
         grant_type: 'client_credentials',
         client_id:,
         client_secret:,
         scope: 'agent'
       }
-      post "http://api.lvh.me/v1/clusters/#{cluster.id}/agents", params: {
+      post "/api/v1/clusters/#{cluster.id}/agents", params: {
         agent: {
           pod_name: 'some-pod-1234',
           node_name: 'node1',
@@ -38,9 +38,9 @@ RSpec.describe 'Agent registration', type: :request do
     end
   end
 
-  describe 'POST /v1/clusters/{clusterId}/agents fails with invalid application' do
+  describe 'POST /api/v1/clusters/{clusterId}/agents fails with invalid application' do
     before do
-      post "/v1/clusters/#{cluster.id}/agents", params: {
+      post "/api/v1/clusters/#{cluster.id}/agents", params: {
         agent: {
           pod_name: 'some-pod-1234',
           node_name: 'node1',

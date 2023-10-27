@@ -9,17 +9,17 @@ RSpec.describe 'Create projects', type: :request do
   let(:token)       { FactoryBot.create('doorkeeper/access_token', application:, resource_owner_id: user.id, scopes: 'manage_clusters manage_projects') }
   let(:cluster)     { FactoryBot.create(:cluster) }
 
-  describe 'POST /v1/projects' do
+  describe 'POST /api/v1/projects' do
     before do
-      expect(Projects::CreateProjectJob).to receive(:perform_later).once
-      post '/v1/projects', params: {
+      expect(Projects::SyncProjectJob).to receive(:perform_async).once
+      post '/api/v1/projects', params: {
         project: {
           name: Faker::App.name,
           memory: 8192,
           cpu: 4,
-          disk: 100
+          disk: 100,
+          cluster_id: cluster.id
         },
-        cluster_id: cluster.id
       }, headers: {
         Authorization: "Bearer #{token.token}",
         Accept: 'application/json'
@@ -36,16 +36,16 @@ RSpec.describe 'Create projects', type: :request do
     end
 
     it 'pauses and resumes' do
-      expect(Projects::PauseProjectJob).to receive(:perform_later).once
-      post "/v1/projects/#{@project_id}/pause", params: {}, headers: {
+      expect(Projects::PauseProjectJob).to receive(:perform_async).once
+      post "/api/v1/projects/#{@project_id}/pause", params: {}, headers: {
         Authorization: "Bearer #{token.token}",
         Accept: 'application/json'
       }
       expect(response).to have_http_status(:success)
       expect(json['status']).to eql('pausing')
 
-      expect(Projects::ResumeProjectJob).to receive(:perform_later).once
-      post "/v1/projects/#{@project_id}/resume", params: {}, headers: {
+      expect(Projects::ResumeProjectJob).to receive(:perform_async).once
+      post "/api/v1/projects/#{@project_id}/resume", params: {}, headers: {
         Authorization: "Bearer #{token.token}",
         Accept: 'application/json'
       }

@@ -2,6 +2,6 @@
 
 require 'rails_helper'
 
-RSpec.describe SyncProjectJob, type: :job do
+RSpec.describe Projects::SyncProjectJob, type: :job do
   pending "add some examples to (or delete) #{__FILE__}"
 end
