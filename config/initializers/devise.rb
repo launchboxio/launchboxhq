@@ -272,9 +272,9 @@ Devise.setup do |config|
   # Add a new OmniAuth provider. Check the wiki for more information on setting
   # up on your models and hooks.
   # config.omniauth :github, 'APP_ID', 'APP_SECRET', scope: 'user,public_repo'
-  config.omniauth :github, ENV['GITHUB_KEY'], ENV['GITHUB_SECRET'], scope: 'user,public_repo'
-  config.omniauth :gitlab, ENV['GITLAB_KEY'], ENV['GITLAB_SECRET'], scope: 'read_user openid read_api read_repository'
-  config.omniauth :bitbucket, ENV['BITBUCKET_KEY'], ENV['BITBUCKET_SECRET'], scope: 'repository'
+  config.omniauth :github, ENV.fetch('GITHUB_KEY', nil), ENV.fetch('GITHUB_SECRET', nil), scope: 'user,public_repo'
+  config.omniauth :gitlab, ENV.fetch('GITLAB_KEY', nil), ENV.fetch('GITLAB_SECRET', nil), scope: 'read_user openid read_api read_repository'
+  config.omniauth :bitbucket, ENV.fetch('BITBUCKET_KEY', nil), ENV.fetch('BITBUCKET_SECRET', nil), scope: 'repository'
 
   # ==> Warden configuration
   # If you want to use other strategies, that are not supported by Devise, or

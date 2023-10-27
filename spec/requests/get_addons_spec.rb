@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe 'Get Addons', type: :request do
-  before { host! "api.lvh.me" }
+  before { host! 'api.lvh.me' }
   let(:application) { FactoryBot.create('doorkeeper/application') }
   let(:user)        { FactoryBot.create(:user) }
   let(:token)       { FactoryBot.create('doorkeeper/access_token', application:, resource_owner_id: user.id, scopes: 'read_addons') }
@@ -9,7 +11,7 @@ RSpec.describe 'Get Addons', type: :request do
   describe 'GET /v1/addons' do
     before do
       FactoryBot.create_list(:addon, 10)
-      get '/v1/addons' , params: {}, headers: {
+      get '/v1/addons', params: {}, headers: {
         Authorization: "Bearer #{token.token}",
         Accept: 'application/json'
       }
@@ -19,14 +21,13 @@ RSpec.describe 'Get Addons', type: :request do
       expect(json.size).to eq(10)
       expect(response).to have_http_status(:success)
     end
-
   end
 
   describe 'GET /v1/addons/{addonId}' do
     before do
       FactoryBot.create_list(:addon, 2)
       addon = Addon.first
-      get "/v1/addons/#{addon.id}" , params: {}, headers: {
+      get "/v1/addons/#{addon.id}", params: {}, headers: {
         Authorization: "Bearer #{token.token}",
         Accept: 'application/json'
       }
@@ -41,7 +42,7 @@ RSpec.describe 'Get Addons', type: :request do
 
   describe 'GET /v1/addons without authentication' do
     before do
-      get "/v1/addons" , params: {}, headers: {
+      get '/v1/addons', params: {}, headers: {
         Accept: 'application/json'
       }
     end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ProfileController < AuthenticatedController
   def index
     # Load all of our profile settings

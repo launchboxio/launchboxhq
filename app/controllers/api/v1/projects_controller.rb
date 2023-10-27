@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Api
   module V1
     class ProjectsController < Api::V1::ApiController
@@ -28,7 +30,6 @@ module Api
           }, status: 400
         end
       end
-
 
       def pause
         if Projects::ProjectPauser(@project).execute

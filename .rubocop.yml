@@ -3,11 +3,22 @@ AllCops:
     - 'db/migrate/*'
     - 'db/schema.rb'
     - 'bin/*'
+    - 'test/**'
+    - 'spec/requests/*'
+    - 'spec/*'
+    - 'app/controllers/users/omniauth_callbacks_controller.rb'
   NewCops: enable
+  SuggestExtensions: false
 
 Metrics/MethodLength:
   Exclude:
-    - 'app/jobs/*'
+    - 'app/jobs/**/*.rb'
+
+Metrics/BlockLength:
+  Exclude:
+    - 'config/routes.rb'
+    - 'config/initializers/*.rb'
+    - 'config/environments/*.rb'
 
 Layout/LineLength:
   Enabled: false

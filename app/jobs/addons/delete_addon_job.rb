@@ -1,8 +1,11 @@
+# frozen_string_literal: true
+
 module Addons
   class DeleteAddonJob
     include Sidekiq::Job
     queue_as :default
 
+    # rubocop:disable Metrics/AbcSize
     def perform(*args)
       @subscription = AddonSubscription.find(args.first)
       @project = @subscription.project
@@ -15,5 +18,6 @@ module Addons
       client.public_send("delete_#{action}", @subscription.name, @project.slug)
       @subscription.destroy
     end
+    # rubocop:enable Metrics/AbcSize
   end
 end

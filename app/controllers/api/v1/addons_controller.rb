@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Api
   module V1
     class AddonsController < ApiController
@@ -14,17 +16,17 @@ module Api
         render json: @addon
       end
 
-      def create;
+      def create
         @addon = Addon.new(addon_params)
         @addon.save!
-        render :json => @addon
+        render json: @addon
       end
 
       def update
         @addon = Addon.find(params[:id])
         @addon.attributes = addon_params
         @addon.save!
-        render :json => @addon
+        render json: @addon
       end
 
       def destroy

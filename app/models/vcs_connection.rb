@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class VcsConnection < ApplicationRecord
   include Vault::EncryptedModel
   belongs_to :user
@@ -5,6 +7,4 @@ class VcsConnection < ApplicationRecord
   vault_lazy_decrypt!
   vault_attribute :access_token
   vault_attribute :refresh_token
-
 end
-

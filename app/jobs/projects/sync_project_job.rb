@@ -1,10 +1,13 @@
+# frozen_string_literal: true
+
+# rubocop:disable Metrics/AbcSize, Metrics/ClassLength
+
 module Projects
   class SyncProjectJob
     include Sidekiq::Job
 
     # TODO: All of our error handlers are silencing error output
     def perform(project_id)
-
       @project = Project.find(project_id)
       @cluster = Cluster.find(@project.cluster_id)
       @project.update(status: :provisioning)
@@ -15,25 +18,23 @@ module Projects
       ensure_cluster
 
       # Backfill our project with the information from the generated cluster
-      client = @cluster.get_client("", "v1")
+      client = @cluster.get_client('', 'v1')
       loop do
-        begin
-          secret = client.get_secret("vc-#{@project.slug}", @project.slug)
-          @project.update(ca_crt: secret.data['certificate-authority'])
-          break
-        rescue Kubeclient::HttpError => e
-          # Handle all errors except for "Not Found"
-          if e.error_code != 404
-            @project.update(status: :failed)
-            raise
-          end
-
-          sleep 1
+        secret = client.get_secret("vc-#{@project.slug}", @project.slug)
+        @project.update(ca_crt: secret.data['certificate-authority'])
+        break
+      rescue Kubeclient::HttpError => e
+        # Handle all errors except for "Not Found"
+        if e.error_code != 404
+          @project.update(status: :failed)
+          raise
         end
+
+        sleep 1
       end
 
-      ensure_provider_config("/apis/kubernetes.crossplane.io", 'v1alpha1')
-      ensure_provider_config("/apis/helm.crossplane.io", 'v1beta1')
+      ensure_provider_config('/apis/kubernetes.crossplane.io', 'v1alpha1')
+      ensure_provider_config('/apis/helm.crossplane.io', 'v1beta1')
 
       @project.update(status: :provisioned)
 
@@ -47,16 +48,16 @@ module Projects
           name: @project.slug
         }
       )
-      client = @cluster.get_client("", "v1")
+      client = @cluster.get_client('', 'v1')
       begin
         client.create_namespace(namespace)
-      rescue
+      rescue StandardError
         client.update_namespace(namespace)
       end
     end
 
     def ensure_infrastructure
-      client = @cluster.get_client("/apis/infrastructure.cluster.x-k8s.io", 'v1alpha1')
+      client = @cluster.get_client('/apis/infrastructure.cluster.x-k8s.io', 'v1alpha1')
       resource = Kubeclient::Resource.new(
         metadata: {
           name: @project.slug,
@@ -64,12 +65,12 @@ module Projects
         },
         spec: {
           controlPlaneEndpoint: {
-            host: "",
+            host: '',
             port: 0
           },
           helmRelease: {
             chart: {},
-            values: values
+            values:
           },
           kubernetesVersion: Rails.configuration.launchbox[:vcluster][:default_kubernetes_version]
         }
@@ -86,35 +87,33 @@ module Projects
     end
 
     def ensure_cluster
-      client = @cluster.get_client("/apis/cluster.x-k8s.io", 'v1beta1')
+      client = @cluster.get_client('/apis/cluster.x-k8s.io', 'v1beta1')
       resource = Kubeclient::Resource.new({
-        metadata: {
-          name: @project.slug,
-          namespace: @project.slug
-        },
-        spec: {
-          controlPlaneRef: {
-            apiVersion: 'infrastructure.cluster.x-k8s.io/v1alpha1',
-            kind: 'VCluster',
-            name: @project.slug,
-          },
-          infrastructureRef: {
-            apiVersion: 'infrastructure.cluster.x-k8s.io/v1alpha1',
-            kind: 'VCluster',
-            name: @project.slug,
-          }
-        }
-      })
+                                            metadata: {
+                                              name: @project.slug,
+                                              namespace: @project.slug
+                                            },
+                                            spec: {
+                                              controlPlaneRef: {
+                                                apiVersion: 'infrastructure.cluster.x-k8s.io/v1alpha1',
+                                                kind: 'VCluster',
+                                                name: @project.slug
+                                              },
+                                              infrastructureRef: {
+                                                apiVersion: 'infrastructure.cluster.x-k8s.io/v1alpha1',
+                                                kind: 'VCluster',
+                                                name: @project.slug
+                                              }
+                                            }
+                                          })
       begin
         client.create_cluster(resource)
       rescue Kubeclient::HttpError => e
-        if e.error_code == 409
-          existing = client.get_cluster @project.slug, @project.slug
-          existing.spec = resource.spec
-          client.update_cluster(existing)
-        else
-          raise e
-        end
+        raise e unless e.error_code == 409
+
+        existing = client.get_cluster @project.slug, @project.slug
+        existing.spec = resource.spec
+        client.update_cluster(existing)
       end
     end
 
@@ -145,11 +144,11 @@ module Projects
                                             },
                                             spec: {
                                               credentials: {
-                                                source: "Secret",
+                                                source: 'Secret',
                                                 secretRef: {
                                                   namespace: @project.slug,
                                                   name: "vc-#{@project.slug}",
-                                                  key: "config"
+                                                  key: 'config'
                                                 }
                                               }
                                             }
@@ -157,13 +156,11 @@ module Projects
       begin
         client.create_provider_config(resource)
       rescue Kubeclient::HttpError => e
-        if e.error_code == 409
-          existing = client.get_provider_config @project.slug
-          existing.spec = resource.spec
-          client.update_provider_config(existing)
-        else
-          raise
-        end
+        raise unless e.error_code == 409
+
+        existing = client.get_provider_config @project.slug
+        existing.spec = resource.spec
+        client.update_provider_config(existing)
       end
     end
 
@@ -193,3 +190,4 @@ module Projects
     end
   end
 end
+# rubocop:enable Metrics/AbcSize, Metrics/ClassLength

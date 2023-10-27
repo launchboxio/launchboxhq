@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# rubocop:disable Metrics/AbcSize
 module Projects
   class PauseProjectJob
     include Sidekiq::Job
@@ -8,8 +9,8 @@ module Projects
     def perform(project_id)
       @project = Project.find(project_id)
       @cluster = Cluster.find(@project.cluster_id)
-      client = @cluster.get_client("", 'v1')
-      apps_client = @cluster.get_client("/apis/apps", 'v1')
+      client = @cluster.get_client('', 'v1')
+      apps_client = @cluster.get_client('/apis/apps', 'v1')
 
       # Suspend the statefulset
       apps_client.patch_stateful_set(@project.slug, { spec: { replicas: 0 } }, @project.slug)
@@ -23,3 +24,4 @@ module Projects
     end
   end
 end
+# rubocop:enable Metrics/AbcSize

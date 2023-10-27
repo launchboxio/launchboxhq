@@ -1,0 +1,46 @@
+name: Tests
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  rubocop:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ruby/setup-ruby@ec02537da5712d66d4d50a0f33b7eb52773b5ed1
+      - run: bundle install
+      - run: bundle exec rubocop
+
+  rspec:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:12
+        env:
+          POSTGRES_PASSWORD: postgres
+        ports: [ '5432:5432' ]
+    env:
+      RAILS_ENV: test
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ruby/setup-ruby@ec02537da5712d66d4d50a0f33b7eb52773b5ed1
+      - run: bundle install
+      - run: bundle exec rspec
+        # Once we start adding tests that pass, we'll require them
+        continue-on-error: true
+
+#  superlint:
+#    runs-on: ubuntu-latest
+#    steps:
+#      - uses: actions/checkout@v4
+#      - uses: super-linter/super-linter@v5
+#        env:
+#          # After soaking for a while, we can disable this
+#          VALIDATE_ALL_CODEBASE: true
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

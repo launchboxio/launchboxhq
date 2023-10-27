@@ -4,12 +4,12 @@ sidebar_position: 5
 
 # Features
 
-## Pause / Resume 
+## Pause / Resume
 
 ## Service Account Issuer Discovery
 
-## OIDC Access to cluster 
+## OIDC Access to cluster
 
-## Service Catalog 
+## Service Catalog
 
 ## 1-Click Updates

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 FactoryBot.define do
   factory :cluster do
     name { Faker::Lorem.word }
@@ -6,16 +8,16 @@ FactoryBot.define do
     version { Faker::App.semantic_version }
     provider { 'aws' }
     status { Faker::Boolean.boolean }
-    oauth_application {
-      Doorkeeper::Application.create!(name: SecureRandom.uuid, confidential: true, redirect_uri: "https://localhost:8080")
-    }
+    oauth_application do
+      Doorkeeper::Application.create!(name: SecureRandom.uuid, confidential: true, redirect_uri: 'https://localhost:8080')
+    end
   end
 
   factory 'doorkeeper/application' do
     name { Faker::App.name }
     uid { Faker::Internet.uuid }
     secret { Faker::Internet.uuid }
-    redirect_uri { Faker::Internet.url(scheme: 'https')  }
+    redirect_uri { Faker::Internet.url(scheme: 'https') }
   end
 
   factory :user do

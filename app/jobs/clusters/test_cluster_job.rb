@@ -1,10 +1,14 @@
-class Clusters::TestClusterJob < ApplicationJob
-  queue_as :default
+# frozen_string_literal: true
 
-  def perform(*args)
-    @cluster = Cluster.find(args.first)
-    client = @cluster.get_client("/api", 'v1')
-    pods = client.get_pods
-    puts pods.inspect
+module Clusters
+  class TestClusterJob < ApplicationJob
+    queue_as :default
+
+    def perform(*args)
+      @cluster = Cluster.find(args.first)
+      client = @cluster.get_client('/api', 'v1')
+      pods = client.get_pods
+      puts pods.inspect
+    end
   end
 end

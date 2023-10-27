@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ProjectsController < AuthenticatedController
   # TODO: This allows any user with access to a project
   # to perform update / delete actions on it. We should
@@ -32,7 +34,7 @@ class ProjectsController < AuthenticatedController
 
   def destroy
     if Projects::ProjectDestroyer(@project).execute
-      flash[:notice] = "Project deleted"
+      flash[:notice] = 'Project deleted'
       redirect_to projects_path
     else
       redirect_to @project
@@ -40,12 +42,13 @@ class ProjectsController < AuthenticatedController
   end
 
   def kubeconfig
-    @application = Doorkeeper::Application.find_by(name: "oidc")
-    @oidc_issuer = "https://launchboxhq.local"
-    render 'kubeconfig', :layout => false, content_type: "application/x-yaml"
+    @application = Doorkeeper::Application.find_by(name: 'oidc')
+    @oidc_issuer = 'https://launchboxhq.local'
+    render 'kubeconfig', layout: false, content_type: 'application/x-yaml'
   end
 
   private
+
   def find_project
     @project = current_user.projects.find(params[:id])
   end

@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe 'Create projects', type: :request do
-  before { host! "api.lvh.me" }
+  before { host! 'api.lvh.me' }
   let(:application) { FactoryBot.create('doorkeeper/application') }
   let(:user)        { FactoryBot.create(:user) }
   let(:token)       { FactoryBot.create('doorkeeper/access_token', application:, resource_owner_id: user.id, scopes: 'manage_clusters manage_projects') }

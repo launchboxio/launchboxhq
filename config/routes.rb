@@ -21,7 +21,7 @@ Rails.application.routes.draw do
 
   resources :projects do
     scope module: :projects do
-      resources :users, only: [:create, :destroy]
+      resources :users, only: %i[create destroy]
       resources :addons
     end
     get :kubeconfig, on: :member
@@ -32,10 +32,9 @@ Rails.application.routes.draw do
 
   scope module: :settings do
     get '/settings', to: 'settings#index'
-    resources :access_tokens, as: 'tokens', only: [:index, :new, :create, :destroy]
-    resources :connections, only: [:index, :destroy]
+    resources :access_tokens, as: 'tokens', only: %i[index new create destroy]
+    resources :connections, only: %i[index destroy]
   end
-
 
   namespace :api, defaults: { format: :json } do
     namespace :v1 do

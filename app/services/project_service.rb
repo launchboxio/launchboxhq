@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ProjectService
   attr_reader :project
 
@@ -5,5 +7,4 @@ class ProjectService
     @project = project
     super()
   end
-
 end
