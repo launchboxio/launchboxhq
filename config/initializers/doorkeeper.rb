@@ -11,7 +11,7 @@ Doorkeeper.configure do
   # end
 
   resource_owner_authenticator do
-    #raise "Please configure doorkeeper resource_owner_authenticator block located in #{__FILE__}"
+    # raise "Please configure doorkeeper resource_owner_authenticator block located in #{__FILE__}"
     # Put your resource owner authentication logic here.
     # Example implementation:
     session[:user_return_to] = request.fullpath
@@ -280,7 +280,7 @@ Doorkeeper.configure do
   # force_ssl_in_redirect_uri !Rails.env.development?
   #
   # force_ssl_in_redirect_uri { |uri| uri.host != 'localhost' }
-  force_ssl_in_redirect_uri = false
+  # force_ssl_in_redirect_uri = false
   # enable_pkce_without_secret
 
   # Specify what redirect URI's you want to block during Application creation.

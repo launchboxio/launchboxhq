@@ -1,9 +1,9 @@
 # LaunchboxHQ
 
 
-## Installation 
+## Installation
 
-### Helm 
+### Helm
 
 ## Development
 
@@ -13,14 +13,14 @@ TODO: Maybe move to `bin/setup`
 # Clone the repository
 git clone git@github.com:launchboxio/launchboxhq
 
-# Generate a signing key for OIDC requests 
+# Generate a signing key for OIDC requests
 openssl genpkey -algorithm RSA -out private_key.pem -pkeyopt rsa_keygen_bits:2048
 kubectl create secret generic signing-certificate --from-file=private_key.pem -n lbx-system
 # Start Vault and Postgres
-docker-compose up -d 
+docker-compose up -d
 
-# Unseal Vault 
-docker-compose exec vault sh 
+# Unseal Vault
+docker-compose exec vault sh
 vault operator init -n 1 -t 1
 vault operator unseal
 vault secrets enable transit
@@ -29,16 +29,16 @@ vault secrets enable transit
 cp .env.example .env
 vi .env
 
-# Start rails 
-rails db:create && rails db:migrate 
+# Start rails
+rails db:create && rails db:migrate
 rails s
 ```
 
-## Kubeconfig template 
-To connect to kubernetes using the OIDC provided by Launchbox 
+## Kubeconfig template
+To connect to kubernetes using the OIDC provided by Launchbox
 
 kubectl oidc-login get-token --oidc-issuer-url http://localhost:3000 --oidc-client-id=RSR00W3ZNJnlc2uPKBE7dx7zDwq_ZTlbeU7sqPkfrbk --oidc-extra-scope email -v8
-```yaml 
+```yaml
 user:
 - name: <%= current_user.email %>
   user:

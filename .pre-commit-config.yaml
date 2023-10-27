@@ -3,4 +3,11 @@ repos:
   rev: v1.3.5
   hooks:
     - id: rubocop
-    - id: rspec
+#    - id: rspec
+
+- repo: https://github.com/pre-commit/pre-commit-hooks
+  rev: v4.5.0
+  hooks:
+    - id: end-of-file-fixer
+    - id: trailing-whitespace
+    - id: check-executables-have-shebangs

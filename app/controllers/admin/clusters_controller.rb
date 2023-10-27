@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Admin
   class ClustersController < AdminController
     def index
@@ -16,7 +18,7 @@ module Admin
       # TODO: Wrap all these cluster creation
       # calls in a transaction to prevent
       # orphaning created applications
-      application = Doorkeeper::Application.create!(name: SecureRandom.uuid, confidential: true, redirect_uri: "https://localhost:8080")
+      application = Doorkeeper::Application.create!(name: SecureRandom.uuid, confidential: true, redirect_uri: 'https://localhost:8080')
       @cluster = Cluster.new(cluster_params)
       @cluster.oauth_application = application
       if @cluster.save
@@ -30,6 +32,7 @@ module Admin
     end
 
     private
+
     def cluster_params
       params.require(:cluster).permit(:name, :region, :version, :provider, :connection_method, :managed, :host, :ca_crt, :token)
     end

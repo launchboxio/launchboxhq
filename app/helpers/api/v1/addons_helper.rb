@@ -1,2 +1,8 @@
-module Api::V1::AddonsHelper
+# frozen_string_literal: true
+
+module Api
+  module V1
+    module AddonsHelper
+    end
+  end
 end

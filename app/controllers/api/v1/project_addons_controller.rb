@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Api
   module V1
     class ProjectAddonsController < ApiController
@@ -7,7 +9,7 @@ module Api
       before_action :find_subscription, except: %i[index create]
 
       def index
-        @addons = AddonSubscription.where(:project_id => @project.id)
+        @addons = AddonSubscription.where(project_id: @project.id)
         render json: @addons
       end
 
@@ -24,15 +26,14 @@ module Api
         @project.save!
       end
 
-      def update
-
-      end
+      def update; end
 
       def destroy
         @addon.destroy
       end
 
       private
+
       def find_project
         @project = Project.where(id: params[:project_id], user_id: current_resource_owner.id).first
       end
@@ -47,4 +48,3 @@ module Api
     end
   end
 end
-

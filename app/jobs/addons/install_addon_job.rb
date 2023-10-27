@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Addons
   class InstallAddonJob
     include Sidekiq::Job
@@ -17,25 +19,21 @@ module Addons
     end
 
     def install_addon_on_cluster(cluster)
-      client = cluster.get_client("/apis/pkg.crossplane.io", "v1")
+      client = cluster.get_client('/apis/pkg.crossplane.io', 'v1')
       resource = build_configuration_resource
 
       begin
         client.create_configuration(resource)
       rescue Kubeclient::HttpError => e
-        if e.error_code == 409
-          update_existing_configuration(client, resource)
-        else
-          raise
-        end
+        raise unless e.error_code == 409
+
+        update_existing_configuration(client, resource)
       end
     end
 
     def build_configuration_resource
       Kubeclient::Resource.new(
-        metadata: {
-          name: @addon.name
-        },
+        metadata: { name: @addon.name },
         spec: {
           package: "#{@addon.oci_registry}:#{@addon.oci_version}",
           packagePullPolicy: @addon.pull_policy,
@@ -52,7 +50,7 @@ module Addons
     end
 
     def update_addon_status(status)
-      @addon.update(status: status)
+      @addon.update(status:)
     end
   end
 end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Projects
   class ProjectDestroyer < ProjectService
     # We trigger the delete job for the project resources. Once

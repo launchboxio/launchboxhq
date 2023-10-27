@@ -28,8 +28,6 @@ module Users
     #   devise_parameter_sanitizer.permit(:sign_in, keys: [:attribute])
     # end
 
-    private
-
     # def respond_with(resource, _opts = {})
     #   render json: {
     #     status: { code: 200, message: 'Logged in successfully.' },

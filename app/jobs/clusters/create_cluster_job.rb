@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module Clusters
   class CreateClusterJob < ApplicationJob
     queue_as :default
@@ -11,13 +12,12 @@ module Clusters
       cli = Rhelm::Client.new(kubeconfig: '/home/rwittman/.kube/config')
       cli.install(
         @cluster.slug,
-        '../../charts/cluster',
+        '../../charts/cluster'
         # values:
       )
 
       # Once the cluster resources have been created, we want to poll
       # the CRD to get the various required information out of it
-
     end
   end
 end

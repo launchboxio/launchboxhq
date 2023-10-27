@@ -11,11 +11,9 @@ module Api
         @agent = @cluster.agents.build(agent_params)
         @agent.last_communication = DateTime.now
 
-        if @agent.save
-          render json: @agent, status: :ok
-        else
+        return unless @agent.save
 
-        end
+        render json: @agent, status: :ok
       end
 
       private
@@ -29,7 +27,7 @@ module Api
       end
 
       def verify_agent_token
-        @cluster.oauth_application.id === doorkeeper_token.application_id
+        @cluster.oauth_application.id == doorkeeper_token.application_id
       end
 
       def missing_agent_token_error

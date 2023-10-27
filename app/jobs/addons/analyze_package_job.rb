@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Addons
   class AnalyzePackageJob
     include Sidekiq::Job
@@ -27,7 +29,7 @@ module Addons
       headers = {
         Authorization: "Bearer #{token}"
       }
-      response = HTTParty.get("https://ghcr.io/v2/#{repo}/manifests/#{@addon.oci_version}", headers: headers)
+      response = HTTParty.get("https://ghcr.io/v2/#{repo}/manifests/#{@addon.oci_version}", headers:)
       data = JSON.parse(response)
       data['layers'][0]['digest']
     end
@@ -36,7 +38,7 @@ module Addons
       file = download_tarball(digest)
 
       Gem::Package::TarReader.new(Zlib::GzipReader.open(file.path)).each do |entry|
-        next unless entry.full_name == "package.yaml"
+        next unless entry.full_name == 'package.yaml'
 
         process_yaml(entry)
       end
@@ -44,9 +46,9 @@ module Addons
 
     def download_tarball(digest)
       file = Tempfile.new('oci')
-      File.open(file.path, "w") do |temp_file|
+      File.open(file.path, 'w') do |temp_file|
         temp_file.binmode
-        HTTParty.get("https://ghcr.io/v2/#{repo}/blobs/#{digest}", headers: headers, stream_body: true) do |fragment|
+        HTTParty.get("https://ghcr.io/v2/#{repo}/blobs/#{digest}", headers:, stream_body: true) do |fragment|
           temp_file.write(fragment)
         end
       end
@@ -56,7 +58,7 @@ module Addons
 
     def process_yaml(entry)
       YAML.load_stream(entry.read) do |document|
-        next unless document && document['kind'] == "CompositeResourceDefinition"
+        next unless document && document['kind'] == 'CompositeResourceDefinition'
 
         group = document['spec']['group']
         claim_name = document['spec']['claimNames']['kind']

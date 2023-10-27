@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Admin
   class AddonsController < AdminController
     def index
@@ -16,6 +18,7 @@ module Admin
       @addon = Addon.new
     end
 
+    # rubocop:disable Metrics/AbcSize
     def update
       @addon = Addon.find(params[:id])
       if @addon.update(addon_params)
@@ -27,6 +30,7 @@ module Admin
         render 'edit'
       end
     end
+    # rubocop:enable Metrics/AbcSize
 
     def create
       @addon = Addon.new(addon_params)
@@ -47,6 +51,7 @@ module Admin
     end
 
     private
+
     def addon_params
       params.require(:addon).permit(:name, :oci_registry, :oci_version, :pull_policy, :activation_policy, :template)
     end

@@ -11,7 +11,7 @@ module Api
         @clusters = Cluster.all
 
         @clusters.each do |cluster|
-          ClusterChannel.broadcast_to(cluster, "Test")
+          ClusterChannel.broadcast_to(cluster, 'Test')
         end
         render json: @clusters
       end
@@ -21,12 +21,12 @@ module Api
       end
 
       def create
-        application = Doorkeeper::Application.create!(name: SecureRandom.uuid, confidential: true, redirect_uri: "https://localhost:8080")
+        application = Doorkeeper::Application.create!(name: SecureRandom.uuid, confidential: true, redirect_uri: 'https://localhost:8080')
         @cluster = Cluster.new(cluster_params)
         @cluster.oauth_application = application
         @cluster.save!
         Clusters::CreateClusterJob.perform_later(@cluster.id) if @cluster.managed?
-        render :json => @cluster, :include => [:oauth_application]
+        render json: @cluster, include: [:oauth_application]
       end
 
       def update; end

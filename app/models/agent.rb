@@ -5,6 +5,7 @@ class Agent < ApplicationRecord
   before_create :set_registered_status
 
   private
+
   def set_registered_status
     self.status = 'registered'
   end
