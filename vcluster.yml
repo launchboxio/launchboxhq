@@ -1,3 +1,4 @@
+---
 globalAnnotations:
   "launchboxhq.io/project-id": "<%= @project.id %>"
 vcluster:

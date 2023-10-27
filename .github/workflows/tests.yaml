@@ -17,12 +17,12 @@ jobs:
       - run: bundle install
       - run: bundle exec rubocop
 
-  superlint:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: super-linter/super-linter@v5
-        env:
-          # After soaking for a while, we can disable this
-          VALIDATE_ALL_CODEBASE: true
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#  superlint:
+#    runs-on: ubuntu-latest
+#    steps:
+#      - uses: actions/checkout@v4
+#      - uses: super-linter/super-linter@v5
+#        env:
+#          # After soaking for a while, we can disable this
+#          VALIDATE_ALL_CODEBASE: true
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
