@@ -1,6 +1,19 @@
 # frozen_string_literal: true
 
 class Project < ApplicationRecord
+  enum status: {
+    failed: 'failed',
+    pausing: 'pausing',
+    paused: 'paused',
+    pending_deletion: 'pending_deletion',
+    provisioning: 'provisioning',
+    provisioned: 'provisioned',
+    running: 'running',
+    starting: 'starting',
+    terminating: 'terminating',
+    terminated: 'terminated'
+  }
+
   has_paper_trail
   include Vault::EncryptedModel
   belongs_to :cluster

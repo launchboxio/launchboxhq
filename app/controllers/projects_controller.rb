@@ -18,13 +18,11 @@ class ProjectsController < AuthenticatedController
   def show; end
 
   def create
-    puts current_user
     @project = current_user.projects.create(project_params)
     @project.user = current_user
-    puts @project.inspect
     @project.cluster = @clusters.sample
-    if @project.save
-      Projects::SyncProjectJob.perform_async(@project.id)
+
+    if Projects::ProjectCreator(@project).execute
       redirect_to @project
     else
       flash[:notice] = @project.errors.full_messages
@@ -33,10 +31,12 @@ class ProjectsController < AuthenticatedController
   end
 
   def destroy
-    Projects::DeleteProjectJob.perform_async(@project.id)
-    @project.update(status: "pending-deletion")
-    flash[:notice] = "Project deleted"
-    redirect_to projects_path
+    if Projects::ProjectDestroyer(@project).execute
+      flash[:notice] = "Project deleted"
+      redirect_to projects_path
+    else
+      redirect_to @project
+    end
   end
 
   def kubeconfig

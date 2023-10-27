@@ -5,7 +5,7 @@ module Projects
 
     def perform(project_id)
       @project = Project.find(project_id)
-      @project.update(status: "terminating")
+      @project.update(status: :terminating)
       @cluster = Cluster.find(@project.cluster_id)
 
       # Get the version
@@ -17,7 +17,7 @@ module Projects
 
       client = @cluster.get_client("", 'v1')
       client.delete_namespace(@project.slug)
-      @project.update(status: 'terminated')
+      @project.update(status: :terminated)
     end
   end
 end

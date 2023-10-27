@@ -1,4 +1,3 @@
-
 module Api
   module V1
     class ProjectsController < Api::V1::ApiController
@@ -20,11 +19,10 @@ module Api
         @project = Project.new(project_params)
         @project.user = current_resource_owner
         @project.cluster = @clusters.sample
-        if @project.save
-          Projects::SyncProjectJob.perform_async(@project.id)
+
+        if Projects::ProjectCreator(@project).execute
           render json: @project
         else
-          puts @project.errors.inspect
           render json: {
             errors: @project.errors.full_messages
           }, status: 400
@@ -33,21 +31,27 @@ module Api
 
 
       def pause
-        @project.update(status: 'pausing')
-        Projects::PauseProjectJob.perform_later(@project.id)
-        render json: @project
+        if Projects::ProjectPauser(@project).execute
+          render json: @project
+        else
+          head :bad_request
+        end
       end
 
       def resume
-        @project.update(status: 'starting')
-        Projects::ResumeProjectJob.perform_later(@project.id)
-        render json: @project
+        if Projects::ProjectResumer(@project).execute
+          render json: @project
+        else
+          head :bad_request
+        end
       end
 
       def destroy
-        Projects::DeleteProjectJob.perform_async(@project.id)
-        @project.update(status: "pending-deletion")
-        head :no_content
+        if Projects::ProjectDestroyer(@project).execute
+          head :no_content
+        else
+          head :bad_request
+        end
       end
 
       private
