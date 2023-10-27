@@ -20,9 +20,9 @@ module Api
       def create
         @project = Project.new(project_params)
         @project.user = current_resource_owner
-        @project.cluster = @clusters.sample
+        @project.cluster = @clusters.sample if @project.cluster.nil?
 
-        if Projects::ProjectCreator(@project).execute
+        if Projects::ProjectCreateService.new(@project).execute
           render json: @project
         else
           render json: {
@@ -32,7 +32,7 @@ module Api
       end
 
       def pause
-        if Projects::ProjectPauser(@project).execute
+        if Projects::ProjectPauseService.new(@project).execute
           render json: @project
         else
           head :bad_request
@@ -40,7 +40,7 @@ module Api
       end
 
       def resume
-        if Projects::ProjectResumer(@project).execute
+        if Projects::ProjectResumeService.new(@project).execute
           render json: @project
         else
           head :bad_request
@@ -48,7 +48,7 @@ module Api
       end
 
       def destroy
-        if Projects::ProjectDestroyer(@project).execute
+        if Projects::ProjectDestroyService.new(@project).execute
           head :no_content
         else
           head :bad_request

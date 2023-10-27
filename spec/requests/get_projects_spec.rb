@@ -10,10 +10,10 @@ RSpec.describe 'Get Projects', type: :request do
   let(:cluster)     { FactoryBot.create(:cluster) }
   let(:project)     { FactoryBot.create(:project, cluster:, user:) }
 
-  describe 'GET /v1/projects' do
+  describe 'GET /api/v1/projects' do
     before do
       FactoryBot.create_list(:project, 10, cluster:, user:)
-      get '/v1/projects', params: {}, headers: {
+      get '/api/v1/projects', params: {}, headers: {
         Authorization: "Bearer #{token.token}",
         Accept: 'application/json'
       }
@@ -25,9 +25,9 @@ RSpec.describe 'Get Projects', type: :request do
     end
   end
 
-  describe 'GET /v1/projects/{projectId}' do
+  describe 'GET /api/v1/projects/{projectId}' do
     before do
-      get "/v1/projects/#{project.id}", params: {}, headers: {
+      get "/api/v1/projects/#{project.id}", params: {}, headers: {
         Authorization: "Bearer #{token.token}",
         Accept: 'application/json'
       }
@@ -40,9 +40,9 @@ RSpec.describe 'Get Projects', type: :request do
     end
   end
 
-  describe 'GET /v1/projects without authentication' do
+  describe 'GET /api/v1/projects without authentication' do
     before do
-      get '/v1/projects', params: {}, headers: {
+      get '/api/v1/projects', params: {}, headers: {
         Accept: 'application/json'
       }
     end

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Projects
-  class ProjectCreator < ProjectService
+  class ProjectCreateService < ProjectService
     def execute
       return false unless @project.save!
 

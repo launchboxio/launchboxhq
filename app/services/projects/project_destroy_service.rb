@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Projects
-  class ProjectDestroyer < ProjectService
+  class ProjectDestroyService < ProjectService
     # We trigger the delete job for the project resources. Once
     # that job has completed, it will finalize and remove the
     # attached project

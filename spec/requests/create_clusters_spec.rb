@@ -8,9 +8,9 @@ RSpec.describe 'Create clusters', type: :request do
   let(:user)        { FactoryBot.create(:user) }
   let(:token)       { FactoryBot.create('doorkeeper/access_token', application:, resource_owner_id: user.id, scopes: 'manage_clusters') }
 
-  describe 'POST /v1/clusters' do
+  describe 'POST /api/v1clusters' do
     before do
-      post '/v1/clusters', params: {
+      post '/api/v1/clusters', params: {
         cluster: { name: Faker::App.name }
       }, headers: {
         Authorization: "Bearer #{token.token}",
