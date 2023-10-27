@@ -11,7 +11,7 @@ module Projects
       apps_client = @cluster.get_client("/apis/apps", 'v1')
       apps_client.patch_stateful_set(@project.slug, { spec: { replicas: 1 } }, @project.slug)
 
-      @project.update(status: 'started')
+      @project.update(status: :running)
     end
   end
 end

@@ -19,7 +19,7 @@ module Projects
       pods.each do |pod|
         client.delete_pod(pod.name, @project.slug)
       end
-      @project.update(status: 'paused')
+      @project.update(status: :paused)
     end
   end
 end

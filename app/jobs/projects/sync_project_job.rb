@@ -7,7 +7,7 @@ module Projects
 
       @project = Project.find(project_id)
       @cluster = Cluster.find(@project.cluster_id)
-      @project.update(status: 'provisioning')
+      @project.update(status: :provisioning)
 
       # Create our resources
       ensure_namespace
@@ -24,7 +24,7 @@ module Projects
         rescue Kubeclient::HttpError => e
           # Handle all errors except for "Not Found"
           if e.error_code != 404
-            @project.update(status: "failed")
+            @project.update(status: :failed)
             raise
           end
 
@@ -35,7 +35,7 @@ module Projects
       ensure_provider_config("/apis/kubernetes.crossplane.io", 'v1alpha1')
       ensure_provider_config("/apis/helm.crossplane.io", 'v1beta1')
 
-      @project.update(status: 'provisioned')
+      @project.update(status: :provisioned)
 
       apply_addon_subscriptions
     end
