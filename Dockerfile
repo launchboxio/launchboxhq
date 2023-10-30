@@ -37,4 +37,4 @@ RUN npm install
 RUN SECRET_KEY_BASE=`bin/rake secret` rake assets:precompile
 
 # Configure the main process to run when running the image
-CMD ["rails", "server", "-b", "0.0.0.0"]
+CMD ["bundle", "exec", "puma", "-t", "1:1", "-b", "tcp://0.0.0.0:3000"]
