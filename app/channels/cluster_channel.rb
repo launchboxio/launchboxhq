@@ -16,4 +16,6 @@ class ClusterChannel < ApplicationCable::Channel
     @cluster = Cluster.find(params[:cluster_id])
     stream_for @cluster
   end
+
+  def ack; end
 end
