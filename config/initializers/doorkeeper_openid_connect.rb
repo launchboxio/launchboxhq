@@ -62,13 +62,14 @@ Doorkeeper::OpenidConnect.configure do
   claims do
     # claim :email, response: [:id_token, :user_info], &:email
 
-    claim :preferred_username, &:email
+    # rubocop:disable Style/SymbolProc
+    claim :preferred_username do |resource_owner, _scopes, _access_token|
+      resource_owner.email
+    end
 
-    # claim :email, response: [:id_token], &:email
-    claim :email, response: %i[id_token user_info], &:email
-    #
-    # claim :preferred_username, response: [:id_token, :user_info] do |resource_owner|
-    #   resource_owner.email
-    # end
+    claim :email, response: %i[id_token user_info] do |resource_owner|
+      resource_owner.email
+    end
+    # rubocop:enable Style/SymbolProc
   end
 end
