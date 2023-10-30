@@ -281,9 +281,7 @@ Doorkeeper.configure do
   #
   # force_ssl_in_redirect_uri { |uri| uri.host != 'localhost' }
 
-  # rubocop:disable Lint/UselessAssignment
-  force_ssl_in_redirect_uri = false
-  # rubocop:enable Lint/UselessAssignment
+  force_ssl_in_redirect_uri false
 
   # enable_pkce_without_secret
 
