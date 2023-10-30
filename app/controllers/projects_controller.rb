@@ -41,8 +41,8 @@ class ProjectsController < AuthenticatedController
   end
 
   def kubeconfig
-    @application = Doorkeeper::Application.find_by(name: 'oidc')
-    @oidc_issuer = 'https://launchboxhq.local'
+    @application = Doorkeeper::Application.find_by(name: 'Cluster Authentication')
+    @oidc_issuer = Rails.configuration.launchbox[:vcluster][:oidc_issuer_url]
     render 'kubeconfig', layout: false, content_type: 'application/x-yaml'
   end
 

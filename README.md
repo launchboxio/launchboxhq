@@ -34,6 +34,12 @@ rails db:create && rails db:migrate
 rails s
 ```
 
+# Generate the Kubernetes cluster authentication client
+```shell
+rails c
+Doorkeeper::Application.create(name: "Cluster Authentication", redirect_uri: "http://localhost:8080")
+```
+
 ## Kubeconfig template
 To connect to kubernetes using the OIDC provided by Launchbox
 
