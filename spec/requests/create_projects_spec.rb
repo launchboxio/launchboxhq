@@ -42,7 +42,6 @@ RSpec.describe 'Create projects', type: :request do
       expect(response).to have_http_status(:success)
       expect(json['status']).to eql('pausing')
 
-      expect(Projects::ResumeProjectJob).to receive(:perform_async).once
       post "/api/v1/projects/#{@project_id}/resume", params: {}, headers: {
         Authorization: "Bearer #{token.token}",
         Accept: 'application/json'

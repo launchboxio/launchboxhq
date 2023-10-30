@@ -11,7 +11,6 @@ Bundler.require(*Rails.groups)
 # Load dotenv only in development or test environment
 Dotenv::Railtie.load if %w[development test].include? ENV['RAILS_ENV']
 
-puts ENV.fetch('RAILS_ENV', nil)
 module Launchboxhq
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.

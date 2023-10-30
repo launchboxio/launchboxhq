@@ -13,7 +13,6 @@
 # - addons.deleted
 class ClusterChannel < ApplicationCable::Channel
   def subscribed
-    puts params[:cluster_id]
     @cluster = Cluster.find(params[:cluster_id])
     stream_for @cluster
   end

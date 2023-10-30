@@ -18,7 +18,6 @@ RSpec.describe 'Get Clusters', type: :request do
     end
 
     it 'returns all clusters' do
-      puts json
       expect(json.size).to eq(10)
       expect(response).to have_http_status(:success)
     end
