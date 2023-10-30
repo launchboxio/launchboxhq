@@ -36,5 +36,7 @@ COPY . /launchbox
 RUN npm install
 RUN SECRET_KEY_BASE=`bin/rake secret` rake assets:precompile
 
+RUN mkdir tmp/pids
+
 # Configure the main process to run when running the image
 CMD ["bundle", "exec", "puma", "-t", "1:1", "-b", "tcp://0.0.0.0:3000"]
