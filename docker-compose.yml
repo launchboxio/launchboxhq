@@ -10,19 +10,6 @@ services:
       - ./data/postgres:/var/lib/postgresql/data
     environment:
       POSTGRES_PASSWORD: password
-#
-#  vault:
-#    image: vault
-#    ports:
-#      - "8200:8200"
-#    volumes:
-#      - ./data/vault:/vault/file:rw
-#      - ./config/vault.json:/vault/config/vault.json:rw
-#    cap_add:
-#      - IPC_LOCK
-#    environment:
-#      VAULT_ADDR: http://127.0.0.1:8200
-#    entrypoint: vault server -config=/vault/config/vault.json
 
 #  centrifugal:
 #    image: centrifugo/centrifugo:v4.1.3

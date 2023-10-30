@@ -6,7 +6,9 @@ module Projects
     # that job has completed, it will finalize and remove the
     # attached project
     def execute
-      Projects::DeleteProjectJob.perform_async(@project.id)
+      @cluster = Cluster.find(@project.cluster_id)
+      ClusterChannel.broadcast_to(@cluster, { type: 'projects.deleted', id:
+        SecureRandom.hex, payload: @project.as_json })
       return false unless @project.update(status: :pending_deletion)
 
       true

@@ -3,9 +3,11 @@
 module Projects
   class ProjectResumeService < ProjectService
     def execute
+      @cluster = Cluster.find(@project.cluster_id)
       return false unless @project.update(status: :starting)
 
-      Projects::ResumeProjectJob.perform_async(@project.id)
+      ClusterChannel.broadcast_to(@cluster, { type: 'projects.resumed', id:
+        SecureRandom.hex, payload: @project.as_json })
       true
     end
   end
