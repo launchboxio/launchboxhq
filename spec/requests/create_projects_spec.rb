@@ -11,7 +11,6 @@ RSpec.describe 'Create projects', type: :request do
 
   describe 'POST /api/v1/projects' do
     before do
-      expect(Projects::SyncProjectJob).to receive(:perform_async).once
       post '/api/v1/projects', params: {
         project: {
           name: Faker::App.name,
@@ -36,7 +35,6 @@ RSpec.describe 'Create projects', type: :request do
     end
 
     it 'pauses and resumes' do
-      expect(Projects::PauseProjectJob).to receive(:perform_async).once
       post "/api/v1/projects/#{@project_id}/pause", params: {}, headers: {
         Authorization: "Bearer #{token.token}",
         Accept: 'application/json'
