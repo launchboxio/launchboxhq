@@ -10,7 +10,7 @@ module Projects
       data['users'] = [
         { email: @project.user.email, clusterRole: 'cluster-admin' }
       ]
-      ClusterChannel.broadcast_to(@cluster, { type: 'projects.created', id: SecureRandom.hex, payload: @project.as_json })
+      ClusterChannel.broadcast_to(@cluster, { type: 'projects.created', id: SecureRandom.hex, payload: data })
       true
     end
   end
