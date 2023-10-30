@@ -6,8 +6,7 @@ module Projects
       @cluster = Cluster.find(@project.cluster_id)
       return false unless @project.update(status: :starting)
 
-      ClusterChannel.broadcast_to(@cluster, { type: 'projects.resumed', id:
-        SecureRandom.hex, payload: @project.as_json })
+      ClusterChannel.broadcast_to(@cluster, { type: 'projects.resumed', id: SecureRandom.hex, payload: @project.as_json })
       true
     end
   end

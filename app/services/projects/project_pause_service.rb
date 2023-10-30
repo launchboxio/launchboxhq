@@ -7,8 +7,7 @@ module Projects
       return false unless @project.update(status: :pausing)
 
       # Projects::PauseProjectJob.perform_async(@project.id)
-      ClusterChannel.broadcast_to(@cluster, { type: 'projects.paused', id:
-        SecureRandom.hex, payload: @project.as_json })
+      ClusterChannel.broadcast_to(@cluster, { type: 'projects.paused', id: SecureRandom.hex, payload: @project.as_json })
       true
     end
   end
