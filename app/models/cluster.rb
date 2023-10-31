@@ -1,11 +1,6 @@
 # frozen_string_literal: true
 
 class Cluster < ApplicationRecord
-  include Vault::EncryptedModel
-  vault_lazy_decrypt!
-  vault_attribute :ca_crt
-  vault_attribute :token
-
   has_many :projects
   has_many :agents
   has_many :cluster_addons, through: :cluster_addon_subscriptions

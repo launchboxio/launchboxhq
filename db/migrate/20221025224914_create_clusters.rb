@@ -10,8 +10,6 @@ class CreateClusters < ActiveRecord::Migration[7.0]
       t.string :provider
       t.string :status
       t.string :host
-      t.string :ca_crt_encrypted
-      t.string :token_encrypted
       t.string :connection_method
       t.boolean :managed, default: false
 
