@@ -34,7 +34,7 @@ module Admin
     private
 
     def cluster_params
-      params.require(:cluster).permit(:name, :region, :version, :provider, :connection_method, :managed, :host, :ca_crt, :token)
+      params.require(:cluster).permit(:name, :region, :version, :provider, :connection_method, :managed, :host)
     end
   end
 end
