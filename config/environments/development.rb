@@ -79,4 +79,5 @@ Rails.application.configure do
     'launchboxhq.local',
     'launchboxhq.dev'
   ]
+  config.hosts << /[a-z0-9\-]+\.ngrok-free\.app/
 end

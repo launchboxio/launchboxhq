@@ -8,7 +8,7 @@ Vault::Rails.configure do |vault|
   # algorithm to Vault. The in-memory store uses a predictable encryption
   # which is great for development and test, but should _never_ be used in
   # production. Default: ENV["VAULT_RAILS_ENABLED"].
-  vault.enabled = ENV['VAULT_RAILS_ENABLED'] || 'false'
+  vault.enabled = Rails.env.production?
 
   # The name of the application. All encrypted keys in Vault will be
   # prefixed with this application name. If you change the name of the
