@@ -15,7 +15,6 @@ class Project < ApplicationRecord
   }
 
   has_paper_trail
-  include Vault::EncryptedModel
   belongs_to :cluster
   belongs_to :user
 
@@ -24,10 +23,6 @@ class Project < ApplicationRecord
   accepts_nested_attributes_for :addon_subscriptions
 
   before_create :generate_slug
-
-  vault_lazy_decrypt!
-  vault_attribute :ca_crt
-  vault_attribute :token
 
   acts_as_taggable_on :tags
 

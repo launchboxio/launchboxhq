@@ -96,8 +96,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_08_234155) do
     t.string "provider"
     t.string "status"
     t.string "host"
-    t.string "ca_crt_encrypted"
-    t.string "token_encrypted"
     t.string "connection_method"
     t.boolean "managed", default: false
     t.text "manifest"
@@ -183,8 +181,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_08_234155) do
     t.datetime "last_started_at"
     t.text "last_error"
     t.string "host"
-    t.string "ca_crt_encrypted"
-    t.string "token_encrypted"
+    t.string "ca_certificate"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["cluster_id"], name: "index_projects_on_cluster_id"

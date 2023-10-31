@@ -25,8 +25,7 @@ class CreateProjects < ActiveRecord::Migration[7.0]
       t.text :last_error
 
       t.string :host
-      t.string :ca_crt_encrypted
-      t.string :token_encrypted
+      t.string :ca_certificate
 
       t.timestamps
     end

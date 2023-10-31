@@ -26,7 +26,7 @@ class ClusterChannel < ApplicationCable::Channel
   def project_status(data)
     @project = Project.find(data['project_id'])
     @project.status = data['status']
-    @project.ca_crt = data['ca_certificate']
+    @project.ca_certificate = data['ca_certificate']
     @project.save!
   end
 end
