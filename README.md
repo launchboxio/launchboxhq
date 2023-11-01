@@ -37,7 +37,7 @@ rails s
 # Generate the Kubernetes cluster authentication client
 ```shell
 rails c
-Doorkeeper::Application.create(name: "Cluster Authentication", redirect_uri: "http://localhost:8080")
+Doorkeeper::Application.create(name: "Cluster Authentication", confidential: false, redirect_uri: "http://localhost:8000")
 ```
 
 ## Kubeconfig template
