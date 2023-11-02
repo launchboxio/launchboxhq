@@ -32,6 +32,17 @@ module Api
       def update; end
       def destroy; end
 
+      def ping
+        doorkeeper_token = ::Doorkeeper.authenticate(request)
+        application_id = doorkeeper_token.application_id
+        head :forbidden if application_id != @cluster.oauth_application_id
+
+        @cluster.assign_attributes(ping_params)
+        @cluster.agent_connected = true
+        @cluster.agent_last_ping = DateTime.now
+        head :no_content
+      end
+
       private
 
       def find_cluster
@@ -40,6 +51,10 @@ module Api
 
       def cluster_params
         params.require(:cluster).permit(:name, :region, :version, :provider, :connection_method, :managed, :host)
+      end
+
+      def ping_params
+        params.require(:cluster).permit(:agent_version, :agent_identifier, :version, :provider, :region)
       end
     end
   end

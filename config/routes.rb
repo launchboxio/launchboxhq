@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  mount RailsEventStore::Browser => '/res' if Rails.env.development?
   root 'projects#index'
 
   devise_for :users, controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
@@ -38,9 +39,14 @@ Rails.application.routes.draw do
 
   namespace :api, defaults: { format: :json } do
     namespace :v1 do
+      get '/events/cluster', to: 'events#cluster'
       resources :clusters do
         resources :cluster_addons
         resources :agents
+
+        member do
+          post 'ping'
+        end
       end
       resources :projects do
         member do

@@ -79,3 +79,4 @@ group :test do
 end
 
 gem 'httparty', '~> 0.21.0'
+gem "rails_event_store", "~> 2.12.1"

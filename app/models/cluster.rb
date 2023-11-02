@@ -38,6 +38,17 @@ class Cluster < ApplicationRecord
   end
   # rubocop:enable Metrics/MethodLength
 
+  def on_project_change
+    ActiveRecord::Base.connection_pool.with_connection do |connection|
+      execute_query(connection, ["LISTEN project_?", id])
+      connection.raw_connection.wait_for_notify do |event, pid|
+        yield event
+      end
+    ensure
+      execute_query(connection, ["UNLISTEN project_?", id])
+    end
+  end
+
   private
 
   def generate_slug
