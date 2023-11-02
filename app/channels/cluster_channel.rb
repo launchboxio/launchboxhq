@@ -29,4 +29,17 @@ class ClusterChannel < ApplicationCable::Channel
     @project.ca_certificate = data['ca_certificate']
     @project.save!
   end
+
+  # rubocop:disable Metrics/AbcSize
+  def ping
+    @cluster.agent_connected = true
+    @cluster.agent_last_ping = DateTime.now
+    @cluster.agent_version = data['version']
+    @cluster.agent_identifier = data['identifier']
+    @cluster.version = data['version']
+    @cluster.provider = data['provider']
+    @cluster.region = data['region']
+    @cluster.save!
+  end
+  # rubocop:enable Metrics/AbcSize
 end

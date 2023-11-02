@@ -52,15 +52,25 @@
             <table class="table">
               <tr>
                 <td>Status</td>
-                <td><span class="badge bg-success">Connected</span></td>
+                <td>
+                  <% if @cluster.agent_connected %>
+                  <span class="badge bg-success">Connected</span>
+                  <% else %>
+                  <span class="badge bg-secondary">Disconnected</span>
+                  <% end %>
+                </td>
+              </tr>
+              <tr>
+                <td>Last Ping</td>
+                <td><%= @cluster.agent_last_ping %></td>
               </tr>
               <tr>
                 <td>Pod</td>
-                <td>operator-stuffs/default</td>
+                <td><%= @cluster.agent_identifier %></td>
               </tr>
               <tr>
                 <td>Version</td>
-                <td>Build 1.2.3</td>
+                <td><%= @cluster.agent_version %></td>
               </tr>
             </table>
           </div>
