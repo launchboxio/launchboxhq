@@ -6,8 +6,8 @@ RSpec.describe 'Api::V1::Projects', type: :request do
   let(:application) { FactoryBot.create('doorkeeper/application') }
   let(:user)        { FactoryBot.create(:user) }
   let(:cluster)     { FactoryBot.create(:cluster, oauth_application_id: application.id) }
-  let(:token)       { FactoryBot.create('doorkeeper/access_token', application: application, scopes: 'manage_clusters') }
-  let(:project)     { FactoryBot.create(:project, cluster:, user:)}
+  let(:token)       { FactoryBot.create('doorkeeper/access_token', application:, scopes: 'manage_clusters') }
+  let(:project)     { FactoryBot.create(:project, cluster:, user:) }
 
   describe 'POST /api/v1/projects/ID' do
     it 'updates a project status from a cluster' do

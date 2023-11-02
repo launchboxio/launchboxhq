@@ -1,2 +1,8 @@
-module Api::V1::EventsHelper
+# frozen_string_literal: true
+
+module Api
+  module V1
+    module EventsHelper
+    end
+  end
 end

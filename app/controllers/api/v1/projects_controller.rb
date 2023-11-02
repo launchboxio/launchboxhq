@@ -91,7 +91,7 @@ module Api
         doorkeeper_token = ::Doorkeeper.authenticate(request)
         if doorkeeper_token.application_id.nil?
           cluster = Cluster.where(oauth_application_id: doorkeeper_token.application_id).first
-          head :forbidden if cluster.nil? or cluster.id != @project.cluster_id
+          head :forbidden if cluster.nil? || (cluster.id != @project.cluster_id)
         else
           doorkeeper_authorize! scopes
         end
@@ -104,7 +104,6 @@ module Api
       def authorize_project_write
         authorize_project_access :manage_projects
       end
-
     end
   end
 end

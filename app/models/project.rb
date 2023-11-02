@@ -27,6 +27,7 @@ class Project < ApplicationRecord
   acts_as_taggable_on :tags
 
   private
+
   def generate_slug
     self.slug = Haiku.call(variant: -> { SecureRandom.alphanumeric(5).downcase })
   end

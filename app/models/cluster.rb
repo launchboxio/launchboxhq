@@ -40,12 +40,12 @@ class Cluster < ApplicationRecord
 
   def on_project_change
     ActiveRecord::Base.connection_pool.with_connection do |connection|
-      execute_query(connection, ["LISTEN project_?", id])
-      connection.raw_connection.wait_for_notify do |event, pid|
+      execute_query(connection, ['LISTEN project_?', id])
+      connection.raw_connection.wait_for_notify do |event, _pid|
         yield event
       end
     ensure
-      execute_query(connection, ["UNLISTEN project_?", id])
+      execute_query(connection, ['UNLISTEN project_?', id])
     end
   end
 

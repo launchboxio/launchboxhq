@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe 'Api::V1::Clusters', type: :request do
   let(:application) { FactoryBot.create('doorkeeper/application') }
-  let(:token)       { FactoryBot.create('doorkeeper/access_token', application: application, scopes: 'manage_clusters') }
+  let(:token)       { FactoryBot.create('doorkeeper/access_token', application:, scopes: 'manage_clusters') }
   let(:cluster)     { FactoryBot.create(:cluster, oauth_application_id: application.id) }
 
   describe 'POST /ping' do
