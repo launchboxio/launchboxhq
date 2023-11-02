@@ -14,7 +14,7 @@
       <%= bootstrap_form_for(@token, url: tokens_path) do |f| %>
         <div class="card-header">Details</div>
         <div class="card-body">
-          <span>No fields to customize yet</span>
+          <%= f.text_field :name %>
         </div>
         <div class="card-footer">
           <%= f.submit "Submit" %>

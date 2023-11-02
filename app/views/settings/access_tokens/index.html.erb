@@ -8,25 +8,30 @@
 </div>
 
 <div class="row">
-  <div class="col-md-4">
+  <div class="col-md-8 offset-md-2">
     <div class="card">
       <div class="card-header">Access Tokens</div>
       <div class="card-body">
-        <a href="<%= new_token_path %>">Create token</a>
         <ul class="list-group">
           <% @tokens.each do |token| %>
             <li class="list-group-item">
               <div class="row">
-                <div class="col-md-8">
-                  <%= token.created_at %>
+                <div class="col-md-6">
+                  <%= token.name %>
                 </div>
                 <div class="col-md-4">
-                  <%= button_to "delete", token_path(token), :method => :delete, :class => 'btn btn-small float-end'  %>
+                  <%= token.created_at %>
+                </div>
+                <div class="col-md-2">
+                  <%= button_to "delete", token_path(token), :method => :delete, data: {confirm: "Are you sure?"}, :class => 'btn btn-sm float-end'  %>
                 </div>
               </div>
             </li>
           <% end %>
         </ul>
+      </div>
+      <div class="card-footer">
+        <a href="<%= new_token_path %>">Create token</a>
       </div>
     </div>
   </div>

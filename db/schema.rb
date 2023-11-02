@@ -10,18 +10,25 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_08_234155) do
+ActiveRecord::Schema[7.0].define(version: 2023_11_02_014315) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "addon_subscriptions", force: :cascade do |t|
     t.bigint "project_id"
     t.bigint "addon_id"
-    t.json "overrides"
-    t.json "mappings"
-    t.string "name"
+    t.string "chart"
+    t.string "repo"
+    t.string "version"
+    t.string "release"
+    t.string "namespace"
+    t.string "value"
+    t.string "values_merge_type"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.json "overrides"
+    t.string "name"
+    t.json "mappings"
     t.index ["addon_id"], name: "index_addon_subscriptions_on_addon_id"
     t.index ["project_id"], name: "index_addon_subscriptions_on_project_id"
   end
@@ -40,15 +47,42 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_08_234155) do
 
   create_table "addons", force: :cascade do |t|
     t.string "name"
-    t.text "defaults"
-    t.string "oci_registry"
-    t.string "oci_version"
-    t.string "pull_policy"
-    t.string "activation_policy"
-    t.string "status"
+    t.boolean "cluster_attachable"
+    t.boolean "project_attachable"
+    t.text "definition"
+    t.text "json_schema"
+    t.text "mapping"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "oci_registry"
+    t.string "oci_version"
     t.text "template"
+    t.string "activation_policy"
+    t.string "pull_policy"
+  end
+
+  create_table "admins", force: :cascade do |t|
+    t.string "email", default: "", null: false
+    t.string "encrypted_password", default: "", null: false
+    t.string "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.integer "sign_in_count", default: 0, null: false
+    t.datetime "current_sign_in_at"
+    t.datetime "last_sign_in_at"
+    t.string "current_sign_in_ip"
+    t.string "last_sign_in_ip"
+    t.string "confirmation_token"
+    t.datetime "confirmed_at"
+    t.datetime "confirmation_sent_at"
+    t.string "unconfirmed_email"
+    t.integer "failed_attempts", default: 0, null: false
+    t.string "unlock_token"
+    t.datetime "locked_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["email"], name: "index_admins_on_email", unique: true
+    t.index ["reset_password_token"], name: "index_admins_on_reset_password_token", unique: true
   end
 
   create_table "agents", force: :cascade do |t|
@@ -63,12 +97,31 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_08_234155) do
     t.index ["cluster_id"], name: "index_agents_on_cluster_id"
   end
 
+  create_table "auth_cluster_roles", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "auth_groups", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "auth_roles", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "cluster_addon_subscriptions", force: :cascade do |t|
     t.bigint "cluster_id"
     t.bigint "cluster_addon_id"
-    t.json "overrides"
-    t.json "mappings"
-    t.string "name"
+    t.string "chart"
+    t.string "repo"
+    t.string "version"
+    t.string "release"
+    t.string "namespace"
+    t.string "value"
+    t.string "values_merge_type"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["cluster_addon_id"], name: "index_cluster_addon_subscriptions_on_cluster_addon_id"
@@ -96,15 +149,20 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_08_234155) do
     t.string "provider"
     t.string "status"
     t.string "host"
+    t.string "ca_crt_encrypted"
+    t.string "token_encrypted"
     t.string "connection_method"
     t.boolean "managed", default: false
-    t.text "manifest"
     t.bigint "oauth_application_id"
     t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.text "manifest"
+    t.boolean "agent_connected"
+    t.datetime "agent_last_ping"
+    t.string "agent_identifier"
+    t.string "agent_version"
     t.index ["oauth_application_id"], name: "index_clusters_on_oauth_application_id"
-    t.index ["slug"], name: "index_clusters_on_slug", unique: true
     t.index ["user_id"], name: "index_clusters_on_user_id"
   end
 
@@ -132,6 +190,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_08_234155) do
     t.datetime "created_at", null: false
     t.string "scopes"
     t.string "previous_refresh_token", default: "", null: false
+    t.string "name"
     t.index ["application_id"], name: "index_oauth_access_tokens_on_application_id"
     t.index ["refresh_token"], name: "index_oauth_access_tokens_on_refresh_token", unique: true
     t.index ["resource_owner_id"], name: "index_oauth_access_tokens_on_resource_owner_id"
@@ -180,10 +239,11 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_08_234155) do
     t.datetime "last_paused_at"
     t.datetime "last_started_at"
     t.text "last_error"
-    t.string "host"
-    t.string "ca_certificate"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "host"
+    t.text "ca_crt_encrypted"
+    t.string "token_encrypted"
     t.index ["cluster_id"], name: "index_projects_on_cluster_id"
     t.index ["slug"], name: "index_projects_on_slug", unique: true
     t.index ["user_id"], name: "index_projects_on_user_id"
@@ -228,6 +288,17 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_08_234155) do
     t.datetime "updated_at", null: false
     t.integer "taggings_count", default: 0
     t.index ["name"], name: "index_tags_on_name", unique: true
+  end
+
+  create_table "tenants", force: :cascade do |t|
+    t.string "name"
+    t.string "domain"
+    t.string "email"
+    t.string "provider"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["domain"], name: "index_tenants_on_domain", unique: true
+    t.index ["name"], name: "index_tenants_on_name", unique: true
   end
 
   create_table "users", force: :cascade do |t|

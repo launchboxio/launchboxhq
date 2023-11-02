@@ -6,3 +6,44 @@
     </ol>
   </nav>
 </div>
+
+<div class="row">
+  <div class="col-md-6">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header">Details</div>
+          <div class="card-body">
+            <table class="table">
+              <tr>
+                <td>ID</td>
+                <td><%= @addon.id %></td>
+              </tr>
+              <tr>
+                <td>Name</td>
+                <td><%= @addon.name %></td>
+              </tr>
+              <tr>
+                <td>Registry</td>
+                <td><%= @addon.oci_registry %></td>
+              </tr>
+              <tr>
+                <td>Version</td>
+                <td><%= @addon.oci_version %></td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="card">
+      <div class="card-header">Installations</div>
+      <div class="card-body">
+
+      </div>
+      <div class="card-footer"></div>
+    </div>
+  </div>
+</div>

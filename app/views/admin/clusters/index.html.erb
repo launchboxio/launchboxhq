@@ -6,14 +6,37 @@
   </nav>
 </div>
 
-<% @clusters.each do |cluster| %>
-  <div class="col-md-3">
-    <div class="card" style="width: 18rem;" onclick="location.href = '/admin/clusters/<%= cluster.id %>';">
-      <div class="card-body">
-        <h5 class="card-title"><%= cluster.name %></h5>
-      </div>
-    </div>
-  </div>
-<% end %>
+<div>
+  <table class="table">
+    <thead>
+      <tr>
+        <td>Name</td>
+        <td>Slug</td>
+        <td>Provider</td>
+        <td>Version</td>
+        <td>Region</td>
+        <td>Status</td>
+        <td>Agent</td>
+        <td></td>
+      </tr>
+    </thead>
+    <tbody>
+      <% @clusters.each do |cluster| %>
+      <tr  onclick="location.href = '<%= admin_cluster_path(cluster.id) %>';">
+        <td><%= cluster.name %></td>
+        <td><%= cluster.slug %></td>
+        <td><%= cluster.provider %></td>
+        <td><%= cluster.version %></td>
+        <td><%= cluster.region %></td>
+        <td><%= cluster.status %></td>
+        <td><span class="badge bg-success">Connected</span></td>
+        <td><a href="/admin/clusters/<%= cluster.id %>/edit"><i class="bi bi-pencil"></i></a></td>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
 
-<a href="/admin/clusters/new">Create new cluster</a>
+<div >
+  <a class="float-right" href="/admin/clusters/new">Create new cluster</a>
+</div>
