@@ -22,7 +22,7 @@
     </thead>
     <tbody>
       <% @clusters.each do |cluster| %>
-      <tr>
+      <tr  onclick="location.href = '<%= admin_cluster_path(cluster.id) %>';">
         <td><%= cluster.name %></td>
         <td><%= cluster.slug %></td>
         <td><%= cluster.provider %></td>

@@ -6,14 +6,33 @@
   </nav>
 </div>
 
-<% @addons.each do |addon| %>
-  <div class="col-md-3">
-    <div class="card" style="width: 18rem;" onclick="location.href = '/admin/addons/<%= addon.id %>/edit';">
-      <div class="card-body">
-        <h5 class="card-title"><%= addon.name %></h5>
-      </div>
-    </div>
+<div class="row">
+  <div class="col-md-12">
+    <table class="table">
+      <thead>
+        <tr>
+          <td>Name</td>
+          <td>OCI Registry</td>
+          <td>Version</td>
+          <td>Activation Policy</td>
+          <td>Pull Policy</td>
+          <td>Created At</td>
+        </tr>
+      </thead>
+      <tbody>
+        <% @addons.each do |addon| %>
+        <tr onclick="location.href = '<%= admin_addon_path(addon.id) %>';">
+          <td><%= addon.name %></td>
+          <td><%= addon.oci_registry %></td>
+          <td><%= addon.oci_version %></td>
+          <td><%= addon.activation_policy %></td>
+          <td><%= addon.pull_policy %></td>
+          <td><%= addon.created_at %></td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
   </div>
-<% end %>
+</div>
 
 <a href="/admin/addons/new">Create new addon</a>

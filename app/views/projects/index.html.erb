@@ -6,14 +6,36 @@
   </nav>
 </div>
 
-<% @projects.each do |project| %>
-  <div class="col-md-3">
-    <div class="card" style="width: 18rem;" onclick="location.href = '/projects/<%= project.id %>';">
-      <div class="card-body">
-        <h5 class="card-title"><%= project.name %></h5>
-      </div>
-    </div>
-  </div>
-<% end %>
 
-<a href="/projects/new">Create new project</a>
+<div>
+  <table class="table">
+    <thead>
+    <tr>
+      <td>Name</td>
+      <td>Slug</td>
+      <td>Memory</td>
+      <td>CPU</td>
+      <td>Disk</td>
+      <td>Status</td>
+      <td></td>
+    </tr>
+    </thead>
+    <tbody>
+    <% @projects.each do |project| %>
+      <tr onclick="location.href = '<%= project_path(project.id) %>';">
+        <td><%= project.name %></td>
+        <td><%= project.slug %></td>
+        <td><%= project.memory %> Mi</td>
+        <td><%= project.cpu %></td>
+        <td><%= project.disk %> GB</td>
+        <td><%= project.status %></td>
+        <td><a href="<%= edit_project_path(project.id) %>"><i class="bi bi-pencil"></i></a></td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+</div>
+
+<div >
+  <a class="float-right" href="<%= new_project_url %>">Create new project</a>
+</div>

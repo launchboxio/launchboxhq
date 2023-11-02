@@ -6,3 +6,78 @@
     </ol>
   </nav>
 </div>
+
+<div class="row">
+  <div class="col-md-6">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header">Details</div>
+          <div class="card-body">
+            <table class="table">
+              <tr>
+                <td>Name</td>
+                <td><%= @cluster.name %></td>
+              </tr>
+              <tr>
+                <td>Slug</td>
+                <td><%= @cluster.slug %></td>
+              </tr>
+              <tr>
+                <td>Provider</td>
+                <td><%= @cluster.provider %></td>
+              </tr>
+              <tr>
+                <td>Version</td>
+                <td><%= @cluster.version %></td>
+              </tr>
+              <tr>
+                <td>Region</td>
+                <td><%= @cluster.region %></td>
+              </tr>
+              <tr>
+                <td>Status</td>
+                <td><%= @cluster.status %></td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header">Agent Information</div>
+          <div class="card-body">
+            <table class="table">
+              <tr>
+                <td>Status</td>
+                <td><span class="badge bg-success">Connected</span></td>
+              </tr>
+              <tr>
+                <td>Pod</td>
+                <td>operator-stuffs/default</td>
+              </tr>
+              <tr>
+                <td>Version</td>
+                <td>Build 1.2.3</td>
+              </tr>
+            </table>
+          </div>
+          <div class="card-footer">
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="card">
+      <div class="card-header">Deployed Projects</div>
+      <div class="card-body">
+
+      </div>
+      <div class="card-footer"></div>
+    </div>
+  </div>
+</div>
