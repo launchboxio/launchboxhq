@@ -5,10 +5,6 @@ module Api
 
       def cluster
 
-        @event_store = Rails.configuration.event_store
-
-        @event_store.subscribe_to_all_events { |event| puts event.inspect }
-
         response.headers['Content-Type'] = 'text/event-stream'
         response.headers['Last-Modified'] = Time.now.httpdate
 

@@ -31,8 +31,6 @@ module Launchboxhq
       Devise::ConfirmationsController.layout 'auth'
       Devise::UnlocksController.layout 'auth'
       Devise::PasswordsController.layout 'auth'
-
-      Rails.configuration.event_store = RailsEventStore::Client.new
     end
 
     config.launchbox = config_for(:launchbox)
