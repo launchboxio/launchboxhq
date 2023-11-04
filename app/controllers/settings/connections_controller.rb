@@ -9,6 +9,7 @@ module Settings
     def destroy
       @connection = current_user.vcs_connections.find(params[:id])
       @connection.destroy
+      flash[:notice] = 'VCS Connection deleted'
       redirect_to connections_path
     end
   end

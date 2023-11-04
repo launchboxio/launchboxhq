@@ -30,7 +30,7 @@ module Users
         @user = current_user
         store_vcs_connection
         set_flash_message(:notice, :success, kind: @auth.provider) if is_navigational_format?
-        redirect_to settings_path and return
+        redirect_to connections_path and return
       end
       # First, we check if a user already exists with the current
       @user = User.find_by(email: @auth.info.email)
