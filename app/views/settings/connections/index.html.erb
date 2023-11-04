@@ -8,25 +8,39 @@
 </div>
 
 <div class="row">
-  <div class="col-md-4">
+  <div class="col-md-8 offset-md-2">
     <div class="card">
       <div class="card-header">VCS Connections</div>
       <div class="card-body">
-        <ul class="list-group">
-          <% @connections.each do |conn| %>
-            <li class="list-group-item">
-              <%= conn.provider %> - <%= conn.email %> - <%= conn.uid %>
-            </li>
-          <% end %>
-        </ul>
-        <div class="row">
-          <%= button_to "Link Github Account", omniauth_authorize_path('user', 'github'), data: { turbo: false }, class: "btn btn-small" %>
-        </div>
-        <div class="row">
-          <%= button_to "Link Gitlab Account", omniauth_authorize_path('user', 'gitlab'), data: { turbo: false }, class: "btn btn-small" %>
-        </div>
-        <div class="row">
-          <%= button_to "Link Bitbucket Account", omniauth_authorize_path('user', 'bitbucket'), data: { turbo: false }, class: "btn btn-small" %>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Provider</th>
+              <th>Email</th>
+              <th>UID</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @connections.each do |conn| %>
+              <tr>
+                <td><%= conn.provider %></td>
+                <td><%= conn.email %></td>
+                <td><%= conn.uid %></td>
+                <td>
+                  <%= button_to "Delete", connection_path(conn), :method => :delete, data: {confirm: "Are you sure?"}, :class => 'btn btn-outline-secondary btn-sm float-end' %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+      <div class="card-footer">
+        Add Provider:
+        <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
+          <%= button_to "Github", omniauth_authorize_path('user', 'github'), data: { turbo: false }, class: "btn btn-small btn-outline-primary" %>
+          <%= button_to "Gitlab", omniauth_authorize_path('user', 'gitlab'), data: { turbo: false }, class: "btn btn-small btn-outline-primary" %>
+          <%= button_to "Bitbucket", omniauth_authorize_path('user', 'bitbucket'), data: { turbo: false }, class: "btn btn-small btn-outline-primary" %>
         </div>
       </div>
     </div>
