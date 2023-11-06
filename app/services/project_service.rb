@@ -7,4 +7,12 @@ class ProjectService
     @project = project
     super()
   end
+
+  def build
+    data = @project.as_json
+    data['users'] = [
+      { email: @project.user.email, clusterRole: 'cluster-admin' }
+    ]
+    data
+  end
 end

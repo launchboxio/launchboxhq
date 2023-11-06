@@ -7,10 +7,14 @@ module Projects
     # attached project
     def execute
       @cluster = Cluster.find(@project.cluster_id)
-      ClusterChannel.broadcast_to(@cluster, { type: 'projects.deleted', id: SecureRandom.hex, payload: @project.as_json })
-      return false unless @project.update(status: :pending_deletion)
-
-      true
+      ClusterChannel.broadcast_to(
+        @cluster, {
+          type: 'projects.deleted',
+          id: SecureRandom.hex,
+          payload: @project.id
+        }
+      )
+      @project.update(status: :pending_deletion)
     end
   end
 end
