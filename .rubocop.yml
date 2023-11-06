@@ -4,8 +4,7 @@ AllCops:
     - 'db/schema.rb'
     - 'bin/*'
     - 'test/**'
-    - 'spec/requests/*'
-    - 'spec/*'
+    - 'spec/**/*'
     - 'app/controllers/users/omniauth_callbacks_controller.rb'
   NewCops: enable
   SuggestExtensions: false

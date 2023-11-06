@@ -9,24 +9,24 @@ module Api
 
       def index
         @addons = Addon.all
-        render json: @addons
+        render json: { addons: @addons }
       end
 
       def show
-        render json: @addon
+        render json: { addon: @addon }
       end
 
       def create
         @addon = Addon.new(addon_params)
         @addon.save!
-        render json: @addon
+        render json: { addon: @addon }
       end
 
       def update
         @addon = Addon.find(params[:id])
         @addon.attributes = addon_params
         @addon.save!
-        render json: @addon
+        render json: { addon: @addon }
       end
 
       def destroy
@@ -41,7 +41,7 @@ module Api
       end
 
       def addon_params
-        params.require(:addon).permit(:oci_registry, :oci_version, :name)
+        params.require(:addon).permit(:oci_registry, :oci_version, :name, :pull_policy, :activation_policy)
       end
     end
   end

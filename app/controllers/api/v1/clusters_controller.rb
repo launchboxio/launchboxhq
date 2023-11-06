@@ -9,15 +9,11 @@ module Api
 
       def index
         @clusters = Cluster.all
-
-        @clusters.each do |cluster|
-          ClusterChannel.broadcast_to(cluster, 'Test')
-        end
-        render json: @clusters
+        render json: { clusters: @clusters }
       end
 
       def show
-        render json: @cluster
+        render json: { cluster: @cluster }
       end
 
       def create

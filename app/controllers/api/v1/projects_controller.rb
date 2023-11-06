@@ -3,30 +3,31 @@
 module Api
   module V1
     class ProjectsController < Api::V1::ApiController
-      # before_action -> { doorkeeper_authorize! :read_projects, :manage_projects }, only: %i[index show]
-      # before_action -> { doorkeeper_authorize! :manage_projects }, only: %i[create destroy pause resume]
+      before_action -> { doorkeeper_authorize! :read_projects, :manage_projects }, only: %i[index show]
+      before_action -> { doorkeeper_authorize! :manage_projects }, only: %i[create destroy pause resume]
 
       before_action :find_project, except: %i[index new create]
       before_action :find_clusters, only: %i[create]
 
-      before_action -> { authorize_project_read }, only: %i[index show]
-      before_action -> { authorize_project_write }, only: %i[create destroy pause resume]
+      before_action -> { :authorize_project_access }, only: %i[update]
+      # before_action :authorize_project_read, only: %i[index show]
+      # before_action :authorize_project_write, only: %i[create destroy pause resume]
       def index
         @projects = Project.all
-        render json: @projects
+        render json: { projects: @projects }
       end
 
       def show
-        render json: @project, include: [:addons]
+        render json: { project: @project }, include: [:addons]
       end
 
       def create
         @project = Project.new(project_params)
         @project.user = current_resource_owner
-        @project.cluster = @clusters.sample if @project.cluster.nil?
+        @project.cluster = Cluster.all.sample if @project.cluster.nil?
 
         if Projects::ProjectCreateService.new(@project).execute
-          render json: @project
+          render json: { project: @project }
         else
           render json: {
             errors: @project.errors.full_messages
@@ -46,7 +47,7 @@ module Api
 
       def pause
         if Projects::ProjectPauseService.new(@project).execute
-          render json: @project
+          render json: { project: @project }
         else
           head :bad_request
         end
@@ -54,7 +55,7 @@ module Api
 
       def resume
         if Projects::ProjectResumeService.new(@project).execute
-          render json: @project
+          render json: { project: @project }
         else
           head :bad_request
         end
@@ -87,20 +88,20 @@ module Api
         @clusters = Cluster.all
       end
 
-      def authorize_project_access(scopes)
+      def authorize_project_access(*scopes)
         doorkeeper_token = ::Doorkeeper.authenticate(request)
         head :unauthorized and return if doorkeeper_token.nil?
 
         if doorkeeper_token.application_id.nil?
+          doorkeeper_authorize! scopes
+        else
           cluster = Cluster.where(oauth_application_id: doorkeeper_token.application_id).first
           head :forbidden if cluster.nil? || (cluster.id != @project.cluster_id)
-        else
-          doorkeeper_authorize! scopes
         end
       end
 
       def authorize_project_read
-        authorize_project_access :read_projects
+        doorkeeper_authorize! :read_projects, :manage_projects
       end
 
       def authorize_project_write
