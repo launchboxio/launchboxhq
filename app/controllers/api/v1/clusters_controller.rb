@@ -7,6 +7,8 @@ module Api
       before_action -> { doorkeeper_authorize! :read_clusters, :manage_clusters }, only: %i[index show]
       before_action -> { doorkeeper_authorize! :manage_clusters }, only: %i[create update destroy]
 
+      # Only allow admins unless listing or retrieving clusters
+      before_action -> { require_admin! }, except: %i[index show ping]
       def index
         @clusters = Cluster.all
         render json: { clusters: @clusters }
@@ -53,6 +55,8 @@ module Api
       def ping_params
         params.require(:cluster).permit(:agent_version, :agent_identifier, :version, :provider, :region)
       end
+
+      def require_admin; end
     end
   end
 end
