@@ -10,11 +10,13 @@ RSpec.describe 'Api::V1::Clusters', type: :request do
   describe 'POST /ping' do
     it 'updates a cluster status' do
       post "/api/v1/clusters/#{cluster.id}/ping", params: {
-        agent_version: '1.2.3',
-        agent_identifier: 'pod-123/default',
-        version: '1.25.15',
-        provider: 'launchbox',
-        region: 'us-east-1'
+        cluster: {
+          agent_version: '1.2.3',
+          agent_identifier: 'pod-123/default',
+          version: '1.25.15',
+          provider: 'launchbox',
+          region: 'us-east-1'
+        }
       }, headers: {
         Authorization: "Bearer #{token.token}",
         Accept: 'application/json'

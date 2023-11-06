@@ -28,7 +28,7 @@ FactoryBot.define do
 
   factory :addon do
     name { Faker::App.name }
-    json_schema { '{a: b}' }
+    # json_schema { '{a: b}' }
   end
 
   factory :project do
