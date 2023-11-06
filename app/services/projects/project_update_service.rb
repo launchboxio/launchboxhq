@@ -6,7 +6,12 @@ module Projects
       return false unless @project.save!
 
       @cluster = Cluster.find(@project.cluster_id)
-      ClusterChannel.broadcast_to(@cluster, { type: 'projects.updated', id: SecureRandom.hex, payload: @project.as_json })
+      payload = build(@project)
+      ClusterChannel.broadcast_to(
+        @cluster, {
+          type: 'projects.created', id: SecureRandom.hex, payload:
+        }
+      )
       true
     end
   end

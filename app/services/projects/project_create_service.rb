@@ -6,11 +6,12 @@ module Projects
       return false unless @project.save!
 
       @cluster = Cluster.find(@project.cluster_id)
-      data = @project.as_json
-      data['users'] = [
-        { email: @project.user.email, clusterRole: 'cluster-admin' }
-      ]
-      ClusterChannel.broadcast_to(@cluster, { type: 'projects.created', id: SecureRandom.hex, payload: data })
+      payload = build(@project)
+      ClusterChannel.broadcast_to(
+        @cluster, {
+          type: 'projects.created', id: SecureRandom.hex, payload:
+        }
+      )
       true
     end
   end
