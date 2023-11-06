@@ -3,11 +3,14 @@
 module Api
   module V1
     class ProjectsController < Api::V1::ApiController
-      before_action -> { doorkeeper_authorize! :read_projects, :manage_projects }, only: %i[index show]
-      before_action -> { doorkeeper_authorize! :manage_projects }, only: %i[create update destroy pause resume]
-      before_action :find_project, except: %i[index new create]
-      before_action :find_clusters
+      # before_action -> { doorkeeper_authorize! :read_projects, :manage_projects }, only: %i[index show]
+      # before_action -> { doorkeeper_authorize! :manage_projects }, only: %i[create destroy pause resume]
 
+      before_action :find_project, except: %i[index new create]
+      before_action :find_clusters, only: %i[create]
+
+      before_action -> { authorize_project_read }, only: %i[index show]
+      before_action -> { authorize_project_write }, only: %i[create destroy pause resume]
       def index
         @projects = Project.all
         render json: @projects
@@ -23,6 +26,16 @@ module Api
         @project.cluster = @clusters.sample if @project.cluster.nil?
 
         if Projects::ProjectCreateService.new(@project).execute
+          render json: @project
+        else
+          render json: {
+            errors: @project.errors.full_messages
+          }, status: 400
+        end
+      end
+
+      def update
+        if @project.update(update_params)
           render json: @project
         else
           render json: {
@@ -58,7 +71,7 @@ module Api
       private
 
       def find_project
-        @project = Project.where(id: params[:id], user_id: current_resource_owner.id).first
+        @project = Project.where(id: params[:id]).first
         render status: 404 if @project.nil?
       end
 
@@ -66,8 +79,32 @@ module Api
         params.require(:project).permit(:cluster_id, :name, :memory, :cpu, :disk, :gpu)
       end
 
+      def update_params
+        params.require(:project).permit(:status, :ca_certificate)
+      end
+
       def find_clusters
         @clusters = Cluster.all
+      end
+
+      def authorize_project_access(scopes)
+        doorkeeper_token = ::Doorkeeper.authenticate(request)
+        head :unauthorized and return if doorkeeper_token.nil?
+
+        if doorkeeper_token.application_id.nil?
+          cluster = Cluster.where(oauth_application_id: doorkeeper_token.application_id).first
+          head :forbidden if cluster.nil? || (cluster.id != @project.cluster_id)
+        else
+          doorkeeper_authorize! scopes
+        end
+      end
+
+      def authorize_project_read
+        authorize_project_access :read_projects
+      end
+
+      def authorize_project_write
+        authorize_project_access :manage_projects
       end
     end
   end
