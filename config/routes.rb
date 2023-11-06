@@ -38,7 +38,6 @@ Rails.application.routes.draw do
 
   namespace :api, defaults: { format: :json } do
     namespace :v1 do
-      get '/events/cluster', to: 'events#cluster'
       resources :clusters do
         resources :cluster_addons
         resources :agents
