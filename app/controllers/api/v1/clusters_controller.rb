@@ -40,6 +40,7 @@ module Api
         @cluster.assign_attributes(ping_params)
         @cluster.agent_connected = true
         @cluster.agent_last_ping = DateTime.now
+        @cluster.save!
         head :no_content
       end
 
