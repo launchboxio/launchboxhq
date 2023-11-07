@@ -18,7 +18,7 @@ RSpec.describe 'Get Addons', type: :request do
     end
 
     it 'returns all addons' do
-      expect(json.size).to eq(10)
+      expect(json['addons'].size).to eq(10)
       expect(response).to have_http_status(:success)
     end
   end
@@ -35,7 +35,7 @@ RSpec.describe 'Get Addons', type: :request do
 
     it 'returns expected addon' do
       addon = Addon.first
-      expect(json['id']).to eq(addon.id)
+      expect(json['addon']['id']).to eq(addon.id)
       expect(response).to have_http_status(:success)
     end
   end

@@ -20,7 +20,7 @@ RSpec.describe 'Get Projects', type: :request do
     end
 
     it 'returns all projects' do
-      expect(json.size).to eq(10)
+      expect(json['projects'].size).to eq(10)
       expect(response).to have_http_status(:success)
     end
   end
@@ -35,7 +35,7 @@ RSpec.describe 'Get Projects', type: :request do
 
     it 'returns expected project' do
       project = Project.first
-      expect(json['id']).to eq(project.id)
+      expect(json['project']['id']).to eq(project.id)
       expect(response).to have_http_status(:success)
     end
   end
