@@ -40,11 +40,6 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :clusters do
         resources :cluster_addons
-        resources :agents
-
-        member do
-          post 'ping'
-        end
       end
       resources :projects do
         member do

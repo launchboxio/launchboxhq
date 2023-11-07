@@ -4,13 +4,13 @@ require 'rails_helper'
 
 RSpec.describe 'Api::V1::Clusters', type: :request do
 
-  describe 'POST /ping' do
+  describe 'PATCH clusters/:id' do
     it 'updates a cluster status' do
       application = FactoryBot.create('doorkeeper/application')
       token = FactoryBot.create('doorkeeper/access_token', application:, scopes: 'manage_clusters')
       cluster = FactoryBot.create(:cluster, oauth_application_id: application.id)
 
-      post "/api/v1/clusters/#{cluster.id}/ping", params: {
+      patch "/api/v1/clusters/#{cluster.id}", params: {
         cluster: {
           agent_version: '1.2.3',
           agent_identifier: 'pod-123/default',
