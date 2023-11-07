@@ -49,11 +49,7 @@ RSpec.describe 'Get Addons', type: :request do
     it 'requires an admin token' do
       post '/api/v1/addons', params: {
         addon: {
-          # name: "redis",
-          # oci_registry: "ghcr.io/launchboxio/addons/redis",
-          # oci_version: "latest",
-          # pull_policy: "Always",
-          # activation_policy: "Manual",
+
         }
       }
 
