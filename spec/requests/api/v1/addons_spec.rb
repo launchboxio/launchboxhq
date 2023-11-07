@@ -14,7 +14,7 @@ RSpec.describe 'Get Addons', type: :request do
         Authorization: "Bearer #{token.token}",
         Accept: 'application/json'
       }
-      # expect(json['addons'].size).to eq(10)
+      expect(json['addons'].size).to eq(Addon.count)
       expect(response).to have_http_status(:success)
     end
   end

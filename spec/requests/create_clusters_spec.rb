@@ -25,4 +25,3 @@ RSpec.describe 'Create clusters', type: :request do
     end
   end
 end
-`]]`
