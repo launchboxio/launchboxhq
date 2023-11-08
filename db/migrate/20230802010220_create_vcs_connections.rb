@@ -14,7 +14,6 @@ class CreateVcsConnections < ActiveRecord::Migration[7.0]
       t.string :refresh_token_encrypted
       t.timestamp :expiry
 
-
       t.timestamps
     end
   end
