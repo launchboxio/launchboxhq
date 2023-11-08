@@ -1,0 +1,10 @@
+<% if project.status.nil? %>
+  <span class="badge bg-secondary">Provisioning</span>
+<% else %>
+  <% case project.status %>
+  <% when "provisioned" %>
+    <span class="badge bg-success">Provisioned</span>
+  <% else %>
+    <span class="badge bg-secondary"><%= project.status %></span>
+  <% end %>
+<% end %>

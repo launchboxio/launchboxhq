@@ -48,7 +48,9 @@
               </tr>
               <tr>
                 <td>Status</td>
-                <td><span class="badge bg-success">Provisioned</span></td>
+                <td>
+                  <%= render partial: "projects/partials/status", locals: {project: @project} %>
+                <td>
               </tr>
               <tr>
                 <td>ID</td>
