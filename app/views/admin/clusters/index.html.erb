@@ -28,8 +28,20 @@
         <td><%= cluster.provider %></td>
         <td><%= cluster.version %></td>
         <td><%= cluster.region %></td>
-        <td><%= cluster.status %></td>
-        <td><span class="badge bg-success">Connected</span></td>
+        <td>
+          <% if cluster.status == "active" %>
+            <span class="badge bg-success">Active</span>
+          <% else %>
+            <span class="badge bg-warning"><%= cluster.status %></span>
+          <% end %>
+        </td>
+        <td>
+          <% if cluster.agent_connected %>
+            <span class="badge bg-success">Connected</span>
+          <% else %>
+            <span class="badge bg-secondary">Disconnected</span>
+          <% end %>
+        </td>
         <td><a href="/admin/clusters/<%= cluster.id %>/edit"><i class="bi bi-pencil"></i></a></td>
       </tr>
       <% end %>

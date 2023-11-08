@@ -10,12 +10,13 @@ class ClustersController < ApplicationController
   def new; end
 
   def create
-    application = Doorkeeper::Application.create!(name: SecureRandom.uuid, confidential: true, redirect_uri: 'https://localhost:8080')
     @cluster = Cluster.new(cluster_params)
-    @cluster.oauth_application = application
-    @cluster.save!
-    Clusters::CreateClusterJob.perform_later(@cluster.id) if @cluster.managed?
-    render json: @cluster, include: [:oauth_application]
+    if Clusters::CreateClusterService.new(@cluster).execute
+      flash[:notice] = 'Cluster successfully created'
+      redirect_to admin_cluster_url @cluster
+    else
+      flash[:notice] = @cluster.errors.full_messages
+    end
   end
 
   def show; end
