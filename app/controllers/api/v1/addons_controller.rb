@@ -7,6 +7,9 @@ module Api
       before_action -> { doorkeeper_authorize! :read_addons, :manage_addons }, only: %i[index show]
       before_action -> { doorkeeper_authorize! :manage_addons }, only: %i[create update destroy]
 
+      # Only allow admins unless listing or retrieving addons
+      before_action -> { require_admin! }, except: %i[index show]
+
       def index
         @addons = Addon.all
         render json: { addons: @addons }

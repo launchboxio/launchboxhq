@@ -28,26 +28,28 @@ RSpec.describe 'Create projects', type: :request do
 
     it 'creates a project' do
       expect(response).to have_http_status(:success)
-      expect(json['cluster_id']).to eql(cluster.id)
-      expect(json['memory']).to eql(8192)
-      expect(json['cpu']).to eql(4)
-      expect(json['disk']).to eql(100)
+      res = json['project']
+      expect(res['cluster_id']).to eql(cluster.id)
+      expect(res['memory']).to eql(8192)
+      expect(res['cpu']).to eql(4)
+      expect(res['disk']).to eql(100)
     end
 
     it 'pauses and resumes' do
-      post "/api/v1/projects/#{@project_id}/pause", params: {}, headers: {
+      project = FactoryBot.create(:project, cluster:, user:)
+      post "/api/v1/projects/#{project.id}/pause", params: {}, headers: {
         Authorization: "Bearer #{token.token}",
         Accept: 'application/json'
       }
       expect(response).to have_http_status(:success)
-      expect(json['status']).to eql('pausing')
+      expect(json['project']['status']).to eql('pausing')
 
-      post "/api/v1/projects/#{@project_id}/resume", params: {}, headers: {
+      post "/api/v1/projects/#{project.id}/resume", params: {}, headers: {
         Authorization: "Bearer #{token.token}",
         Accept: 'application/json'
       }
       expect(response).to have_http_status(:success)
-      expect(json['status']).to eql('starting')
+      expect(json['project']['status']).to eql('starting')
     end
   end
 end

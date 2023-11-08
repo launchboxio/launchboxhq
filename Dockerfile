@@ -20,7 +20,6 @@ RUN apt-get update -qq && \
       postgresql-client \
       yarn
 
-
 COPY entrypoint.sh /usr/bin/
 RUN chmod +x /usr/bin/entrypoint.sh
 ENTRYPOINT ["entrypoint.sh"]

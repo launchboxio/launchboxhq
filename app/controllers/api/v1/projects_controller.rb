@@ -12,8 +12,9 @@ module Api
       before_action -> { :authorize_project_access }, only: %i[update]
       # before_action :authorize_project_read, only: %i[index show]
       # before_action :authorize_project_write, only: %i[create destroy pause resume]
+
       def index
-        @projects = Project.all
+        @projects = current_resource_owner.projects.all
         render json: { projects: @projects }
       end
 
@@ -72,7 +73,11 @@ module Api
       private
 
       def find_project
-        @project = Project.where(id: params[:id]).first
+        @project = if cluster_request?
+                     Project.find(params[:id])
+                   else
+                     current_resource_owner.projects.where(id: params[:id]).first
+                   end
         render status: 404 if @project.nil?
       end
 
@@ -92,11 +97,11 @@ module Api
         doorkeeper_token = ::Doorkeeper.authenticate(request)
         head :unauthorized and return if doorkeeper_token.nil?
 
-        if doorkeeper_token.application_id.nil?
-          doorkeeper_authorize! scopes
-        else
+        if cluster_request?
           cluster = Cluster.where(oauth_application_id: doorkeeper_token.application_id).first
           head :forbidden if cluster.nil? || (cluster.id != @project.cluster_id)
+        else
+          doorkeeper_authorize! scopes
         end
       end
 
