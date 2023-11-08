@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+### [1.1.2](https://github.com/launchboxio/launchboxhq/compare/v1.1.1...v1.1.2) (2023-11-08)
+
+
+### Bug Fixes
+
+* Add status badging for projects ([3360368](https://github.com/launchboxio/launchboxhq/commit/3360368df7feb97b4f3efe95103e53bdccc0af38))
+
 ### [1.1.1](https://github.com/launchboxio/launchboxhq/compare/v1.1.0...v1.1.1) (2023-11-08)
 
 
