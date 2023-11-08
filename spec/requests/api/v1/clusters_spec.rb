@@ -80,13 +80,28 @@ RSpec.describe 'Api::V1::Clusters', type: :request do
       application = FactoryBot.create('doorkeeper/application')
       cluster = FactoryBot.create(:cluster, oauth_application_id: application.id)
 
-      FactoryBot.create_list(:cluster, 10)
       get "/api/v1/clusters/#{cluster.id}", headers: {
         Authorization: "Bearer #{token.token}",
       }
       expect(response).to have_http_status(:success)
       data = json['cluster']
       expect(data['name']).to eq(cluster.name)
+      expect(data['oauth_application']).to be_nil
+    end
+
+    it 'adds credentials if admin' do
+      admin = FactoryBot.create(:user, admin: true)
+      token = FactoryBot.create('doorkeeper/access_token', resource_owner_id: admin.id, scopes: 'manage_clusters')
+      application = FactoryBot.create('doorkeeper/application')
+      cluster = FactoryBot.create(:cluster, oauth_application_id: application.id)
+
+      get "/api/v1/clusters/#{cluster.id}", headers: {
+        Authorization: "Bearer #{token.token}",
+      }
+      expect(response).to have_http_status(:success)
+      data = json['cluster']
+      expect(data['name']).to eq(cluster.name)
+      expect(data['oauth_application']).not_to be_nil
     end
   end
 end

@@ -17,7 +17,11 @@ module Api
       end
 
       def show
-        render json: { cluster: @cluster }
+        if current_resource_owner.admin?
+          render json: { cluster: @cluster }, include: [:oauth_application]
+        else
+          render json: { cluster: @cluster }
+        end
       end
 
       def create
