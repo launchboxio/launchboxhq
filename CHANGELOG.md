@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+### [1.1.1](https://github.com/launchboxio/launchboxhq/compare/v1.1.0...v1.1.1) (2023-11-08)
+
+
+### Bug Fixes
+
+* **clusters:** Add oauth application info to admin responses ([b1a1104](https://github.com/launchboxio/launchboxhq/commit/b1a11041ac20c6a706d6ba9e3d0480c845bd5fe1))
+
 ## [1.1.0](https://github.com/launchboxio/launchboxhq/compare/v1.0.0...v1.1.0) (2023-11-08)
 
 
