@@ -37,7 +37,23 @@
               </tr>
               <tr>
                 <td>Status</td>
-                <td><%= @cluster.status %></td>
+                <td>
+                  <% if @cluster.status == "active" %>
+                    <span class="badge bg-success">Active</span>
+                  <% else %>
+                    <span class="badge bg-warning"><%= @cluster.status %></span>
+                  <% end %>
+                </td>
+              </tr>
+              <tr>
+                <td>Client ID</td>
+                <td><%= @cluster.oauth_application.uid %></td>
+              </tr>
+              <tr>
+                <td>Client Secret</td>
+                <td>
+                  <%= @cluster.oauth_application.secret %>
+                </td>
               </tr>
             </table>
           </div>
@@ -85,7 +101,35 @@
     <div class="card">
       <div class="card-header">Deployed Projects</div>
       <div class="card-body">
+        <table class="table">
+          <thead>
+          <tr>
+            <th>Slug</th>
+            <th>CPU</th>
+            <th>Memory</th>
+            <th>Disk</th>
+            <th>Status</th>
+          </tr>
+          </thead>
+          <tbody>
+          <% @projects.each do |project| %>
+          <tr>
+            <td>
+              <a href="<%= project_url project %>">
+                <%= project.slug %>
+              </a>
+            </td>
+            <td><%= project.cpu %></td>
+            <td><%= project.memory %></td>
+            <td><%= project.disk %></td>
+            <td><%= project.status %></td>
+          </tr>
+          <% end %>
+          <tr>
 
+          </tr>
+          </tbody>
+        </table>
       </div>
       <div class="card-footer"></div>
     </div>

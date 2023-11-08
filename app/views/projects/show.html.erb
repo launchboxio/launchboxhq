@@ -35,6 +35,18 @@
                 <td><%= @project.slug %></td>
               </tr>
               <tr>
+                <td>Cluster</td>
+                <td>
+                  <% if current_user.admin? %>
+                  <a href="<%= admin_cluster_url @project.cluster %>">
+                    <%= @project.cluster.slug %>
+                  </a>
+                  <% else %>
+                  <%= @project.cluster.slug %>
+                  <% end %>
+                </td>
+              </tr>
+              <tr>
                 <td>Status</td>
                 <td><span class="badge bg-success">Provisioned</span></td>
               </tr>

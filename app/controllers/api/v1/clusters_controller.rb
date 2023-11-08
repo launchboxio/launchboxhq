@@ -21,12 +21,14 @@ module Api
       end
 
       def create
-        application = Doorkeeper::Application.create!(name: SecureRandom.uuid, confidential: true, redirect_uri: 'https://localhost:8080')
         @cluster = Cluster.new(cluster_params)
-        @cluster.oauth_application = application
-        @cluster.save!
-        Clusters::CreateClusterJob.perform_later(@cluster.id) if @cluster.managed?
-        render json: @cluster, include: [:oauth_application]
+        if Clusters::CreateClusterService.new(@cluster).execute
+          render json: @cluster, include: [:oauth_application]
+        else
+          render json: {
+            errors: @cluster.errors.full_messages
+          }, status: 400
+        end
       end
 
       def update

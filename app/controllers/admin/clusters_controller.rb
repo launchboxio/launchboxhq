@@ -8,6 +8,7 @@ module Admin
 
     def show
       @cluster = Cluster.find(params[:id])
+      @projects = Project.where(cluster_id: @cluster.id)
     end
 
     def new
@@ -15,19 +16,12 @@ module Admin
     end
 
     def create
-      # TODO: Wrap all these cluster creation
-      # calls in a transaction to prevent
-      # orphaning created applications
-      application = Doorkeeper::Application.create!(name: SecureRandom.uuid, confidential: true, redirect_uri: 'https://localhost:8080')
       @cluster = Cluster.new(cluster_params)
-      @cluster.oauth_application = application
-      if @cluster.save
-        Clusters::CreateClusterJob.perform_async(@cluster.id) if @cluster.managed?
-        # TODO: Fix our redirect here
-        # undefined method `cluster_url'
-        redirect_to @cluster
+      if Clusters::CreateClusterService.new(@cluster).execute
+        flash[:notice] = 'Cluster successfully created'
+        redirect_to admin_cluster_url @cluster
       else
-        render 'new'
+        flash[:notice] = @cluster.errors.full_messages
       end
     end
 
