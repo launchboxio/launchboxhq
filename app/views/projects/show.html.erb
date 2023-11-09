@@ -47,6 +47,10 @@
                 </td>
               </tr>
               <tr>
+                <td>Domain</td>
+                <td><%= @project.slug %>.<%= @project.cluster.domain %></td>
+              </tr>
+              <tr>
                 <td>Status</td>
                 <td>
                   <%= render partial: "projects/partials/status", locals: {project: @project} %>
