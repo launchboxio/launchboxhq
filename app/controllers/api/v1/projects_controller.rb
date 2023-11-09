@@ -82,11 +82,11 @@ module Api
       end
 
       def project_params
-        params.require(:project).permit(:cluster_id, :name, :memory, :cpu, :disk, :gpu)
+        params.require(:project).permit(:cluster_id, :name, :memory, :cpu, :disk, :gpu, :kubernetes_version)
       end
 
       def update_params
-        params.require(:project).permit(:status, :ca_certificate)
+        params.require(:project).permit(:status, :ca_certificate, :kubernetes_version)
       end
 
       def find_clusters

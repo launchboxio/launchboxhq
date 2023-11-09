@@ -17,6 +17,7 @@
         <%= f.text_field :cpu, append: "cores" %>
         <%= f.text_field :memory, append: "Mi"  %>
         <%= f.text_field :disk, append: "Gi" %>
+        <%= f.select :kubernetes_version, %w[1.28 1.27 1.26 1.25], selected: "1.27" %>
 
       </div>
       <div class="card-footer">

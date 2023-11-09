@@ -53,7 +53,7 @@ class ProjectsController < AuthenticatedController
   end
 
   def project_params
-    params.require(:project).permit(:cluster_id, :name, :memory, :cpu, :disk)
+    params.require(:project).permit(:cluster_id, :name, :memory, :cpu, :disk, :kubernetes_version)
   end
 
   def find_clusters
