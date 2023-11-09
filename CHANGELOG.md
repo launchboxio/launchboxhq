@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.3.0](https://github.com/launchboxio/launchboxhq/compare/v1.2.1...v1.3.0) (2023-11-09)
+
+
+### Features
+
+* Add Kubernetes version to project creation ([bd56983](https://github.com/launchboxio/launchboxhq/commit/bd56983f1bc1adbe0783f5834b702038dd86d696))
+
+
+### Bug Fixes
+
+* Update Kubernetes versions, add selected version to both index / show pages ([7c93a09](https://github.com/launchboxio/launchboxhq/commit/7c93a09cf9b80d39f99cd9030ea1da530b169594))
+
 ### [1.2.1](https://github.com/launchboxio/launchboxhq/compare/v1.2.0...v1.2.1) (2023-11-09)
 
 
