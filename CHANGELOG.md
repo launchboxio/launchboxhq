@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.4.0](https://github.com/launchboxio/launchboxhq/compare/v1.3.0...v1.4.0) (2023-11-09)
+
+
+### Features
+
+* Add domain setting to clusters ([6c12c4a](https://github.com/launchboxio/launchboxhq/commit/6c12c4a43e3d75adfa92a73dc994c9b913f9df1c))
+
+
+### Bug Fixes
+
+* Adjust login form ([dd6b7ab](https://github.com/launchboxio/launchboxhq/commit/dd6b7abafda6fc2365f2dd098786dc74c2e625c9))
+* **auth:** Redirect to login page, and back to /projects ([75f61f8](https://github.com/launchboxio/launchboxhq/commit/75f61f855e2e6f59d2fc308d48c4a34a5788421d))
+
 ## [1.3.0](https://github.com/launchboxio/launchboxhq/compare/v1.2.1...v1.3.0) (2023-11-09)
 
 
