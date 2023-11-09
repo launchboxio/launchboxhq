@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+### [1.2.1](https://github.com/launchboxio/launchboxhq/compare/v1.2.0...v1.2.1) (2023-11-09)
+
+
+### Bug Fixes
+
+* Prefix generated domains with api. ([640e883](https://github.com/launchboxio/launchboxhq/commit/640e883c5f0a77de447986a0706486fdce37b4e0))
+
 ## [1.2.0](https://github.com/launchboxio/launchboxhq/compare/v1.1.3...v1.2.0) (2023-11-09)
 
 
