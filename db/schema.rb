@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_11_02_120756) do
+ActiveRecord::Schema[7.0].define(version: 2023_11_02_014315) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -39,28 +39,15 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_02_120756) do
   end
 
   create_table "addons", force: :cascade do |t|
-    t.string "name"
-    t.text "defaults"
-    t.string "oci_registry"
-    t.string "oci_version"
+    t.string "name", null: false
+    t.string "oci_registry", null: false
+    t.string "oci_version", null: false
     t.string "pull_policy"
     t.string "activation_policy"
     t.string "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.text "template"
-  end
-
-  create_table "agents", force: :cascade do |t|
-    t.bigint "cluster_id"
-    t.datetime "last_communication"
-    t.string "status"
-    t.string "ip_address"
-    t.string "pod_name"
-    t.string "node_name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["cluster_id"], name: "index_agents_on_cluster_id"
+    t.index ["name"], name: "index_addons_on_name", unique: true
   end
 
   create_table "cluster_addon_subscriptions", force: :cascade do |t|
@@ -89,16 +76,12 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_02_120756) do
   end
 
   create_table "clusters", force: :cascade do |t|
-    t.string "name"
+    t.string "name", null: false
     t.string "slug"
     t.string "region"
     t.string "version"
     t.string "provider"
     t.string "status"
-    t.string "host"
-    t.string "connection_method"
-    t.boolean "managed", default: false
-    t.text "manifest"
     t.bigint "oauth_application_id"
     t.bigint "user_id"
     t.datetime "created_at", null: false
@@ -107,33 +90,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_02_120756) do
     t.datetime "agent_last_ping"
     t.string "agent_identifier"
     t.string "agent_version"
+    t.index ["name"], name: "index_clusters_on_name", unique: true
     t.index ["oauth_application_id"], name: "index_clusters_on_oauth_application_id"
     t.index ["slug"], name: "index_clusters_on_slug", unique: true
     t.index ["user_id"], name: "index_clusters_on_user_id"
-  end
-
-  create_table "event_store_events", force: :cascade do |t|
-    t.uuid "event_id", null: false
-    t.string "event_type", null: false
-    t.jsonb "metadata"
-    t.jsonb "data", null: false
-    t.datetime "created_at", null: false
-    t.datetime "valid_at"
-    t.index ["created_at"], name: "index_event_store_events_on_created_at"
-    t.index ["event_id"], name: "index_event_store_events_on_event_id", unique: true
-    t.index ["event_type"], name: "index_event_store_events_on_event_type"
-    t.index ["valid_at"], name: "index_event_store_events_on_valid_at"
-  end
-
-  create_table "event_store_events_in_streams", force: :cascade do |t|
-    t.string "stream", null: false
-    t.integer "position"
-    t.uuid "event_id", null: false
-    t.datetime "created_at", null: false
-    t.index ["created_at"], name: "index_event_store_events_in_streams_on_created_at"
-    t.index ["event_id"], name: "index_event_store_events_in_streams_on_event_id"
-    t.index ["stream", "event_id"], name: "index_event_store_events_in_streams_on_stream_and_event_id", unique: true
-    t.index ["stream", "position"], name: "index_event_store_events_in_streams_on_stream_and_position", unique: true
   end
 
   create_table "oauth_access_grants", force: :cascade do |t|
@@ -311,7 +271,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_02_120756) do
     t.index ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id"
   end
 
-  add_foreign_key "event_store_events_in_streams", "event_store_events", column: "event_id", primary_key: "event_id"
   add_foreign_key "oauth_access_grants", "oauth_applications", column: "application_id"
   add_foreign_key "oauth_access_grants", "users", column: "resource_owner_id"
   add_foreign_key "oauth_access_tokens", "oauth_applications", column: "application_id"

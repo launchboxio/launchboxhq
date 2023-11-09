@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file.
 
+### [1.1.3](https://github.com/launchboxio/launchboxhq/compare/v1.1.2...v1.1.3) (2023-11-09)
+
+
+### Bug Fixes
+
+* Add FQDN for project to status page ([32d68dd](https://github.com/launchboxio/launchboxhq/commit/32d68ddd40357f648aab0e9bcf14f718ffa7c7ab))
+* Disable usage of managed clusters for now ([d2944e8](https://github.com/launchboxio/launchboxhq/commit/d2944e899ede3bde467af10570982b63704a4be3))
+* Return clsuter model on update success ([90146bd](https://github.com/launchboxio/launchboxhq/commit/90146bd1e38dc330ab0b3a8f870cdf07ec99c246))
+
 ### [1.1.2](https://github.com/launchboxio/launchboxhq/compare/v1.1.1...v1.1.2) (2023-11-08)
 
 
