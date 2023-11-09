@@ -18,25 +18,19 @@ module Admin
       @addon = Addon.new
     end
 
-    # rubocop:disable Metrics/AbcSize
     def update
       @addon = Addon.find(params[:id])
-      if @addon.update(addon_params)
-        Addons::InstallAddonJob.perform_async @addon.id
-        Addons::AnalyzePackageJob.perform_async @addon.id
+      if Addons::UpdateAddonService.new(@addon).execute
         redirect_to admin_addon_path(@addon), notice: 'Addon updated'
       else
         flash[:error] = @addon.errors.full_messages.to_sentence
         render 'edit'
       end
     end
-    # rubocop:enable Metrics/AbcSize
 
     def create
       @addon = Addon.new(addon_params)
-      if @addon.save
-        Addons::InstallAddonJob.perform_async @addon.id
-        Addons::AnalyzePackageJob.perform_async @addon.id
+      if Addons::UpdateAddonService.new(@addon).execute
         redirect_to admin_addon_path(@addon), notice: 'Addon created'
       else
         flash[:error] = @addon.errors.full_messages.to_sentence
@@ -45,8 +39,11 @@ module Admin
     end
 
     def destroy
-      @addon.destroy
-      flash[:notice] = 'Addon deleted'
+      flash[:notice] = if Addons::DeleteAddonService.new(@addon).execute
+                         'Addon deleted'
+                       else
+                         'There was an error deleting the addon'
+                       end
       redirect_to admin_addons_path
     end
 
