@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.5.0](https://github.com/launchboxio/launchboxhq/compare/v1.4.0...v1.5.0) (2023-11-09)
+
+
+### Features
+
+* Move addon operations to services ([5c1f6ba](https://github.com/launchboxio/launchboxhq/commit/5c1f6bad3dd30bf376d928c0af191caa753feff6))
+
 ## [1.4.0](https://github.com/launchboxio/launchboxhq/compare/v1.3.0...v1.4.0) (2023-11-09)
 
 
