@@ -46,7 +46,7 @@ module Api
           @cluster.agent_last_ping = DateTime.now
         end
         @cluster.save!
-        head :no_content
+        render json: { cluster: @cluster }
       end
 
       def destroy
@@ -61,11 +61,11 @@ module Api
       end
 
       def cluster_params
-        params.require(:cluster).permit(:name, :region, :version, :provider, :connection_method, :managed, :host)
+        params.require(:cluster).permit(:name, :region, :version, :provider, :connection_method, :host)
       end
 
       def update_params
-        params.require(:cluster).permit(:agent_version, :agent_identifier, :version, :provider, :region)
+        params.require(:cluster).permit(:agent_version, :agent_identifier, :version, :provider, :region, :domain)
       end
 
       def authorize_cluster_access
