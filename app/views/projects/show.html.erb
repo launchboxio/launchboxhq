@@ -35,6 +35,10 @@
                 <td><%= @project.slug %></td>
               </tr>
               <tr>
+                <td>Version</td>
+                <td><%= @project.kubernetes_version %></td>
+              </tr>
+              <tr>
                 <td>Cluster</td>
                 <td>
                   <% if current_user.admin? %>

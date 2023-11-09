@@ -13,6 +13,7 @@
     <tr>
       <td>Name</td>
       <td>Slug</td>
+      <td>Version</td>
       <td>Memory</td>
       <td>CPU</td>
       <td>Disk</td>
@@ -25,6 +26,7 @@
       <tr onclick="location.href = '<%= project_path(project.id) %>';">
         <td><%= project.name %></td>
         <td><%= project.slug %></td>
+        <td><%= project.kubernetes_version %></td>
         <td><%= project.memory %> Mi</td>
         <td><%= project.cpu %></td>
         <td><%= project.disk %> GB</td>
