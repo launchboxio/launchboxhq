@@ -12,6 +12,7 @@
       <tr>
         <td>Name</td>
         <td>Slug</td>
+        <td>Domain</td>
         <td>Provider</td>
         <td>Version</td>
         <td>Region</td>
@@ -25,6 +26,7 @@
       <tr  onclick="location.href = '<%= admin_cluster_path(cluster.id) %>';">
         <td><%= cluster.name %></td>
         <td><%= cluster.slug %></td>
+        <td><%= cluster.domain %></td>
         <td><%= cluster.provider %></td>
         <td><%= cluster.version %></td>
         <td><%= cluster.region %></td>
