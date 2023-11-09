@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.6.0](https://github.com/launchboxio/launchboxhq/compare/v1.5.0...v1.6.0) (2023-11-09)
+
+
+### Features
+
+* Add job for resyncing clusters w/ projects and addons ([f70dc28](https://github.com/launchboxio/launchboxhq/commit/f70dc288da9c97a0c4f9b400871c89e9c8b20e57))
+
 ## [1.5.0](https://github.com/launchboxio/launchboxhq/compare/v1.4.0...v1.5.0) (2023-11-09)
 
 
