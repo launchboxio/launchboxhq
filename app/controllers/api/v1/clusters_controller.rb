@@ -61,7 +61,7 @@ module Api
       end
 
       def cluster_params
-        params.require(:cluster).permit(:name, :region, :version, :provider, :connection_method, :host)
+        params.require(:cluster).permit(:name, :domain)
       end
 
       def update_params

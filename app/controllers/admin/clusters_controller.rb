@@ -28,7 +28,7 @@ module Admin
     private
 
     def cluster_params
-      params.require(:cluster).permit(:name, :region, :version, :provider, :connection_method, :managed, :host)
+      params.require(:cluster).permit(:name, :domain)
     end
   end
 end
