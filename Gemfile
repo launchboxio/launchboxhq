@@ -22,6 +22,7 @@ gem 'docker-api'
 gem 'dotenv-rails', '~> 2.8'
 gem 'faraday', '~> 2.6'
 gem 'gruf', '~> 2.16'
+gem 'httparty', '~> 0.21.0'
 gem 'jsonapi-serializer', '~> 2.2'
 gem 'json-schema'
 gem 'paper_trail'
@@ -77,5 +78,3 @@ group :test do
   gem 'selenium-webdriver'
   gem 'webdrivers'
 end
-
-gem 'httparty', '~> 0.21.0'
