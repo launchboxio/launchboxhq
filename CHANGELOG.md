@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.2.0](https://github.com/launchboxio/launchboxhq/compare/v1.1.3...v1.2.0) (2023-11-09)
+
+
+### Features
+
+* Configurable domain when generating a cluster ([e5d27e1](https://github.com/launchboxio/launchboxhq/commit/e5d27e16f0548077a0e70f147a8cf58d0700965a))
+
 ### [1.1.3](https://github.com/launchboxio/launchboxhq/compare/v1.1.2...v1.1.3) (2023-11-09)
 
 
