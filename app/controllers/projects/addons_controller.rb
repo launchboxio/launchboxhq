@@ -20,7 +20,7 @@ module Projects
     def create
       @sub = @project.addon_subscriptions.build(addon_params)
       if @sub.save
-        Projects::SyncProjectJob.perform_async @project.id
+        Projects::ProjectSyncService.new(@project).execute
         redirect_to project_path(@project), notice: 'Addon attached'
       else
         flash[:notice] = @sub.errors.full_messages.to_sentence
@@ -29,8 +29,10 @@ module Projects
     end
 
     def destroy
-      Addons::DeleteAddonJob.perform_async @addon.id
-      redirect_to project_path(@project), notice: 'Addon uninstallation started'
+      @subscription = @project.addon_subscriptions.find(params[:id])
+      @subscription.destroy
+      Projects::ProjectSyncService.new(@project).execute
+      redirect_to project_path(@project), notice: 'Addon removed'
     end
 
     private

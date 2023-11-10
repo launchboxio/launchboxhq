@@ -10,34 +10,40 @@ module Api
 
       def index
         @addons = AddonSubscription.where(project_id: @project.id)
-        render json: @addons
+        render json: { addons: @addons }
       end
 
       def show
         @addon = AddonSubscription.find(params[:addon_id])
-        render json: @addon
+        render json: { addon: @addon }
       end
 
       def create
-        @project.addon_subscriptions.create(subscription_params)
-        # @project.addons.new(subscription_params)
-        @project.save!
+        @sub = @project.addon_subscriptions.new(subscription_params)
+        if @sub.save
+          Projects::ProjectSyncService.new(@project).execute
+          render json: { addon: @sub }
+        else
+          render json: { errors: @sub.errors.full_messages }, status: 400
+        end
       end
 
       def update; end
 
       def destroy
         @addon.destroy
+        Projects::ProjectSyncService.new(@project).execute
+        head :no_content
       end
 
       private
 
       def find_project
-        @project = Project.where(id: params[:project_id], user_id: current_resource_owner.id).first
+        @project = current_resource_owner.projects.find(params[:project_id])
       end
 
       def find_subscription
-        @addon = AddonSubscription.find(params[:addon_id])
+        @addon = @project.addon_subscriptions.find(params[:addon_id])
       end
 
       def subscription_params

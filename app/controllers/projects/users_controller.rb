@@ -4,6 +4,8 @@ module Projects
   class UsersController < Projects::ApplicationController
     before_action :find_project
 
+    def new; end
+
     def create
       @user = User.find_by!(email: params[:email])
       @project.users << @user

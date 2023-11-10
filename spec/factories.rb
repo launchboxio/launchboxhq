@@ -28,6 +28,8 @@ FactoryBot.define do
 
   factory :addon do
     name { Faker::App.name }
+    oci_registry { Faker::Internet.url }
+    oci_version { Faker::App.semantic_version }
     # json_schema { '{a: b}' }
   end
 

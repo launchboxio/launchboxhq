@@ -16,6 +16,7 @@ class Project < ApplicationRecord
 
   has_paper_trail
   belongs_to :cluster
+
   belongs_to :user
 
   has_many :addon_subscriptions

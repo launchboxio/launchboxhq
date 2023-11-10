@@ -21,7 +21,7 @@ Rails.application.routes.draw do
 
   resources :projects do
     scope module: :projects do
-      resources :users, only: %i[create destroy]
+      resources :users, only: %i[new create destroy]
       resources :addons
     end
     get :kubeconfig, on: :member
