@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.7.0](https://github.com/launchboxio/launchboxhq/compare/v1.6.0...v1.7.0) (2023-11-10)
+
+
+### Features
+
+* Refactor project addons and subscriptions ([9c60ed6](https://github.com/launchboxio/launchboxhq/commit/9c60ed6461c8e052dd2498de1d2781e411548794))
+
+
+### Bug Fixes
+
+* Move ClusterSyncJob to Sidekiq ([99f3b3c](https://github.com/launchboxio/launchboxhq/commit/99f3b3c619be946eb497da54476d7fcef5c4bfcb))
+
 ## [1.6.0](https://github.com/launchboxio/launchboxhq/compare/v1.5.0...v1.6.0) (2023-11-09)
 
 
