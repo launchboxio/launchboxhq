@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+### [1.7.2](https://github.com/launchboxio/launchboxhq/compare/v1.7.1...v1.7.2) (2023-11-10)
+
+
+### Bug Fixes
+
+* Return data object, not map output ([21ad848](https://github.com/launchboxio/launchboxhq/commit/21ad848d7eb2f228fa987c571a5748cc8f4dda2a))
+
 ### [1.7.1](https://github.com/launchboxio/launchboxhq/compare/v1.7.0...v1.7.1) (2023-11-10)
 
 
