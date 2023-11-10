@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Clusters
-  class SyncClustersJob < ApplicationJob
+  class SyncClustersJob
     include Sidekiq::Job
 
     def perform(*_args)
