@@ -13,6 +13,13 @@ class ProjectService
     data['users'] = [
       { email: @project.user.email, clusterRole: 'cluster-admin' }
     ]
-    data
+    data['addons'] = @project.addon_subscriptions.map { |sub| build_addon(sub) }
+  end
+
+  def build_addon(sub)
+    {
+      name: sub.addon.name,
+      install_name: sub.name || sub.addon.name
+    }
   end
 end
