@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+### [1.7.1](https://github.com/launchboxio/launchboxhq/compare/v1.7.0...v1.7.1) (2023-11-10)
+
+
+### Bug Fixes
+
+* Compile addon payload when emitting events ([c9d0c1a](https://github.com/launchboxio/launchboxhq/commit/c9d0c1a99833ebad0d5534ca2e801f9f52f8409e))
+
 ## [1.7.0](https://github.com/launchboxio/launchboxhq/compare/v1.6.0...v1.7.0) (2023-11-10)
 
 
