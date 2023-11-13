@@ -18,9 +18,13 @@ class ProjectService
   end
 
   def build_addon(sub)
+    version = sub.addon.addon_versions.find_by_default(true)
     {
       name: sub.addon.name,
-      install_name: sub.name || sub.addon.name
+      install_name: sub.name || sub.addon.name,
+      resource: version.claim_name,
+      version: version.version,
+      group: version.group
     }
   end
 end
