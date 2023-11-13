@@ -42,6 +42,8 @@ module Addons
 
         process_yaml(entry)
       end
+
+      File.delete(file.path)
     end
 
     def download_tarball(digest, token)
@@ -55,7 +57,6 @@ module Addons
           temp_file.write(fragment)
         end
       end
-      # File.delete(file.path)
       file
     end
 
