@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+### [1.8.5](https://github.com/launchboxio/launchboxhq/compare/v1.8.4...v1.8.5) (2023-11-13)
+
+
+### Bug Fixes
+
+* Move file deletion until after final read ([541c8c7](https://github.com/launchboxio/launchboxhq/commit/541c8c718e7ee277b0dd8e767af362298270ddde))
+
 ### [1.8.4](https://github.com/launchboxio/launchboxhq/compare/v1.8.3...v1.8.4) (2023-11-13)
 
 
