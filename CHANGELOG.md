@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+### [1.8.2](https://github.com/launchboxio/launchboxhq/compare/v1.8.1...v1.8.2) (2023-11-13)
+
+
+### Bug Fixes
+
+* Pass token to process_tarball for authentication ([c954dda](https://github.com/launchboxio/launchboxhq/commit/c954ddadb2d3a1ef97309aebdda143a9d5a841aa))
+
 ### [1.8.1](https://github.com/launchboxio/launchboxhq/compare/v1.8.0...v1.8.1) (2023-11-13)
 
 
