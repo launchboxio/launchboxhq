@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.8.0](https://github.com/launchboxio/launchboxhq/compare/v1.7.3...v1.8.0) (2023-11-13)
+
+
+### Features
+
+* Allow updating addon statuses ([5a58e58](https://github.com/launchboxio/launchboxhq/commit/5a58e580bbe962c3ee698027da948e3b4e1c22ba))
+
 ### [1.7.3](https://github.com/launchboxio/launchboxhq/compare/v1.7.2...v1.7.3) (2023-11-13)
 
 
