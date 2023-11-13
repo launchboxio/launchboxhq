@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+### [1.8.6](https://github.com/launchboxio/launchboxhq/compare/v1.8.5...v1.8.6) (2023-11-13)
+
+
+### Bug Fixes
+
+* Return addon configuration with API responses ([2865d47](https://github.com/launchboxio/launchboxhq/commit/2865d47605a1829d96357c5b3c52a5ae7290cbc7))
+
 ### [1.8.5](https://github.com/launchboxio/launchboxhq/compare/v1.8.4...v1.8.5) (2023-11-13)
 
 
