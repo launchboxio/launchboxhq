@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+### [1.8.4](https://github.com/launchboxio/launchboxhq/compare/v1.8.3...v1.8.4) (2023-11-13)
+
+
+### Bug Fixes
+
+* Dont delete tempfile manually ([f05d3cd](https://github.com/launchboxio/launchboxhq/commit/f05d3cd4e3daced2ea06b4acb71afd7fc2421477))
+
 ### [1.8.3](https://github.com/launchboxio/launchboxhq/compare/v1.8.2...v1.8.3) (2023-11-13)
 
 
