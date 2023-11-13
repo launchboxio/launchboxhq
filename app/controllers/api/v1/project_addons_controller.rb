@@ -23,7 +23,7 @@ module Api
         @sub = @project.addon_subscriptions.new(subscription_params)
         if @sub.save
           Projects::ProjectSyncService.new(@project).execute
-          render json: { project_addon: @sub }
+          render json: { project_addon: @sub }, include: [:addon]
         else
           render json: { errors: @sub.errors.full_messages }, status: 400
         end
@@ -32,7 +32,7 @@ module Api
       def update
         if @addon.update(update_params)
           Projects::ProjectSyncService.new(@project).execute unless cluster_request?
-          render json: { project_addon: @addon }
+          render json: { project_addon: @addon }, include: [:addon]
         else
           render json: {
             errors: @addon.errors.full_messages
