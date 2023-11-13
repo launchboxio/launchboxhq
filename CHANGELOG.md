@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.9.0](https://github.com/launchboxio/launchboxhq/compare/v1.8.7...v1.9.0) (2023-11-13)
+
+
+### Features
+
+* Add admin management of addon versions ([af341a0](https://github.com/launchboxio/launchboxhq/commit/af341a060a6cab0a1c3f8705bdb67f7f176c2dab))
+
 ### [1.8.7](https://github.com/launchboxio/launchboxhq/compare/v1.8.6...v1.8.7) (2023-11-13)
 
 
