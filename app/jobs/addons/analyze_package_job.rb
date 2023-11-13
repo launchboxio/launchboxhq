@@ -16,7 +16,7 @@ module Addons
     def retrieve_and_process_oci_data
       token = fetch_oci_token
       digest = fetch_digest(token)
-      process_tarball(digest)
+      process_tarball(digest, token)
     end
 
     def fetch_oci_token
@@ -44,7 +44,10 @@ module Addons
       end
     end
 
-    def download_tarball(digest)
+    def download_tarball(digest, token)
+      headers = {
+        Authorization: "Bearer #{token}"
+      }
       file = Tempfile.new('oci')
       File.open(file.path, 'w') do |temp_file|
         temp_file.binmode
