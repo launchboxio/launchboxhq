@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+### [1.8.7](https://github.com/launchboxio/launchboxhq/compare/v1.8.6...v1.8.7) (2023-11-13)
+
+
+### Bug Fixes
+
+* Include addon response for all addon subscription management ([49d5b5f](https://github.com/launchboxio/launchboxhq/commit/49d5b5f09a455c3090766ad3431a265c54a27e0c))
+
 ### [1.8.6](https://github.com/launchboxio/launchboxhq/compare/v1.8.5...v1.8.6) (2023-11-13)
 
 
