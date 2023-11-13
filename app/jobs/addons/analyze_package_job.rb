@@ -6,6 +6,8 @@ module Addons
 
     def perform(addon_id)
       @addon = Addon.find(addon_id)
+      uri = URI.parse(@addon.oci_registry)
+      @repo = uri.path
       retrieve_and_process_oci_data
     end
 
@@ -18,9 +20,7 @@ module Addons
     end
 
     def fetch_oci_token
-      uri = URI.parse(@addon.oci_registry)
-      repo = uri.path
-      url = "https://ghcr.io/token?scope=repository:#{repo}:pull"
+      url = "https://ghcr.io/token?scope=repository:#{@repo}:pull"
       response = HTTParty.get(url)
       response['token']
     end
@@ -29,7 +29,7 @@ module Addons
       headers = {
         Authorization: "Bearer #{token}"
       }
-      response = HTTParty.get("https://ghcr.io/v2/#{repo}/manifests/#{@addon.oci_version}", headers:)
+      response = HTTParty.get("https://ghcr.io/v2/#{@repo}/manifests/#{@addon.oci_version}", headers:)
       data = JSON.parse(response)
       data['layers'][0]['digest']
     end
@@ -48,7 +48,7 @@ module Addons
       file = Tempfile.new('oci')
       File.open(file.path, 'w') do |temp_file|
         temp_file.binmode
-        HTTParty.get("https://ghcr.io/v2/#{repo}/blobs/#{digest}", headers:, stream_body: true) do |fragment|
+        HTTParty.get("https://ghcr.io/v2/#{@repo}/blobs/#{digest}", headers:, stream_body: true) do |fragment|
           temp_file.write(fragment)
         end
       end
