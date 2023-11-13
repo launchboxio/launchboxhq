@@ -13,7 +13,9 @@ Rails.application.routes.draw do
   scope '/admin/', module: :admin, as: :admin do
     root 'clusters#index'
     resources :cluster_addons
-    resources :addons
+    resources :addons do
+      resources :addon_versions, only: %i[update]
+    end
     resources :clusters
   end
 

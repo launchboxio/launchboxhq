@@ -31,6 +31,42 @@
                 <td>Version</td>
                 <td><%= @addon.oci_version %></td>
               </tr>
+              <tr>
+                <td>Status</td>
+                <td><%= @addon.status %></td>
+              </tr>
+            </table>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">Versions</div>
+          <div class="card-body">
+            <table class="table">
+              <thead>
+              <tr>
+                <th>Version</th>
+                <th>Claim Name</th>
+                <th>Group</th>
+                <th></th>
+              </tr>
+              </thead>
+              <tbody>
+              <% @addon.addon_versions.each do |version| %>
+              <tr>
+                <td><%= version.version %> <% if version.default %><span class="badge bg-success">default</span><% end %></td>
+                <td><%= version.claim_name %></td>
+                <td><%= version.group %></td>
+                <td>
+                  <button class="btn btn-small">View Schema</button>
+                  <% unless version.default %>
+                  <td>
+                    <%= button_to 'Set as default', {:controller => "admin/addon_versions", :action => "update", :addon_id => @addon.id, :id=> version.id} , :method=>:patch  %>
+                  </td>
+                  <% end %>
+                </td>
+              </tr>
+              <% end %>
+              </tbody>
             </table>
           </div>
         </div>
