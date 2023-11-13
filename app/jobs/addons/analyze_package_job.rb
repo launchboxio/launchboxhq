@@ -34,8 +34,8 @@ module Addons
       data['layers'][0]['digest']
     end
 
-    def process_tarball(digest)
-      file = download_tarball(digest)
+    def process_tarball(digest, token)
+      file = download_tarball(digest, token)
 
       Gem::Package::TarReader.new(Zlib::GzipReader.open(file.path)).each do |entry|
         next unless entry.full_name == 'package.yaml'
