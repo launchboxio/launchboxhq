@@ -72,15 +72,6 @@ module Api
 
       private
 
-      def find_project
-        @project = if cluster_request?
-                     Project.find(params[:id])
-                   else
-                     current_resource_owner.projects.where(id: params[:id]).first
-                   end
-        render status: 404 if @project.nil?
-      end
-
       def project_params
         params.require(:project).permit(:cluster_id, :name, :memory, :cpu, :disk, :gpu, :kubernetes_version)
       end
@@ -91,18 +82,6 @@ module Api
 
       def find_clusters
         @clusters = Cluster.all
-      end
-
-      def authorize_project_access(*scopes)
-        doorkeeper_token = ::Doorkeeper.authenticate(request)
-        head :unauthorized and return if doorkeeper_token.nil?
-
-        if cluster_request?
-          cluster = Cluster.where(oauth_application_id: doorkeeper_token.application_id).first
-          head :forbidden if cluster.nil? || (cluster.id != @project.cluster_id)
-        else
-          doorkeeper_authorize! scopes
-        end
       end
 
       def authorize_project_read

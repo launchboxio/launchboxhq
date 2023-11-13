@@ -60,6 +60,7 @@ gem 'cent'
 gem 'sidekiq', '~> 7.1'
 
 group :development, :test do
+  gem 'database_cleaner-active_record'
   gem 'debug', platforms: %i[mri mingw x64_mingw]
   gem 'rspec-rails'
   gem 'rubocop', '~> 1.38'

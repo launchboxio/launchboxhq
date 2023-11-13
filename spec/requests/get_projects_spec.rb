@@ -8,7 +8,7 @@ RSpec.describe 'Get Projects', type: :request do
   let(:user)        { FactoryBot.create(:user) }
   let(:token)       { FactoryBot.create('doorkeeper/access_token', application:, resource_owner_id: user.id, scopes: 'read_projects') }
   let(:cluster)     { FactoryBot.create(:cluster) }
-  let(:project)     { FactoryBot.create(:project, cluster:, user:) }
+  let!(:project)     { FactoryBot.create(:project, cluster:, user:) }
 
   describe 'GET /api/v1/projects' do
     before do
