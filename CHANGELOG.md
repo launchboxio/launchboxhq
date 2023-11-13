@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+### [1.7.3](https://github.com/launchboxio/launchboxhq/compare/v1.7.2...v1.7.3) (2023-11-13)
+
+
+### Bug Fixes
+
+* Use addon_versions when emitting the event ([0536815](https://github.com/launchboxio/launchboxhq/commit/0536815dded0b6db4ed106809f887a622a795e1d))
+
 ### [1.7.2](https://github.com/launchboxio/launchboxhq/compare/v1.7.1...v1.7.2) (2023-11-10)
 
 
