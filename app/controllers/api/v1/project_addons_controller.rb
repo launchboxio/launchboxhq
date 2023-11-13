@@ -12,11 +12,11 @@ module Api
 
       def index
         @addons = AddonSubscription.where(project_id: @project.id)
-        render json: { project_addons: @addons }
+        render json: { project_addons: @addons }, include: [:addon]
       end
 
       def show
-        render json: { project_addon: @addon }
+        render json: { project_addon: @addon }, include: [:addon]
       end
 
       def create

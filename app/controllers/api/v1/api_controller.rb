@@ -3,6 +3,10 @@
 module Api
   module V1
     class ApiController < ActionController::API
+      rescue_from RuntimeError do |ex|
+        render json: { success: false, error: ex.class.name, message: ex.message }, status: 500
+      end
+
       private
 
       def current_resource_owner
