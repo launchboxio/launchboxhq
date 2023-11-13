@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+### [1.8.3](https://github.com/launchboxio/launchboxhq/compare/v1.8.2...v1.8.3) (2023-11-13)
+
+
+### Bug Fixes
+
+* Pass to token to other download function ([2b6fe46](https://github.com/launchboxio/launchboxhq/commit/2b6fe46aebf422248c2d02044b35378ae3c1aa68))
+
 ### [1.8.2](https://github.com/launchboxio/launchboxhq/compare/v1.8.1...v1.8.2) (2023-11-13)
 
 
