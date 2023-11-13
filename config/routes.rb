@@ -41,11 +41,13 @@ Rails.application.routes.draw do
       resources :clusters do
         resources :cluster_addons
       end
-      resources :projects do
+      resources :projects, param: :project_id do
         member do
           post 'pause'
           post 'resume'
         end
+      end
+      resources :projects, only: [] do
         resources :addons, controller: 'project_addons'
       end
       resources :addons

@@ -37,5 +37,9 @@ FactoryBot.define do
     name { Faker::App.name }
   end
 
+  factory :addon_subscription do
+
+  end
+
   factory 'doorkeeper/access_token' do; end
 end
