@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+### [1.8.1](https://github.com/launchboxio/launchboxhq/compare/v1.8.0...v1.8.1) (2023-11-13)
+
+
+### Bug Fixes
+
+* Hoist repo variable ([098743d](https://github.com/launchboxio/launchboxhq/commit/098743dbe1be08e4548df70637ed6360096bda26))
+
 ## [1.8.0](https://github.com/launchboxio/launchboxhq/compare/v1.7.3...v1.8.0) (2023-11-13)
 
 
