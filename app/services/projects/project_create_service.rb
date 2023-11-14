@@ -6,7 +6,6 @@ module Projects
       @project.cluster = Cluster.where(status: 'active').sample if @project.cluster.nil?
       return false unless @project.save!
 
-      @cluster = Cluster.find(@project.cluster_id)
       broadcast_event
       true
     end
@@ -15,7 +14,7 @@ module Projects
 
     def broadcast_event
       ClusterChannel.broadcast_to(
-        @cluster,
+        @project.cluster,
         {
           type: 'projects.created',
           id: SecureRandom.hex,

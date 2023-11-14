@@ -4,7 +4,7 @@ module Projects
   class ProjectSyncService < ProjectService
     def execute
       ClusterChannel.broadcast_to(
-        @cluster,
+        @project.cluster,
         {
           type: 'projects.updated',
           id: SecureRandom.hex,
