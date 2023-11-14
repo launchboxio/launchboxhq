@@ -22,7 +22,6 @@ class ProjectsController < AuthenticatedController
   def create
     @project = current_user.projects.create(project_params)
     @project.user = current_user
-    @project.cluster = @clusters.sample
 
     if Projects::ProjectCreateService.new(@project).execute
       redirect_to @project
