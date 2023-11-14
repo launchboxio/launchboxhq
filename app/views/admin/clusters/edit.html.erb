@@ -1,0 +1,27 @@
+<div class="row">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="<%= admin_clusters_path %>">Clusters</a></li>
+      <li class="breadcrumb-item" aria-current="page">Edit Cluster</li>
+      <li class="breadcrumb-item active"><%= @cluster.name %></li>
+    </ol>
+  </nav>
+</div>
+
+
+<div class="row justify-content-md-center">
+  <div class="col-md-6">
+    <div class="card">
+      <%= bootstrap_form_for [:admin, @cluster] do |f| %>
+        <div class="card-header">Cluster Info</div>
+        <div class="card-body">
+          <%= f.text_field :domain, value: @cluster.domain %>
+          <%= f.select :status, %w[active inactive], selected: @cluster.status %>
+        </div>
+        <div class="card-footer">
+          <%= f.submit "Submit" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

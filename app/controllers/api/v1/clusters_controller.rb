@@ -65,7 +65,7 @@ module Api
       end
 
       def update_params
-        params.require(:cluster).permit(:agent_version, :agent_identifier, :version, :provider, :region, :domain)
+        params.require(:cluster).permit(:agent_version, :agent_identifier, :version, :provider, :region, :domain, :status)
       end
 
       def authorize_cluster_access
