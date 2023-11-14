@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+### [1.10.1](https://github.com/launchboxio/launchboxhq/compare/v1.10.0...v1.10.1) (2023-11-14)
+
+
+### Bug Fixes
+
+* clusters.update no longer double authorizes ([668856f](https://github.com/launchboxio/launchboxhq/commit/668856f874b6ef63b2a695feb34b3a194bec5705))
+
 ## [1.10.0](https://github.com/launchboxio/launchboxhq/compare/v1.9.0...v1.10.0) (2023-11-14)
 
 
