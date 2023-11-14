@@ -36,10 +36,6 @@ module Api
       end
 
       def update
-        doorkeeper_token = ::Doorkeeper.authenticate(request)
-        application_id = doorkeeper_token.application_id
-        head :forbidden if application_id != @cluster.oauth_application_id
-
         @cluster.assign_attributes(update_params)
         if cluster_request?
           @cluster.agent_connected = true
