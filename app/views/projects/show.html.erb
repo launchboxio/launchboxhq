@@ -103,7 +103,7 @@
           </div>
           <div class="card-footer">
             <a href="<%= new_project_user_path(@project) %>">
-              Attach Addon
+              Modify Access
             </a>
           </div>
         </div>
@@ -157,9 +157,15 @@
       <div class="card">
         <div class="card-header">Services</div>
         <div class="card-body">
-
+            <div class="alert alert-info">
+              No services have been added to this project
+            </div>
         </div>
-        <div class="card-footer"></div>
+        <div class="card-footer">
+          <a href="#">
+            Add Service
+          </a>
+        </div>
       </div>
     </div>
   </div>
