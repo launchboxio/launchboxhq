@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.10.0](https://github.com/launchboxio/launchboxhq/compare/v1.9.0...v1.10.0) (2023-11-14)
+
+
+### Features
+
+* Allow selecting cluster ID when creating a project ([13b9182](https://github.com/launchboxio/launchboxhq/commit/13b9182491d475ad0c3c51656821d3dcea8ba93e))
+* Allow setting of status on clusters ([c12249a](https://github.com/launchboxio/launchboxhq/commit/c12249a3ada28e901d614b0c9e667066ace4e217))
+
 ## [1.9.0](https://github.com/launchboxio/launchboxhq/compare/v1.8.7...v1.9.0) (2023-11-13)
 
 
