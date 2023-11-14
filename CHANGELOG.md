@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file.
 
+### [1.10.3](https://github.com/launchboxio/launchboxhq/compare/v1.10.2...v1.10.3) (2023-11-14)
+
+
+### Bug Fixes
+
+* Remove link for services and catalogs ([962be13](https://github.com/launchboxio/launchboxhq/commit/962be13c1ee7654930286eaebf27a5851d2d048c))
+* Update link naming, stub out services panel ([09cf026](https://github.com/launchboxio/launchboxhq/commit/09cf0265b64a53dc309f1698e05f0bd7b3d51912))
+
 ### [1.10.2](https://github.com/launchboxio/launchboxhq/compare/v1.10.1...v1.10.2) (2023-11-14)
 
 
