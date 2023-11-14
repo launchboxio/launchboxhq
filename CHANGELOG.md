@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+### [1.10.2](https://github.com/launchboxio/launchboxhq/compare/v1.10.1...v1.10.2) (2023-11-14)
+
+
+### Bug Fixes
+
+* dont sample cluster if provided ([dd1c3be](https://github.com/launchboxio/launchboxhq/commit/dd1c3bec89cff815292c44239fa896edfa7bd372))
+
 ### [1.10.1](https://github.com/launchboxio/launchboxhq/compare/v1.10.0...v1.10.1) (2023-11-14)
 
 
