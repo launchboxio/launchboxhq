@@ -14,6 +14,7 @@ class ProjectsController < AuthenticatedController
 
   def new
     @project = Project.new
+    @clusters = Cluster.where(status: 'active')
   end
 
   def show; end
