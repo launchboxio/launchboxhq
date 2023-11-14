@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+### [1.10.4](https://github.com/launchboxio/launchboxhq/compare/v1.10.3...v1.10.4) (2023-11-14)
+
+
+### Bug Fixes
+
+* Use cluster association instead of lookup for broadcast ([af4d883](https://github.com/launchboxio/launchboxhq/commit/af4d88333f2dc78079d6e8f98d3e01230e42ddcb))
+
 ### [1.10.3](https://github.com/launchboxio/launchboxhq/compare/v1.10.2...v1.10.3) (2023-11-14)
 
 
