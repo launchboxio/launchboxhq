@@ -24,6 +24,8 @@ Rails.application.routes.draw do
   end
 
   resources :organizations
+  resources :clusters, only: %i[index show]
+  resources :addons, only: %i[index show]
 
   resources :projects do
     scope module: :projects do
