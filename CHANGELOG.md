@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.13.0](https://github.com/launchboxio/launchboxhq/compare/v1.12.2...v1.13.0) (2023-11-15)
+
+
+### Features
+
+* Add projects/:id/manifest for generating runtime ([fdcc67c](https://github.com/launchboxio/launchboxhq/commit/fdcc67c2ba6a7a94bfa574ec195d8fd28e32322d))
+
 ### [1.12.2](https://github.com/launchboxio/launchboxhq/compare/v1.12.1...v1.12.2) (2023-11-15)
 
 
