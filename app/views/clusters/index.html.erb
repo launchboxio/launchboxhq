@@ -1,11 +1,44 @@
-<% @clusters.each do |cluster| %>
-  <div class="col-md-3">
-    <div class="card" style="width: 18rem;" onclick="location.href = '/clusters/<%= cluster.id %>';">
-      <div class="card-body">
-        <h5 class="card-title"><%= cluster.name %></h5>
-      </div>
-    </div>
-  </div>
-<% end %>
+<div class="row">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item active" aria-current="page">Clusters</li>
+    </ol>
+  </nav>
+</div>
 
-<a href="/clusters/new">Create new cluster</a>
+<div>
+  <table class="table">
+    <thead>
+    <tr>
+      <td>Slug</td>
+      <td>Domain</td>
+      <td>Provider</td>
+      <td>Version</td>
+      <td>Region</td>
+      <td>Status</td>
+    </tr>
+    </thead>
+    <tbody>
+    <% @clusters.each do |cluster| %>
+      <tr>
+        <td><%= cluster.slug %></td>
+        <td><%= cluster.domain %></td>
+        <td><%= cluster.provider %></td>
+        <td><%= cluster.version %></td>
+        <td><%= cluster.region %></td>
+        <td>
+          <% if cluster.status == "active" %>
+            <span class="badge bg-success">Active</span>
+          <% else %>
+            <span class="badge bg-warning"><%= cluster.status %></span>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+</div>
+
+<div >
+  <a class="float-right" href="#">Create a private cluster (coming soon)</a>
+</div>

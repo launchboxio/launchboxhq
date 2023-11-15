@@ -1,0 +1,65 @@
+<div class="row">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="<%= addons_path %>">Addons</a></li>
+      <li class="breadcrumb-item active" aria-current="page"><%= @addon.name %></li>
+    </ol>
+  </nav>
+</div>
+
+<div class="row">
+  <div class="col-md-6">
+    <div class="card">
+      <div class="card-header">Details</div>
+      <div class="card-body">
+        <table class="table">
+          <tr>
+            <td>Name</td>
+            <td><%= @addon.name %></td>
+          </tr>
+          <tr>
+            <td>Registry</td>
+            <td><%= @addon.oci_registry %></td>
+          </tr>
+          <tr>
+            <td>Version</td>
+            <td><%= @addon.oci_version %></td>
+          </tr>
+          <tr>
+            <td>Status</td>
+            <td><%= @addon.status %></td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="card">
+      <div class="card-header">Versions</div>
+      <div class="card-body">
+        <table class="table">
+          <thead>
+          <tr>
+            <th>Version</th>
+            <th>Claim Name</th>
+            <th>Group</th>
+            <th></th>
+          </tr>
+          </thead>
+          <tbody>
+          <% @addon.addon_versions.each do |version| %>
+            <tr>
+              <td><%= version.version %> <% if version.default %><span class="badge bg-success">default</span><% end %></td>
+              <td><%= version.claim_name %></td>
+              <td><%= version.group %></td>
+              <td>
+                <button class="btn btn-small">View Schema</button>
+              </td>
+            </tr>
+          <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

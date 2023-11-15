@@ -1,0 +1,30 @@
+<div class="row">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item active" aria-current="page">Addons</li>
+    </ol>
+  </nav>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <table class="table">
+      <thead>
+      <tr>
+        <td>Name</td>
+        <td>OCI Registry</td>
+        <td>Version</td>
+      </tr>
+      </thead>
+      <tbody>
+      <% @addons.each do |addon| %>
+        <tr onclick="location.href = '<%= addon_path(addon.id) %>';">
+          <td><%= addon.name %></td>
+          <td><%= addon.oci_registry %></td>
+          <td><%= addon.oci_version %></td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
