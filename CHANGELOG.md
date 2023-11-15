@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+### [1.12.2](https://github.com/launchboxio/launchboxhq/compare/v1.12.1...v1.12.2) (2023-11-15)
+
+
+### Bug Fixes
+
+* Dont auto-login after password reset ([6ee6dc1](https://github.com/launchboxio/launchboxhq/commit/6ee6dc16032cb5ff2b2260612c4436013cb33151))
+
 ### [1.12.1](https://github.com/launchboxio/launchboxhq/compare/v1.12.0...v1.12.1) (2023-11-15)
 
 
