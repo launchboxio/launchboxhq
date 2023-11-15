@@ -3,7 +3,10 @@
 Rails.application.routes.draw do
   root 'projects#index'
 
-  devise_for :users, controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
+  devise_for :users, controllers: {
+    omniauth_callbacks: 'users/omniauth_callbacks',
+    sessions: 'users/sessions'
+  }
   use_doorkeeper_openid_connect
   use_doorkeeper
 
@@ -17,6 +20,7 @@ Rails.application.routes.draw do
       resources :addon_versions, only: %i[update]
     end
     resources :clusters
+    resources :users, only: %i[index show new create update]
   end
 
   resources :organizations

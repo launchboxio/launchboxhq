@@ -1,0 +1,49 @@
+<div class="row">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item active" aria-current="page">Users</li>
+    </ol>
+  </nav>
+</div>
+
+<div>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Email</th>
+        <th>Activated</th>
+        <th>Provider</th>
+        <th>UID</th>
+        <th>Created At</th>
+      </tr>
+    </thead>
+    <tbody>
+    <% @users.each do |user| %>
+    <tr onclick="location.href = '<%= admin_user_path(user.id) %>';">
+      <td><%= user.id %></td>
+      <td>
+        <%= user.email %>
+        <% if user.admin? %>
+        <span class="badge bg-warning">Admin</span>
+        <% end %>
+      </td>
+      <td>
+        <% if user.activated? %>
+        <span class="badge bg-success">Active</span>
+        <% else %>
+        <span class="badge bg-secondary">Inactive</span>
+        <% end %>
+      </td>
+      <td><%= user.provider %></td>
+      <td><%= user.uid %></td>
+      <td><%= user.created_at %></td>
+    </tr>
+    <% end %>
+    </tbody>
+  </table>
+</div>
+
+<div >
+  <a class="float-right" href="<%= new_admin_user_path %>">Create new user</a>
+</div>
