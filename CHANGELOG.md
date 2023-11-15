@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+### [1.13.1](https://github.com/launchboxio/launchboxhq/compare/v1.13.0...v1.13.1) (2023-11-15)
+
+
+### Bug Fixes
+
+* Attach default version to addon response as well ([057c06f](https://github.com/launchboxio/launchboxhq/commit/057c06f6aa135f59edbc35c2720469d279a80169))
+
 ## [1.13.0](https://github.com/launchboxio/launchboxhq/compare/v1.12.2...v1.13.0) (2023-11-15)
 
 
