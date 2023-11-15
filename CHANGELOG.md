@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+### [1.12.1](https://github.com/launchboxio/launchboxhq/compare/v1.12.0...v1.12.1) (2023-11-15)
+
+
+### Bug Fixes
+
+* Adjust styling and usage for password forms ([b94b178](https://github.com/launchboxio/launchboxhq/commit/b94b178b68de29d25f49aea7648a6af785383f18))
+
 ## [1.12.0](https://github.com/launchboxio/launchboxhq/compare/v1.11.0...v1.12.0) (2023-11-15)
 
 
