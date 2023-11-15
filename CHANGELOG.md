@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.12.0](https://github.com/launchboxio/launchboxhq/compare/v1.11.0...v1.12.0) (2023-11-15)
+
+
+### Features
+
+* Add public endpoints for clusters and addons ([825cc9c](https://github.com/launchboxio/launchboxhq/commit/825cc9cfb0b66777d15655075d3df49d9a4e6323))
+
 ## [1.11.0](https://github.com/launchboxio/launchboxhq/compare/v1.10.4...v1.11.0) (2023-11-15)
 
 
