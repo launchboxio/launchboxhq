@@ -1,8 +1,8 @@
 <div class="row">
   <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
-      <li class="breadcrumb-item"><a href="<%= admin_clusters_path %>">Clusters</a></li>
-      <li class="breadcrumb-item active" aria-current="page">New Cluster</li>
+      <li class="breadcrumb-item"><a href="<%= admin_users_path %>">Users</a></li>
+      <li class="breadcrumb-item active" aria-current="page">New User</li>
     </ol>
   </nav>
 </div>
@@ -11,11 +11,10 @@
 <div class="row justify-content-md-center">
   <div class="col-md-6">
     <div class="card">
-      <%= bootstrap_form_for [:admin, @cluster] do |f| %>
-        <div class="card-header">Cluster Info</div>
+      <%= bootstrap_form_for [:admin, @user] do |f| %>
+        <div class="card-header">Details</div>
         <div class="card-body">
-          <%= f.text_field :name %>
-          <%= f.text_field :domain %>
+          <%= f.text_field :email %>
         </div>
         <div class="card-footer">
           <%= f.submit "Submit" %>

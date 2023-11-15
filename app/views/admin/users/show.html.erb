@@ -1,0 +1,119 @@
+<div class="row">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="<%= admin_users_path %>">Users</a></li>
+      <li class="breadcrumb-item active" aria-current="page"><%= @user.id %></li>
+    </ol>
+  </nav>
+</div>
+
+<div class="row">
+  <div class="col-md-6">
+    <div class="card">
+      <div class="card-header">
+        User Information
+      </div>
+      <div class="card-body">
+        <table class="table">
+          <tr>
+            <td>ID</td>
+            <td><%= @user.id %></td>
+          </tr>
+          <tr>
+            <td>Email</td>
+            <td>
+              <%= @user.email %>
+              <% if @user.admin? %>
+                <span class="badge bg-warning">Admin</span>
+              <% end %>
+            </td>
+          </tr>
+          <tr>
+            <td>Created At</td>
+            <td><%= @user.created_at %></td>
+          </tr>
+          <tr>
+            <td>Status</td>
+            <td>
+              <% if @user.activated? %>
+                <span class="badge bg-success">Active</span>
+              <% else %>
+                <span class="badge bg-secondary">Inactive</span>
+              <% end %>
+            </td>
+          </tr>
+          <tr>
+            <td>Confirmed?</td>
+            <td><%= @user.confirmed_at %></td>
+          </tr>
+          <tr>
+            <td>OAuth Provider</td>
+            <td><%= @user.provider %></td>
+          </tr>
+          <tr>
+            <td>OAuth UID</td>
+            <td><%= @user.uid %></td>
+          </tr>
+        </table>
+      </div>
+      <div class="card-footer">
+        <div class="btn-group">
+          <% if @user.activated? %>
+            <%= form_for [:admin, @user], method: :patch do |f| -%>
+              <%= f.hidden_field :activated, :value => false -%>
+              <%= f.submit 'Deactivate' -%>
+            <%- end -%>
+          <% else %>
+            <%= form_for [:admin, @user], method: :patch do |f| -%>
+              <%= f.hidden_field :activated, :value => true -%>
+              <%= f.submit 'Activate' -%>
+            <%- end -%>
+          <% end %>
+          <% if @user.confirmed_at.nil? %>
+            <%= form_for [:admin, @user], method: :patch do |f| -%>
+              <%= f.hidden_field :confirmed_at, :value => DateTime.now -%>
+              <%= f.submit 'Confirm Email' -%>
+            <%- end -%>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="card">
+      <div class="card-header">Deployed Projects</div>
+      <div class="card-body">
+        <table class="table">
+          <thead>
+          <tr>
+            <th>Slug</th>
+            <th>CPU</th>
+            <th>Memory</th>
+            <th>Disk</th>
+            <th>Status</th>
+          </tr>
+          </thead>
+          <tbody>
+          <% @user.projects.each do |project| %>
+            <tr>
+              <td>
+                <a href="<%= project_url project %>">
+                  <%= project.slug %>
+                </a>
+              </td>
+              <td><%= project.cpu %></td>
+              <td><%= project.memory %></td>
+              <td><%= project.disk %></td>
+              <td><%= project.status %></td>
+            </tr>
+          <% end %>
+          <tr>
+
+          </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="card-footer"></div>
+    </div>
+  </div>
+</div>

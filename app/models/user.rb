@@ -21,4 +21,12 @@ class User < ApplicationRecord
 
   has_one :profile
   has_many :vcs_connections
+
+  def active_for_authentication?
+    super and activated?
+  end
+
+  def inactive_message
+    "This account hasn't been activated yet"
+  end
 end

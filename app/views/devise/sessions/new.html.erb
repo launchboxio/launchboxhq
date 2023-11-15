@@ -4,7 +4,6 @@
       <div class="card-header">Login</div>
       <div class="card-body">
         <div class="row">
-<!--          <div class="col-md-6">-->
             <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
               <div class="field">
                 <%= f.label :email %><br />
@@ -22,20 +21,13 @@
                   <%= f.label :remember_me %>
                 </div>
               <% end %>
+            <%#= render "devise/shared/links" %>
+            <a href="<%= new_user_registration_path %>">Need an account?</a>
+            <br>
+            <a href="<%= new_user_password_path %>">Forgot your password?</a>
+            <br>
               <%= f.submit "Log in", class: "btn btn-primary" %>
             <% end %>
-<!--          </div>-->
-<!--          <div class="col-md-6">-->
-<!--            <div class="row">-->
-              <%#= button_to "Login with Github", omniauth_authorize_path('user', 'github'), data: { turbo: false }, class: "btn btn-small" %>
-<!--            </div>-->
-<!--            <div class="row">-->
-              <%#= button_to "Login with Gitlab", omniauth_authorize_path('user', 'gitlab'), data: { turbo: false }, class: "btn btn-small" %>
-<!--            </div>-->
-<!--            <div class="row">-->
-              <%#= button_to "Login with Bitbucket", omniauth_authorize_path('user', 'bitbucket'), data: { turbo: false }, class: "btn btn-small" %>
-<!--            </div>-->
-<!--          </div>-->
         </div>
       </div>
     </div>

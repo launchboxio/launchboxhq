@@ -49,7 +49,11 @@ class ProjectsController < AuthenticatedController
   private
 
   def find_project
-    @project = current_user.projects.find(params[:id])
+    @project = if current_user.admin?
+                 Project.find(params[:id])
+               else
+                 current_user.projects.find(params[:id])
+               end
   end
 
   def project_params
