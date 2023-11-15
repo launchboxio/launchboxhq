@@ -53,6 +53,7 @@ Rails.application.routes.draw do
         member do
           post 'pause'
           post 'resume'
+          get 'manifest'
         end
       end
       resources :projects, only: [] do

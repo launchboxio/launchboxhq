@@ -70,6 +70,17 @@ module Api
         end
       end
 
+      def manifest
+        render json: {
+          project: @project.as_json(
+            include: {
+              addon_subscriptions: { include: :addon },
+              user: { only: :email }
+            }
+          )
+        }
+      end
+
       private
 
       def project_params
