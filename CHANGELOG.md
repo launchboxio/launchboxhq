@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.11.0](https://github.com/launchboxio/launchboxhq/compare/v1.10.4...v1.11.0) (2023-11-15)
+
+
+### Features
+
+* Add admin routes for users. Fix sign up / registration forms ([de702b9](https://github.com/launchboxio/launchboxhq/commit/de702b97af359654473a2ba4355daf24978fd979))
+* Add admin routes for users. Fix sign up / registration forms ([66e15b2](https://github.com/launchboxio/launchboxhq/commit/66e15b27b514f4278468e5817ec81cb50e9e1d08))
+
 ### [1.10.4](https://github.com/launchboxio/launchboxhq/compare/v1.10.3...v1.10.4) (2023-11-14)
 
 
