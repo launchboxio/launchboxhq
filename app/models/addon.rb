@@ -5,4 +5,6 @@ class Addon < ApplicationRecord
   acts_as_taggable_on :tags
 
   has_many :addon_versions
+
+  has_one :default_version, -> { where(default: true) }, class_name: 'AddonVersion'
 end

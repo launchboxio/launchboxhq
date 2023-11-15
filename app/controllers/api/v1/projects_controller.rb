@@ -70,16 +70,28 @@ module Api
         end
       end
 
+      # rubocop:disable Metrics/MethodLength
       def manifest
         render json: {
           project: @project.as_json(
             include: {
-              addon_subscriptions: { include: :addon },
+              addon_subscriptions: {
+                include: {
+                  addon: {
+                    include: {
+                      default_version: {
+                        only: %i[claim_name group version]
+                      }
+                    }
+                  }
+                }
+              },
               user: { only: :email }
             }
           )
         }
       end
+      # rubocop:enable Metrics/MethodLength
 
       private
 
