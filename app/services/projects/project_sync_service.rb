@@ -3,14 +3,7 @@
 module Projects
   class ProjectSyncService < ProjectService
     def execute
-      ClusterChannel.broadcast_to(
-        @project.cluster,
-        {
-          type: 'projects.updated',
-          id: SecureRandom.hex,
-          payload: build
-        }
-      )
+      broadcast('projects.updated')
     end
   end
 end

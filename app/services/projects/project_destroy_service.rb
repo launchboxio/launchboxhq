@@ -6,13 +6,7 @@ module Projects
     # that job has completed, it will finalize and remove the
     # attached project
     def execute
-      ClusterChannel.broadcast_to(
-        @project.cluster, {
-          type: 'projects.deleted',
-          id: SecureRandom.hex,
-          payload: @project.id
-        }
-      )
+      broadcast('projects.deleted')
       @project.update(status: :pending_deletion)
     end
   end

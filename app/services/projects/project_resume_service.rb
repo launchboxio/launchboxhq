@@ -5,13 +5,7 @@ module Projects
     def execute
       return false unless @project.update(status: :starting)
 
-      ClusterChannel.broadcast_to(
-        @project.cluster, {
-          type: 'projects.resumed',
-          id: SecureRandom.hex,
-          payload: @project.id
-        }
-      )
+      broadcast('projects.resumed')
       true
     end
   end

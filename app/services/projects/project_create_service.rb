@@ -6,21 +6,8 @@ module Projects
       @project.cluster = Cluster.where(status: 'active').sample if @project.cluster.nil?
       return false unless @project.save!
 
-      broadcast_event
+      broadcast('projects.created')
       true
-    end
-
-    private
-
-    def broadcast_event
-      ClusterChannel.broadcast_to(
-        @project.cluster,
-        {
-          type: 'projects.created',
-          id: SecureRandom.hex,
-          payload: build
-        }
-      )
     end
   end
 end

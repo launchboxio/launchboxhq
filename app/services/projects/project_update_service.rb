@@ -5,11 +5,7 @@ module Projects
     def execute
       return false unless @project.save!
 
-      ClusterChannel.broadcast_to(
-        @project.cluster, {
-          type: 'projects.created', id: SecureRandom.hex, payload: build
-        }
-      )
+      broadcast('projects.updated')
       true
     end
   end

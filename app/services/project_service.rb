@@ -8,23 +8,16 @@ class ProjectService
     super()
   end
 
-  def build
-    data = @project.as_json
-    data['users'] = [
-      { email: @project.user.email, clusterRole: 'cluster-admin' }
-    ]
-    data['addons'] = @project.addon_subscriptions.map { |sub| build_addon(sub) }
-    data
-  end
+  protected
 
-  def build_addon(sub)
-    version = sub.addon.addon_versions.find_by_default(true)
-    {
-      name: sub.addon.name,
-      install_name: sub.name || sub.addon.name,
-      resource: version.claim_name,
-      version: version.version,
-      group: version.group
-    }
+  def broadcast(event)
+    ClusterChannel.broadcast_to(
+      @project.cluster,
+      {
+        type: event,
+        id: SecureRandom.hex,
+        payload: { id: @project.id }
+      }
+    )
   end
 end

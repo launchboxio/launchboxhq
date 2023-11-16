@@ -5,13 +5,7 @@ module Projects
     def execute
       return false unless @project.update(status: :pausing)
 
-      ClusterChannel.broadcast_to(
-        @project.cluster, {
-          type: 'projects.paused',
-          id: SecureRandom.hex,
-          payload: @project.id
-        }
-      )
+      broadcast('projects.paused')
       true
     end
   end
