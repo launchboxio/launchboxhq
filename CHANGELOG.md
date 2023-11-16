@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+### [1.13.2](https://github.com/launchboxio/launchboxhq/compare/v1.13.1...v1.13.2) (2023-11-16)
+
+
+### Bug Fixes
+
+* Broadcast just the product ID instead of building ([907c894](https://github.com/launchboxio/launchboxhq/commit/907c894e1b1e3ae0ccf81480b35984704676304c))
+
 ### [1.13.1](https://github.com/launchboxio/launchboxhq/compare/v1.13.0...v1.13.1) (2023-11-15)
 
 
