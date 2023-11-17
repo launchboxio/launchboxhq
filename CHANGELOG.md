@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+### [1.14.2](https://github.com/launchboxio/launchboxhq/compare/v1.14.1...v1.14.2) (2023-11-17)
+
+
+### Bug Fixes
+
+* Move action_mailer to application.rb ([42c6f54](https://github.com/launchboxio/launchboxhq/commit/42c6f54b7f75bc32b72e56d2c83d4d94a6d69933))
+
 ### [1.14.1](https://github.com/launchboxio/launchboxhq/compare/v1.14.0...v1.14.1) (2023-11-17)
 
 
