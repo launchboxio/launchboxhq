@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.14.0](https://github.com/launchboxio/launchboxhq/compare/v1.13.2...v1.14.0) (2023-11-17)
+
+
+### Features
+
+* Add SendGrid configuration ([58f5b8c](https://github.com/launchboxio/launchboxhq/commit/58f5b8c301c1ae2a2fb61f62da6854e692ccc249))
+
 ### [1.13.2](https://github.com/launchboxio/launchboxhq/compare/v1.13.1...v1.13.2) (2023-11-16)
 
 
