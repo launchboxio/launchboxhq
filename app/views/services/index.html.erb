@@ -1,0 +1,41 @@
+<div class="row">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item active" aria-current="page">Services</li>
+    </ol>
+  </nav>
+</div>
+
+
+<div>
+  <table class="table">
+    <thead>
+    <tr>
+      <td>Name</td>
+      <td>Full Name</td>
+      <td>Default Branch</td>
+      <td>Visibility</td>
+      <td>Language</td>
+      <td>Deployment Strategy</td>
+      <td>Update Strategy</td>
+    </tr>
+    </thead>
+    <tbody>
+    <% @services.each do |service| %>
+      <tr onclick="location.href = '<%= service_path(service.id) %>';">
+        <td><%= service.name %></td>
+        <td><%= service.full_name %></td>
+        <td><%= service.default_branch %></td>
+        <td><%= service.visibility %></td>
+        <td><%= service.language %></td>
+        <td><%= service.deployment_strategy %></td>
+        <td><%= service.update_strategy %></td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+</div>
+
+<div >
+  <a class="float-right" href="<%= new_service_url %>">Create new service</a>
+</div>

@@ -1,0 +1,26 @@
+<div class="row">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="<%= projects_path %>">Projects</a></li>
+      <li class="breadcrumb-item"><a href="<%= project_path(@project) %>"><%= @project.name %></a></li>
+      <li class="breadcrumb-item active" aria-current="page">Services</li>
+    </ol>
+  </nav>
+</div>
+
+<div class="row justify-content-md-center">
+  <div class="col-md-6">
+    <div class="card">
+      <%= bootstrap_form_for(@service, url: "/projects/#{@project.id}/services") do |f| %>
+        <div class="card-header">Service Info</div>
+        <div class="card-body">
+          <%= f.select :service_id, @services.map{|service| [service.name || service.full_name, service.id]} %>
+          <%= f.text_field :name  %>
+        </div>
+        <div class="card-footer">
+          <%= f.submit "Submit" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

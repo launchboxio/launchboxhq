@@ -3,13 +3,13 @@
 module Api
   module V1
     class ProjectsController < Api::V1::ApiController
-      before_action -> { doorkeeper_authorize! :read_projects, :manage_projects }, only: %i[index show]
+      before_action -> { doorkeeper_authorize! :read_projects, :manage_projects }, only: %i[index show manifest]
       before_action -> { doorkeeper_authorize! :manage_projects }, only: %i[create destroy pause resume]
 
       before_action :find_project, except: %i[index new create]
       before_action :find_clusters, only: %i[create]
 
-      before_action -> { :authorize_project_access }, only: %i[update]
+      before_action -> { :authorize_project_access }, only: %i[update manifest]
       # before_action :authorize_project_read, only: %i[index show]
       # before_action :authorize_project_write, only: %i[create destroy pause resume]
 
@@ -84,6 +84,11 @@ module Api
                       }
                     }
                   }
+                }
+              },
+              service_subscriptions: {
+                include: {
+                  service: {}
                 }
               },
               user: { only: :email }

@@ -53,6 +53,9 @@ gem 'redis', '~> 4.0'
 gem 'vault', '~> 0.17.0'
 gem 'vault-rails', '~> 0.8.0'
 
+# VCS Providers
+gem 'octokit'
+
 # RealTime Communication
 gem 'cent'
 
