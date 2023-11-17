@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.15.0](https://github.com/launchboxio/launchboxhq/compare/v1.14.3...v1.15.0) (2023-11-17)
+
+
+### Features
+
+* Import some branding ([65ee3db](https://github.com/launchboxio/launchboxhq/commit/65ee3dbc3045214eebec15bebe85be2461a30774))
+
 ### [1.14.3](https://github.com/launchboxio/launchboxhq/compare/v1.14.2...v1.14.3) (2023-11-17)
 
 
