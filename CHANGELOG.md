@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+### [1.14.3](https://github.com/launchboxio/launchboxhq/compare/v1.14.2...v1.14.3) (2023-11-17)
+
+
+### Bug Fixes
+
+* Move ActionMailer initialization ([b8e1bd0](https://github.com/launchboxio/launchboxhq/commit/b8e1bd08ff096251908d9f4587ee7583324b1086))
+
 ### [1.14.2](https://github.com/launchboxio/launchboxhq/compare/v1.14.1...v1.14.2) (2023-11-17)
 
 
