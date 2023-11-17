@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+### [1.14.1](https://github.com/launchboxio/launchboxhq/compare/v1.14.0...v1.14.1) (2023-11-17)
+
+
+### Bug Fixes
+
+* require action_mailer ([884dcc6](https://github.com/launchboxio/launchboxhq/commit/884dcc60c24c645f197b0fb50f24691201184e32))
+
 ## [1.14.0](https://github.com/launchboxio/launchboxhq/compare/v1.13.2...v1.14.0) (2023-11-17)
 
 
