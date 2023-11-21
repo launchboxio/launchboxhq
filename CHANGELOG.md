@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+### [1.18.1](https://github.com/launchboxio/launchboxhq/compare/v1.18.0...v1.18.1) (2023-11-21)
+
+
+### Bug Fixes
+
+* Use repository name, not URL, for creation through API ([10f6924](https://github.com/launchboxio/launchboxhq/commit/10f69243dae187f14594070a123a7865f7f063f1))
+
 ## [1.18.0](https://github.com/launchboxio/launchboxhq/compare/v1.17.0...v1.18.0) (2023-11-21)
 
 
