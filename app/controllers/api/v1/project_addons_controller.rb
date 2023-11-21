@@ -4,7 +4,7 @@ module Api
   module V1
     class ProjectAddonsController < ApiController
       before_action -> { doorkeeper_authorize! :read_projects, :manage_projects }, only: %i[index show]
-      before_action -> { doorkeeper_authorize! :manage_projects }, only: %i[create]
+      before_action -> { doorkeeper_authorize! :manage_projects }, only: %i[create destroy]
       before_action :find_project
       before_action :find_subscription, except: %i[index create]
 

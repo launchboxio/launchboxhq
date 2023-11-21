@@ -1,0 +1,26 @@
+<div class="row">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="<%= services_path %>">Service</a></li>
+      <li class="breadcrumb-item active" aria-current="page">New Service</li>
+    </ol>
+  </nav>
+</div>
+
+<div class="row justify-content-md-center">
+  <div class="col-md-4">
+    <div class="card">
+      <%= bootstrap_form_for(@service) do |f| %>
+        <div class="card-header">Details</div>
+        <div class="card-body">
+          <%= f.collection_select(:vcs_connection_id, current_user.vcs_connections, :id, :provider) %>
+          <%= f.text_field :name %>
+          <%= f.text_field :full_name %>
+        </div>
+        <div class="card-footer">
+          <%= f.submit "Submit" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

@@ -23,6 +23,10 @@ class Project < ApplicationRecord
   has_many :addons, through: :addon_subscriptions
   accepts_nested_attributes_for :addon_subscriptions
 
+  has_many :service_subscriptions
+  has_many :services, through: :service_subscriptions
+  accepts_nested_attributes_for :service_subscriptions
+
   before_create :generate_slug
 
   acts_as_taggable_on :tags

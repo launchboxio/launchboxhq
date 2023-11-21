@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_11_15_144643) do
+ActiveRecord::Schema[7.0].define(version: 2023_11_17_204628) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -49,7 +49,20 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_15_144643) do
     t.string "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.text "template"
     t.index ["name"], name: "index_addons_on_name", unique: true
+  end
+
+  create_table "agents", force: :cascade do |t|
+    t.bigint "cluster_id"
+    t.datetime "last_communication"
+    t.string "status"
+    t.string "ip_address"
+    t.string "pod_name"
+    t.string "node_name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["cluster_id"], name: "index_agents_on_cluster_id"
   end
 
   create_table "cluster_addon_subscriptions", force: :cascade do |t|
@@ -190,6 +203,33 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_15_144643) do
     t.index ["project_id"], name: "index_projects_users_on_project_id"
     t.index ["user_id", "project_id"], name: "index_projects_users_on_user_id_and_project_id", unique: true
     t.index ["user_id"], name: "index_projects_users_on_user_id"
+  end
+
+  create_table "service_subscriptions", force: :cascade do |t|
+    t.bigint "project_id"
+    t.bigint "service_id"
+    t.string "name"
+    t.json "overrides"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["project_id"], name: "index_service_subscriptions_on_project_id"
+    t.index ["service_id"], name: "index_service_subscriptions_on_service_id"
+  end
+
+  create_table "services", force: :cascade do |t|
+    t.string "name"
+    t.string "full_name"
+    t.string "default_branch"
+    t.string "visibility", default: "public"
+    t.string "language"
+    t.string "deployment_strategy", default: "helm"
+    t.json "update_strategy"
+    t.bigint "user_id"
+    t.bigint "vcs_connection_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_services_on_user_id"
+    t.index ["vcs_connection_id"], name: "index_services_on_vcs_connection_id"
   end
 
   create_table "taggings", force: :cascade do |t|

@@ -157,12 +157,37 @@
       <div class="card">
         <div class="card-header">Services</div>
         <div class="card-body">
+          <% if @project.service_subscriptions.length == 0 %>
             <div class="alert alert-info">
               No services have been added to this project
             </div>
+          <% else %>
+            <table class="table">
+              <thead>
+              <tr>
+                <th>Service</th>
+                <th>Name Override</th>
+                <th>Branch</th>
+                <th></th>
+              </tr>
+              </thead>
+              <tbody>
+              <% @project.service_subscriptions.each do |sub| %>
+                <tr>
+                  <td><%= sub.service.full_name %></td>
+                  <td><%= sub.name %></td>
+                  <td><%= sub.service.default_branch %></td>
+                  <td>
+                    <%= button_to "delete", project_service_path(@project, sub), :method => :delete, :class => 'btn btn-small btn-outline-danger float-end'  %>
+                  </td>
+                </tr>
+              <% end %>
+              </tbody>
+            </table>
+          <% end %>
         </div>
         <div class="card-footer">
-          <a href="#">
+          <a href="<%= new_project_service_path(@project) %>">
             Add Service
           </a>
         </div>

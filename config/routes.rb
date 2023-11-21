@@ -26,11 +26,13 @@ Rails.application.routes.draw do
   resources :organizations
   resources :clusters, only: %i[index show]
   resources :addons, only: %i[index show]
+  resources :services
 
   resources :projects do
     scope module: :projects do
       resources :users, only: %i[new create destroy]
       resources :addons
+      resources :services
     end
     get :kubeconfig, on: :member
   end
@@ -56,8 +58,10 @@ Rails.application.routes.draw do
           get 'manifest'
         end
       end
+      resources :services
       resources :projects, only: [] do
         resources :addons, controller: 'project_addons'
+        resources :services, controller: 'project_services'
       end
       resources :addons
     end
