@@ -58,8 +58,10 @@ Rails.application.routes.draw do
           get 'manifest'
         end
       end
+      resources :services
       resources :projects, only: [] do
         resources :addons, controller: 'project_addons'
+        resources :services, controller: 'project_services'
       end
       resources :addons
     end

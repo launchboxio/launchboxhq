@@ -19,7 +19,7 @@ module Api
       end
 
       def show
-        render json: { project: @project }, include: [:addons]
+        render json: { project: @project }, include: %i[addons services]
       end
 
       def create
