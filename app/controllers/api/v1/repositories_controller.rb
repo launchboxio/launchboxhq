@@ -49,7 +49,7 @@ module Api
       private
 
       def repository_params
-        params.require(:repository).permit(:vcs_connection_id, :repository_url)
+        params.require(:repository).permit(:vcs_connection_id, :repository)
       end
 
       def find_repository
