@@ -10,6 +10,8 @@ class ServicesController < AuthenticatedController
 
   def show; end
 
+  def edit; end
+
   def new
     @service = @repository.services.build
   end
@@ -22,6 +24,16 @@ class ServicesController < AuthenticatedController
     else
       flash[:notice] = @service.errors.full_messages
       render 'new'
+    end
+  end
+
+  def update
+    if @service.update(update_params)
+      flash[:notice] = 'Service updated'
+      redirect_to repository_path(@repository)
+    else
+      flash[:notice] = @service.errors.full_messages
+      render 'edit'
     end
   end
 
@@ -41,6 +53,10 @@ class ServicesController < AuthenticatedController
   end
 
   def service_params
+    params.require(:service).permit(:name, :deployment_strategy, :update_strategy)
+  end
+
+  def update_params
     params.require(:service).permit(:name, :deployment_strategy, :update_strategy)
   end
 end
