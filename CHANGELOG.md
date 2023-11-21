@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+### [1.18.2](https://github.com/launchboxio/launchboxhq/compare/v1.18.1...v1.18.2) (2023-11-21)
+
+
+### Bug Fixes
+
+* Add service update endpoints ([2099fb7](https://github.com/launchboxio/launchboxhq/commit/2099fb70a95253c53517a74f3c74cf0b0dc7bf33))
+
 ### [1.18.1](https://github.com/launchboxio/launchboxhq/compare/v1.18.0...v1.18.1) (2023-11-21)
 
 
