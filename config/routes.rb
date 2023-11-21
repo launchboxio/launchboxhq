@@ -63,6 +63,7 @@ Rails.application.routes.draw do
         resources :addons, controller: 'project_addons'
         resources :services, controller: 'project_services'
       end
+      resources :vcs_connections, only: %i[index show]
       resources :addons
     end
   end
