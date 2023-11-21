@@ -2,7 +2,8 @@
   <div class="col-md-8">
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="<%= services_path %>">Services</a></li>
+        <li class="breadcrumb-item"><a href="<%= repository_path(@repository) %>"><%= @repository.repository %></a></li>
+        <li class="breadcrumb-item"><a href="<%= repository_services_path(@repository) %>">Services</a></li>
         <li class="breadcrumb-item active" aria-current="page"><%= @service.name || @service.full_name %></li>
       </ol>
     </nav>

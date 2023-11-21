@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class ServicesController < AuthenticatedController
+  before_action :find_repository, except: %i[index]
   before_action :find_service, only: %i[show update destroy]
 
   def index
@@ -10,27 +11,36 @@ class ServicesController < AuthenticatedController
   def show; end
 
   def new
-    @service = current_user.services.build
+    @service = @repository.services.build
   end
 
   def create
-    @service = current_user.services.new(service_params)
-    if Services::CreateService.new(@service).execute
+    @service = @repository.services.new(service_params)
+    if @service.save
       flash[:notice] = 'Service added'
-      redirect_to services_path(@service)
+      redirect_to repository_path(@repository)
     else
       flash[:notice] = @service.errors.full_messages
       render 'new'
     end
   end
 
+  def destroy
+    @service.destroy
+    redirect_to repository_path(@repository)
+  end
+
   private
 
+  def find_repository
+    @repository = current_user.repositories.find(params[:repository_id])
+  end
+
   def find_service
-    @service = current_user.services.find(params[:id])
+    @service = @repository.services.find(params[:id])
   end
 
   def service_params
-    params.require(:service).permit(:vcs_connection_id, :full_name)
+    params.require(:service).permit(:name, :deployment_strategy, :update_strategy)
   end
 end

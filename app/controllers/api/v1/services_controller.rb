@@ -6,10 +6,10 @@ module Api
       before_action -> { doorkeeper_authorize! :manage_services, :read_services }, only: %i[index show]
       before_action -> { doorkeeper_authorize! :manage_services }, only: %i[create update destroy]
 
-      before_action :find_service, only: %i[show update destroy]
+      before_action :find_repository, only: %i[show update destroy]
 
       def index
-        render json: { services: current_resource_owner.services }
+        render json: { services: @repository.services }
       end
 
       def show
@@ -17,8 +17,8 @@ module Api
       end
 
       def create
-        @service = current_resource_owner.services.new(service_params)
-        if Services::CreateService.new(@service).execute
+        @service = @repository.services.new(service_params)
+        if @service.save
           render json: { service: @service }
         else
           render json: { errors: @service.errors.full_messages }, status: :bad_request
@@ -40,16 +40,20 @@ module Api
 
       private
 
+      def find_repository
+        @repository = current_resource_owner.repositories.find(params[:repository_id])
+      end
+
       def find_service
-        @service = current_resource_owner.services.find(params[:id])
+        @service = @repository.services.find(params[:id])
       end
 
       def service_params
-        params.require(:service).permit(:vcs_connection_id, :full_name, :name)
+        params.require(:service).permit(:name, :deployment_strategy, :update_strategy)
       end
 
       def update_params
-        params.require(:service).permit(:name)
+        params.require(:service).permit(:name, :deployment_strategy, :update_strategy)
       end
     end
   end

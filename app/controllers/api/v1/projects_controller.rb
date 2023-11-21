@@ -88,7 +88,11 @@ module Api
               },
               service_subscriptions: {
                 include: {
-                  service: {}
+                  service: {
+                    include: {
+                      repository: {}
+                    }
+                  }
                 }
               },
               user: { only: :email }

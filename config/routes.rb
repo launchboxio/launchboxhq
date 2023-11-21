@@ -26,7 +26,11 @@ Rails.application.routes.draw do
   resources :organizations
   resources :clusters, only: %i[index show]
   resources :addons, only: %i[index show]
-  resources :services
+
+  get 'services' => 'services#index'
+  resources :repositories do
+    resources :services
+  end
 
   resources :projects do
     scope module: :projects do
@@ -58,7 +62,10 @@ Rails.application.routes.draw do
           get 'manifest'
         end
       end
-      resources :services
+      get 'services'
+      resources :repositories do
+        resources :services
+      end
       resources :projects, only: [] do
         resources :addons, controller: 'project_addons'
         resources :services, controller: 'project_services'
