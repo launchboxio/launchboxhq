@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.18.0](https://github.com/launchboxio/launchboxhq/compare/v1.17.0...v1.18.0) (2023-11-21)
+
+
+### Features
+
+* Add connected repositories, attach services to those ([1d35e51](https://github.com/launchboxio/launchboxhq/commit/1d35e51480b552f8e05fc31209ee6c1c61e7b356))
+
 ## [1.17.0](https://github.com/launchboxio/launchboxhq/compare/v1.16.0...v1.17.0) (2023-11-21)
 
 
