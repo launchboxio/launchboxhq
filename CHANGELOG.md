@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.17.0](https://github.com/launchboxio/launchboxhq/compare/v1.16.0...v1.17.0) (2023-11-21)
+
+
+### Features
+
+* Add VCS connection endpoint ([f59426a](https://github.com/launchboxio/launchboxhq/commit/f59426a8a83d439660fe13c639787e1ffd7d58a7))
+
 ## [1.16.0](https://github.com/launchboxio/launchboxhq/compare/v1.15.0...v1.16.0) (2023-11-21)
 
 
