@@ -22,7 +22,8 @@ class User < ApplicationRecord
   has_one :profile
   has_many :vcs_connections
 
-  has_many :services
+  has_many :repositories
+  has_many :services, through: :repositories
 
   def active_for_authentication?
     super and activated?

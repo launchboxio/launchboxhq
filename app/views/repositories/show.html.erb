@@ -1,0 +1,103 @@
+<div class="row">
+  <div class="col-md-8">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="<%= repositories_path %>">Repositories</a></li>
+        <li class="breadcrumb-item active" aria-current="page"><%= @repository.repository %></li>
+      </ol>
+    </nav>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-5">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header">Details</div>
+          <div class="card-body">
+            <table class="table">
+              <tr>
+                <td>Name</td>
+                <td><%= @repository.repository %></td>
+              </tr>
+              <tr>
+                <td>URL</td>
+                <td><%= @repository.repository_url %></td>
+              </tr>
+              <tr>
+                <td>Default Branch</td>
+                <td><%= @repository.default_branch %></td>
+              </tr>
+              <tr>
+                <td>Visibility</td>
+                <td><%= @repository.visibility %></td>
+              </tr>
+              <tr>
+                <td>Language</td>
+                <td><%= @repository.language %></td>
+              </tr>
+              <tr>
+                <td>Deployment Strategy</td>
+                <td><%= @repository.default_deployment_strategy %></td>
+              </tr>
+              <tr>
+                <td>Update Strategy</td>
+                <td><%= @repository.default_update_strategy %></td>
+              </tr>
+            </table>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">Services</div>
+          <div class="card-body">
+          <% if @repository.services.length == 0 %>
+              <div class="alert alert-info">
+                No services configured for this repository
+              </div>
+          <% else %>
+            <table class="table">
+              <thead>
+              <tr>
+                <th>Name</th>
+                <th>Deployment Strategy</th>
+                <th>Update Strategy</th>
+                <th></th>
+              </tr>
+              </thead>
+              <tbody>
+              <% @repository.services.each do |service| %>
+              <tr>
+                <td><%= service.name %></td>
+                <td><%= service.deployment_strategy %></td>
+                <td><%= service.update_strategy %></td>
+                <td>
+                  <%= button_to "delete", repository_service_path(@repository, service), :method => :delete, :class => 'btn btn-small btn-outline-danger float-end'  %>
+                </td>
+              </tr>
+              <% end %>
+              </tbody>
+            </table>
+          <% end %>
+
+          </div>
+          <div class="card-footer">
+            <a href="<%= new_repository_service_path(@repository) %>">
+              Configure a service
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-7">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">Recent commits</div>
+        <div class="card-body">
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

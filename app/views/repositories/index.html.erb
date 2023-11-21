@@ -1,0 +1,41 @@
+<div class="row">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item active" aria-current="page">Repositories</li>
+    </ol>
+  </nav>
+</div>
+
+
+<div>
+  <table class="table">
+    <thead>
+    <tr>
+      <td>Name</td>
+      <td>Repository URL</td>
+      <td>Default Branch</td>
+      <td>Visibility</td>
+      <td>Language</td>
+      <td>Deployment Strategy</td>
+      <td>Update Strategy</td>
+    </tr>
+    </thead>
+    <tbody>
+    <% @repositories.each do |repository| %>
+      <tr onclick="location.href = '<%= repository_path(repository.id) %>';">
+        <td><%= repository.repository %></td>
+        <td></td>
+        <td><%= repository.default_branch %></td>
+        <td><%= repository.visibility %></td>
+        <td><%= repository.language %></td>
+        <td><%= repository.default_deployment_strategy %></td>
+        <td><%= repository.default_update_strategy %></td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+</div>
+
+<div >
+  <a class="float-right" href="<%= new_repository_url %>">Connect new repository</a>
+</div>

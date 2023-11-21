@@ -5,6 +5,5 @@ class Service < ApplicationRecord
     helm: 'helm'
   }
 
-  belongs_to :user
-  belongs_to :vcs_connection
+  belongs_to :repository
 end

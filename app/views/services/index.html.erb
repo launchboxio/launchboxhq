@@ -12,22 +12,16 @@
     <thead>
     <tr>
       <td>Name</td>
-      <td>Full Name</td>
-      <td>Default Branch</td>
-      <td>Visibility</td>
-      <td>Language</td>
+      <td>Repository</td>
       <td>Deployment Strategy</td>
       <td>Update Strategy</td>
     </tr>
     </thead>
     <tbody>
     <% @services.each do |service| %>
-      <tr onclick="location.href = '<%= service_path(service.id) %>';">
+      <tr onclick="location.href = '<%= repository_service_path(service.repository, service.id) %>';">
         <td><%= service.name %></td>
-        <td><%= service.full_name %></td>
-        <td><%= service.default_branch %></td>
-        <td><%= service.visibility %></td>
-        <td><%= service.language %></td>
+        <td><%= service.repository.repository %></td>
         <td><%= service.deployment_strategy %></td>
         <td><%= service.update_strategy %></td>
       </tr>
@@ -36,6 +30,6 @@
   </table>
 </div>
 
-<div >
-  <a class="float-right" href="<%= new_service_url %>">Create new service</a>
-</div>
+<!--<div >-->
+<!--  <a class="float-right" href="<%#= new_service_url %>">Create new service</a>-->
+<!--</div>-->
