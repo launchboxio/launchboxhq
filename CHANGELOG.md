@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.16.0](https://github.com/launchboxio/launchboxhq/compare/v1.15.0...v1.16.0) (2023-11-21)
+
+
+### Features
+
+* Add project service management ([8c4c2a2](https://github.com/launchboxio/launchboxhq/commit/8c4c2a25bf4f32704a0e0a112dc32875dd82f265))
+* Add project service routes to api/v1 ([879aaa1](https://github.com/launchboxio/launchboxhq/commit/879aaa15352a9768a9a6fe2a2aa876df912e7c17))
+
 ## [1.15.0](https://github.com/launchboxio/launchboxhq/compare/v1.14.3...v1.15.0) (2023-11-17)
 
 
