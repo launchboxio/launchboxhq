@@ -62,7 +62,8 @@ Rails.application.routes.draw do
           get 'manifest'
         end
       end
-      get 'services'
+      resources :services, only: %i[index show]
+
       resources :repositories do
         resources :services
       end

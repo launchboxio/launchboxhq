@@ -6,6 +6,8 @@ module Api
       before_action -> { doorkeeper_authorize! :manage_repositories, :read_repositories }, only: %i[index show]
       before_action -> { doorkeeper_authorize! :manage_repositories }, only: %i[create update destroy]
 
+      before_action :find_repository, except: %i[index create]
+
       def index
         render json: {
           repositories: current_resource_owner.repositories
