@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_11_21_153356) do
+ActiveRecord::Schema[7.0].define(version: 2023_11_26_024003) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -112,6 +112,17 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_21_153356) do
     t.index ["user_id"], name: "index_clusters_on_user_id"
   end
 
+  create_table "memberships", force: :cascade do |t|
+    t.bigint "organization_id"
+    t.bigint "user_id"
+    t.string "role"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["organization_id"], name: "index_memberships_on_organization_id"
+    t.index ["user_id", "organization_id"], name: "index_memberships_on_user_id_and_organization_id", unique: true
+    t.index ["user_id"], name: "index_memberships_on_user_id"
+  end
+
   create_table "oauth_access_grants", force: :cascade do |t|
     t.bigint "resource_owner_id", null: false
     t.bigint "application_id", null: false
@@ -169,6 +180,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_21_153356) do
     t.string "plan"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "organization_type"
     t.index ["name"], name: "index_organizations_on_name", unique: true
   end
 
