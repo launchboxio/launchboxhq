@@ -14,4 +14,14 @@ class AuthenticatedController < ApplicationController
       ## render :file => File.join(Rails.root, 'public/404'), :formats => [:html], :status => 404, :layout => false
     end
   end
+
+  # def set_organization(organization)
+  #   session[:current_organization] = organization
+  # end
+
+  def current_organization
+    session[:current_organization] || Organization.where(name: current_user.email, type: 'personal').first
+  end
+
+  helper_method :current_organization
 end
