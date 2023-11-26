@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file.
 
+### [1.18.3](https://github.com/launchboxio/launchboxhq/compare/v1.18.2...v1.18.3) (2023-11-26)
+
+
+### Bug Fixes
+
+* Allow both repository-scoped and service scoped endpoints ([0fb3beb](https://github.com/launchboxio/launchboxhq/commit/0fb3bebecd4364663af1895f15d769f3ec321424))
+* Load repositories on appropriate routes ([3e8b402](https://github.com/launchboxio/launchboxhq/commit/3e8b40258edbb695340e71c5f61b532f7b3df65c))
+
 ### [1.18.2](https://github.com/launchboxio/launchboxhq/compare/v1.18.1...v1.18.2) (2023-11-21)
 
 
