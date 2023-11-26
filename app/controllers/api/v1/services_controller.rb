@@ -6,10 +6,15 @@ module Api
       before_action -> { doorkeeper_authorize! :manage_services, :read_services }, only: %i[index show]
       before_action -> { doorkeeper_authorize! :manage_services }, only: %i[create update destroy]
 
-      before_action :find_repository, only: %i[show update destroy]
+      before_action :find_service, only: %i[show update destroy]
 
       def index
-        render json: { services: @repository.services }
+        if params[:repository_id].nil?
+          render json: { services: current_resource_owner.services }
+        else
+          @repository = current_resource_owner.repositories.find(params[:repository_id])
+          render json: { services: @repository.services }
+        end
       end
 
       def show
@@ -40,12 +45,8 @@ module Api
 
       private
 
-      def find_repository
-        @repository = current_resource_owner.repositories.find(params[:repository_id])
-      end
-
       def find_service
-        @service = @repository.services.find(params[:id])
+        @service = current_resource_owner.services.find(params[:id])
       end
 
       def service_params
